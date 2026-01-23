@@ -3,141 +3,1587 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Casa de Lídia</title>
-    <meta name="description" content="Casa de Lídia - Em breve">
+    <title>Casa de Lídia | Roteiros de Célula em Minutos</title>
+    <meta name="description" content="Crie roteiros de célula profissionais em minutos, baseados no seu próprio culto. Economize até 4 horas por semana com IA.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
+      :root {
+        --bg-dark: #1a1d2e;
+        --bg-darker: #12141f;
+        --bg-card: #232738;
+        --gold: #E8A849;
+        --gold-light: #F5C97A;
+        --purple: #6B7AA1;
+        --purple-light: #8B9BC7;
+        --text-primary: #ffffff;
+        --text-secondary: rgba(255, 255, 255, 0.7);
+        --text-muted: rgba(255, 255, 255, 0.5);
+        --gradient: linear-gradient(135deg, #E8A849 0%, #D4A85A 50%, #8B7AA1 100%);
+      }
+
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
 
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(135deg, #2D3436 0%, #1a1d2e 50%, #2D3436 100%);
-        font-family: 'Poppins', sans-serif;
-        color: #ffffff;
-        padding: 20px;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--bg-dark);
+        color: var(--text-primary);
+        line-height: 1.6;
       }
 
+      /* ===== UTILITIES ===== */
       .container {
-        text-align: center;
-        max-width: 600px;
-        animation: fadeIn 1s ease-out;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
       }
 
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .logo {
-        width: 280px;
-        max-width: 80%;
-        height: auto;
-        margin-bottom: 40px;
-        filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
-      }
-
-      h1 {
-        font-size: 2.5rem;
-        font-weight: 600;
-        margin-bottom: 16px;
-        background: linear-gradient(90deg, #E8A849, #D4A85A, #8B7AA1, #6B7AA1);
+      .gradient-text {
+        background: var(--gradient);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
       }
 
-      .tagline {
-        font-size: 1.2rem;
-        font-weight: 300;
-        color: rgba(255, 255, 255, 0.8);
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 16px 32px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: none;
+      }
+
+      .btn-primary {
+        background: var(--gradient);
+        color: var(--bg-dark);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 40px rgba(232, 168, 73, 0.3);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        border: 2px solid var(--purple);
+        color: var(--text-primary);
+      }
+
+      .btn-secondary:hover {
+        background: var(--purple);
+        border-color: var(--purple);
+      }
+
+      .btn-large {
+        padding: 20px 48px;
+        font-size: 1.125rem;
+      }
+
+      .section {
+        padding: 100px 0;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 16px;
+      }
+
+      .section-subtitle {
+        font-size: 1.125rem;
+        color: var(--text-secondary);
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto 60px;
+      }
+
+      /* ===== HEADER ===== */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: rgba(26, 29, 46, 0.95);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .header-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 80px;
+      }
+
+      .logo {
+        height: 50px;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+      }
+
+      nav a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      nav a:hover {
+        color: var(--gold);
+      }
+
+      .header-cta {
+        padding: 12px 24px;
+        font-size: 0.9rem;
+      }
+
+      /* ===== HERO ===== */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding-top: 80px;
+        background:
+          radial-gradient(ellipse at 20% 50%, rgba(232, 168, 73, 0.08) 0%, transparent 50%),
+          radial-gradient(ellipse at 80% 50%, rgba(107, 122, 161, 0.08) 0%, transparent 50%),
+          var(--bg-dark);
+      }
+
+      .hero-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: rgba(232, 168, 73, 0.1);
+        border: 1px solid rgba(232, 168, 73, 0.3);
+        border-radius: 100px;
+        font-size: 0.875rem;
+        color: var(--gold);
+        margin-bottom: 24px;
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        line-height: 1.1;
+        margin-bottom: 24px;
+      }
+
+      .hero-description {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+        margin-bottom: 16px;
+        max-width: 500px;
+      }
+
+      .hero-pain {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 20px;
+        background: rgba(255, 107, 107, 0.1);
+        border-left: 3px solid #FF6B6B;
+        border-radius: 0 8px 8px 0;
+        margin-bottom: 32px;
+        max-width: 500px;
+      }
+
+      .hero-pain-icon {
+        font-size: 1.5rem;
+      }
+
+      .hero-pain p {
+        color: #FF8A8A;
+        font-size: 0.95rem;
+      }
+
+      .hero-pain strong {
+        color: #FF6B6B;
+      }
+
+      .hero-buttons {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+
+      .hero-trust {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--text-muted);
+        font-size: 0.875rem;
+      }
+
+      .hero-trust-icons {
+        display: flex;
+      }
+
+      .hero-trust-icon {
+        width: 32px;
+        height: 32px;
+        background: var(--bg-card);
+        border-radius: 50%;
+        border: 2px solid var(--bg-dark);
+        margin-left: -8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+      }
+
+      .hero-trust-icon:first-child {
+        margin-left: 0;
+      }
+
+      .hero-visual {
+        position: relative;
+      }
+
+      .hero-mockup {
+        background: var(--bg-card);
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .mockup-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+
+      .mockup-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+      }
+
+      .mockup-dot.red { background: #FF5F57; }
+      .mockup-dot.yellow { background: #FFBD2E; }
+      .mockup-dot.green { background: #28CA42; }
+
+      .mockup-input {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+
+      .mockup-input input {
+        flex: 1;
+        padding: 14px 16px;
+        background: var(--bg-dark);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+
+      .mockup-input button {
+        padding: 14px 24px;
+        background: var(--gradient);
+        border: none;
+        border-radius: 8px;
+        color: var(--bg-dark);
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .mockup-result {
+        background: var(--bg-dark);
+        border-radius: 12px;
+        padding: 20px;
+      }
+
+      .mockup-result-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .mockup-result-icon {
+        width: 40px;
+        height: 40px;
+        background: var(--gradient);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .mockup-result h4 {
+        font-size: 1rem;
+        font-weight: 600;
+      }
+
+      .mockup-result p {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      .mockup-sections {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .mockup-section {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 8px;
+      }
+
+      .mockup-section-check {
+        width: 20px;
+        height: 20px;
+        background: rgba(40, 202, 66, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #28CA42;
+        font-size: 0.7rem;
+      }
+
+      .mockup-section span {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+      }
+
+      .hero-float-badge {
+        position: absolute;
+        background: var(--bg-card);
+        padding: 12px 16px;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .hero-float-badge.time {
+        top: -20px;
+        right: -20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .hero-float-badge.time .icon {
+        width: 36px;
+        height: 36px;
+        background: rgba(40, 202, 66, 0.2);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #28CA42;
+      }
+
+      .hero-float-badge.time .text strong {
+        display: block;
+        font-size: 1.1rem;
+        color: #28CA42;
+      }
+
+      .hero-float-badge.time .text span {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+
+      /* ===== PAIN SECTION ===== */
+      .pain-section {
+        background: var(--bg-darker);
+      }
+
+      .pain-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px;
+      }
+
+      .pain-card {
+        background: var(--bg-card);
+        padding: 32px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        text-align: center;
+      }
+
+      .pain-card-icon {
+        width: 64px;
+        height: 64px;
+        background: rgba(255, 107, 107, 0.1);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        font-size: 1.75rem;
+      }
+
+      .pain-card h3 {
+        font-size: 1.25rem;
+        margin-bottom: 12px;
+      }
+
+      .pain-card p {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+      }
+
+      .pain-card .stat {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #FF6B6B;
+        margin-top: 16px;
+      }
+
+      /* ===== HOW IT WORKS ===== */
+      .how-it-works {
+        background: var(--bg-dark);
+      }
+
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+        position: relative;
+      }
+
+      .steps::before {
+        content: '';
+        position: absolute;
+        top: 60px;
+        left: 15%;
+        right: 15%;
+        height: 2px;
+        background: linear-gradient(90deg, var(--gold), var(--purple));
+        opacity: 0.3;
+      }
+
+      .step {
+        text-align: center;
+        position: relative;
+      }
+
+      .step-number {
+        width: 80px;
+        height: 80px;
+        background: var(--bg-card);
+        border: 2px solid transparent;
+        background-image: linear-gradient(var(--bg-card), var(--bg-card)), var(--gradient);
+        background-origin: border-box;
+        background-clip: padding-box, border-box;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 24px;
+        font-size: 1.75rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .step h3 {
+        font-size: 1.25rem;
+        margin-bottom: 12px;
+      }
+
+      .step p {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        max-width: 280px;
+        margin: 0 auto;
+      }
+
+      .step-highlight {
+        margin-top: 16px;
+        padding: 8px 16px;
+        background: rgba(232, 168, 73, 0.1);
+        border-radius: 8px;
+        display: inline-block;
+        color: var(--gold);
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+
+      /* ===== FEATURES ===== */
+      .features {
+        background: var(--bg-darker);
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+
+      .feature-card {
+        background: var(--bg-card);
+        padding: 32px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        gap: 20px;
+        transition: all 0.3s ease;
+      }
+
+      .feature-card:hover {
+        border-color: rgba(232, 168, 73, 0.3);
+        transform: translateY(-4px);
+      }
+
+      .feature-icon {
+        width: 56px;
+        height: 56px;
+        min-width: 56px;
+        background: var(--gradient);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+      }
+
+      .feature-content h3 {
+        font-size: 1.125rem;
+        margin-bottom: 8px;
+      }
+
+      .feature-content p {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+
+      /* ===== COMPARISON ===== */
+      .comparison {
+        background: var(--bg-dark);
+      }
+
+      .comparison-table {
+        background: var(--bg-card);
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .comparison-row {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .comparison-row:last-child {
+        border-bottom: none;
+      }
+
+      .comparison-row.header {
+        background: var(--bg-darker);
+      }
+
+      .comparison-cell {
+        padding: 20px 24px;
+        display: flex;
+        align-items: center;
+      }
+
+      .comparison-row.header .comparison-cell {
+        font-weight: 600;
+        font-size: 1rem;
+      }
+
+      .comparison-cell.feature {
+        color: var(--text-secondary);
+      }
+
+      .comparison-cell.old {
+        justify-content: center;
+        color: #FF6B6B;
+      }
+
+      .comparison-cell.new {
+        justify-content: center;
+        color: #28CA42;
+        background: rgba(40, 202, 66, 0.05);
+      }
+
+      .comparison-cell .check {
+        width: 24px;
+        height: 24px;
+        background: rgba(40, 202, 66, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .comparison-cell .cross {
+        width: 24px;
+        height: 24px;
+        background: rgba(255, 107, 107, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* ===== TESTIMONIALS ===== */
+      .testimonials {
+        background: var(--bg-darker);
+      }
+
+      .testimonials-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+
+      .testimonial-card {
+        background: var(--bg-card);
+        padding: 32px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .testimonial-stars {
+        color: var(--gold);
+        margin-bottom: 16px;
+        font-size: 1.25rem;
+      }
+
+      .testimonial-text {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        line-height: 1.7;
+        margin-bottom: 24px;
+      }
+
+      .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .testimonial-avatar {
+        width: 48px;
+        height: 48px;
+        background: var(--gradient);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: var(--bg-dark);
+      }
+
+      .testimonial-info strong {
+        display: block;
+        font-size: 0.95rem;
+      }
+
+      .testimonial-info span {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      /* ===== PRICING ===== */
+      .pricing {
+        background: var(--bg-dark);
+      }
+
+      .pricing-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        margin-bottom: 48px;
+      }
+
+      .pricing-toggle span {
+        color: var(--text-secondary);
+      }
+
+      .pricing-toggle span.active {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+      }
+
+      .pricing-card {
+        background: var(--bg-card);
+        padding: 32px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .pricing-card:hover {
+        transform: translateY(-8px);
+      }
+
+      .pricing-card.featured {
+        border-color: var(--gold);
+        transform: scale(1.05);
+      }
+
+      .pricing-card.featured:hover {
+        transform: scale(1.05) translateY(-8px);
+      }
+
+      .pricing-badge {
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 6px 16px;
+        background: var(--gradient);
+        border-radius: 100px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--bg-dark);
+        text-transform: uppercase;
+      }
+
+      .pricing-name {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .pricing-description {
+        color: var(--text-muted);
+        font-size: 0.875rem;
+        margin-bottom: 24px;
+      }
+
+      .pricing-price {
+        margin-bottom: 24px;
+      }
+
+      .pricing-price .currency {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+        vertical-align: top;
+      }
+
+      .pricing-price .amount {
+        font-size: 3rem;
+        font-weight: 700;
+      }
+
+      .pricing-price .period {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      .pricing-features {
+        list-style: none;
+        margin-bottom: 32px;
+      }
+
+      .pricing-features li {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 10px 0;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+      }
+
+      .pricing-features li::before {
+        content: '✓';
+        color: #28CA42;
+        font-weight: 700;
+        margin-top: 2px;
+      }
+
+      .pricing-cta {
+        width: 100%;
+      }
+
+      /* ===== FAQ ===== */
+      .faq {
+        background: var(--bg-darker);
+      }
+
+      .faq-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .faq-item {
+        background: var(--bg-card);
+        padding: 24px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .faq-question {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .faq-question::before {
+        content: '?';
+        width: 24px;
+        height: 24px;
+        min-width: 24px;
+        background: var(--gradient);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        color: var(--bg-dark);
+      }
+
+      .faq-answer {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        padding-left: 36px;
+      }
+
+      /* ===== FINAL CTA ===== */
+      .final-cta {
+        background:
+          radial-gradient(ellipse at 50% 0%, rgba(232, 168, 73, 0.15) 0%, transparent 60%),
+          var(--bg-dark);
+        text-align: center;
+        padding: 120px 0;
+      }
+
+      .final-cta h2 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+
+      .final-cta p {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+        margin-bottom: 40px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .final-cta-buttons {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        margin-bottom: 24px;
+      }
+
+      .final-cta-note {
+        color: var(--text-muted);
+        font-size: 0.875rem;
+      }
+
+      /* ===== FOOTER ===== */
+      footer {
+        background: var(--bg-darker);
+        padding: 60px 0 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 60px;
         margin-bottom: 40px;
       }
 
-      .coming-soon {
-        display: inline-block;
-        padding: 12px 32px;
-        border: 2px solid transparent;
-        border-radius: 50px;
-        background: linear-gradient(#2D3436, #2D3436) padding-box,
-                    linear-gradient(90deg, #E8A849, #6B7AA1) border-box;
-        font-size: 1rem;
-        font-weight: 400;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.9);
+      .footer-brand img {
+        height: 40px;
+        margin-bottom: 16px;
       }
 
-      .divider {
-        width: 60px;
-        height: 3px;
-        background: linear-gradient(90deg, #E8A849, #6B7AA1);
-        margin: 40px auto;
-        border-radius: 2px;
-      }
-
-      .contact {
+      .footer-brand p {
+        color: var(--text-secondary);
         font-size: 0.9rem;
-        color: rgba(255, 255, 255, 0.6);
+        max-width: 280px;
       }
 
-      .contact a {
-        color: #E8A849;
+      .footer-links h4 {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: var(--text-primary);
+      }
+
+      .footer-links a {
+        display: block;
+        color: var(--text-secondary);
         text-decoration: none;
-        transition: color 0.3s ease;
+        font-size: 0.875rem;
+        padding: 6px 0;
+        transition: color 0.3s;
       }
 
-      .contact a:hover {
-        color: #6B7AA1;
+      .footer-links a:hover {
+        color: var(--gold);
       }
 
-      @media (max-width: 480px) {
-        h1 {
-          font-size: 1.8rem;
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .footer-bottom p {
+        color: var(--text-muted);
+        font-size: 0.8rem;
+      }
+
+      .footer-bottom a {
+        color: var(--text-muted);
+        text-decoration: none;
+      }
+
+      .footer-bottom a:hover {
+        color: var(--gold);
+      }
+
+      /* ===== MOBILE ===== */
+      @media (max-width: 1024px) {
+        .pricing-grid {
+          grid-template-columns: repeat(2, 1fr);
         }
 
-        .tagline {
-          font-size: 1rem;
+        .pricing-card.featured {
+          transform: none;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .section {
+          padding: 60px 0;
         }
 
-        .logo {
-          width: 220px;
-          margin-bottom: 30px;
+        .section-title {
+          font-size: 1.875rem;
         }
+
+        nav {
+          display: none;
+        }
+
+        .hero-content {
+          grid-template-columns: 1fr;
+          gap: 40px;
+          text-align: center;
+        }
+
+        .hero h1 {
+          font-size: 2.25rem;
+        }
+
+        .hero-description, .hero-pain {
+          max-width: 100%;
+        }
+
+        .hero-buttons {
+          flex-direction: column;
+        }
+
+        .hero-trust {
+          justify-content: center;
+        }
+
+        .hero-visual {
+          order: -1;
+        }
+
+        .hero-float-badge {
+          display: none;
+        }
+
+        .pain-grid,
+        .steps,
+        .features-grid,
+        .testimonials-grid,
+        .pricing-grid,
+        .faq-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .steps::before {
+          display: none;
+        }
+
+        .comparison-row {
+          grid-template-columns: 1fr;
+        }
+
+        .comparison-row.header {
+          display: none;
+        }
+
+        .comparison-cell {
+          justify-content: space-between;
+        }
+
+        .comparison-cell.feature {
+          background: var(--bg-darker);
+          font-weight: 500;
+        }
+
+        .comparison-cell::before {
+          content: attr(data-label);
+          font-weight: 500;
+          color: var(--text-muted);
+        }
+
+        .comparison-cell.feature::before {
+          display: none;
+        }
+
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 40px;
+          text-align: center;
+        }
+
+        .footer-brand p {
+          max-width: 100%;
+        }
+
+        .footer-bottom {
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .final-cta h2 {
+          font-size: 2rem;
+        }
+
+        .final-cta-buttons {
+          flex-direction: column;
+        }
+      }
+
+      /* ===== ANIMATIONS ===== */
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+
+      .hero-mockup {
+        animation: float 6s ease-in-out infinite;
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <img src="assets/logo.jpg" alt="Casa de Lídia" class="logo">
+    <!-- HEADER -->
+    <header>
+      <div class="container header-content">
+        <img src="assets/logo.jpg" alt="Casa de Lídia" class="logo">
+        <nav>
+          <a href="#como-funciona">Como Funciona</a>
+          <a href="#recursos">Recursos</a>
+          <a href="#planos">Planos</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+        <a href="#" class="btn btn-primary header-cta">Teste Grátis</a>
+      </div>
+    </header>
 
-      <h1>Bem-vindo</h1>
-      <p class="tagline">Estamos preparando algo especial para você</p>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-text">
+            <div class="hero-badge">
+              ✨ Usado por +50 igrejas brasileiras
+            </div>
+            <h1>Roteiros de Célula<br><span class="gradient-text">em Minutos</span></h1>
+            <p class="hero-description">
+              Crie roteiros profissionais e contextualizados baseados no seu próprio culto.
+              Cole o link do YouTube e deixe a IA fazer o trabalho.
+            </p>
+            <div class="hero-pain">
+              <span class="hero-pain-icon">⏰</span>
+              <p>Você ainda gasta <strong>2-4 horas por semana</strong> criando roteiros de célula manualmente?</p>
+            </div>
+            <div class="hero-buttons">
+              <a href="#" class="btn btn-primary btn-large">Comece Grátis por 14 Dias</a>
+              <a href="#como-funciona" class="btn btn-secondary btn-large">Ver Demonstração</a>
+            </div>
+            <div class="hero-trust">
+              <div class="hero-trust-icons">
+                <div class="hero-trust-icon">JM</div>
+                <div class="hero-trust-icon">PR</div>
+                <div class="hero-trust-icon">AS</div>
+                <div class="hero-trust-icon">+</div>
+              </div>
+              <span>Sem cartão de crédito necessário</span>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div class="hero-mockup">
+              <div class="mockup-header">
+                <div class="mockup-dot red"></div>
+                <div class="mockup-dot yellow"></div>
+                <div class="mockup-dot green"></div>
+              </div>
+              <div class="mockup-input">
+                <input type="text" value="youtube.com/watch?v=culto-domingo" readonly>
+                <button>Gerar</button>
+              </div>
+              <div class="mockup-result">
+                <div class="mockup-result-header">
+                  <div class="mockup-result-icon">📄</div>
+                  <div>
+                    <h4>Roteiro: A Fé que Transforma</h4>
+                    <p>Gerado em 3 minutos</p>
+                  </div>
+                </div>
+                <div class="mockup-sections">
+                  <div class="mockup-section">
+                    <div class="mockup-section-check">✓</div>
+                    <span>Quebra-gelo contextualizado</span>
+                  </div>
+                  <div class="mockup-section">
+                    <div class="mockup-section-check">✓</div>
+                    <span>Perguntas para compartilhamento</span>
+                  </div>
+                  <div class="mockup-section">
+                    <div class="mockup-section-check">✓</div>
+                    <span>Estudo bíblico baseado na pregação</span>
+                  </div>
+                  <div class="mockup-section">
+                    <div class="mockup-section-check">✓</div>
+                    <span>Aplicação prática para a semana</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="hero-float-badge time">
+              <div class="icon">⚡</div>
+              <div class="text">
+                <strong>5 min</strong>
+                <span>vs 3h manual</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-      <span class="coming-soon">Em Breve</span>
+    <!-- PAIN POINTS -->
+    <section class="pain-section section">
+      <div class="container">
+        <h2 class="section-title">O Problema que Todo <span class="gradient-text">Líder Conhece</span></h2>
+        <p class="section-subtitle">Criar material para células é trabalhoso, repetitivo e toma um tempo precioso que poderia ser usado no que realmente importa.</p>
 
-      <div class="divider"></div>
+        <div class="pain-grid">
+          <div class="pain-card">
+            <div class="pain-card-icon">⏰</div>
+            <h3>Tempo Perdido</h3>
+            <p>Pastores e líderes gastam horas toda semana pesquisando, escrevendo e formatando roteiros de células.</p>
+            <div class="stat">2-4h/semana</div>
+          </div>
+          <div class="pain-card">
+            <div class="pain-card-icon">📚</div>
+            <h3>Conteúdo Genérico</h3>
+            <p>Materiais comprados não refletem a mensagem específica do seu culto, perdendo a conexão com a célula.</p>
+            <div class="stat">Desconectado</div>
+          </div>
+          <div class="pain-card">
+            <div class="pain-card-icon">📊</div>
+            <h3>Sem Visibilidade</h3>
+            <p>Você não sabe se os líderes estão usando o material, quantas células aconteceram ou como estão crescendo.</p>
+            <div class="stat">No escuro</div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-      <p class="contact">
-        Entre em contato: <a href="mailto:contato@casadelidia.com.br">contato@casadelidia.com.br</a>
-      </p>
-    </div>
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works section" id="como-funciona">
+      <div class="container">
+        <h2 class="section-title">Como Funciona em <span class="gradient-text">3 Passos</span></h2>
+        <p class="section-subtitle">Da pregação de domingo ao roteiro pronto em minutos, sem esforço manual.</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Cole o Link do YouTube</h3>
+            <p>Copie o link do culto transmitido no YouTube da sua igreja. Pode ser ao vivo ou gravado.</p>
+            <div class="step-highlight">30 segundos</div>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>IA Gera o Roteiro</h3>
+            <p>Nossa IA transcreve a pregação e cria um roteiro estruturado com quebra-gelo, perguntas e aplicação.</p>
+            <div class="step-highlight">3-5 minutos</div>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Distribua para os Líderes</h3>
+            <p>Revise, personalize se quiser, e envie o PDF profissional para todos os líderes de célula.</p>
+            <div class="step-highlight">1 clique</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features section" id="recursos">
+      <div class="container">
+        <h2 class="section-title">Tudo que Sua Igreja <span class="gradient-text">Precisa</span></h2>
+        <p class="section-subtitle">Ferramentas pensadas para facilitar a vida de pastores, coordenadores e líderes de célula.</p>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <div class="feature-content">
+              <h3>Baseado no Seu Culto</h3>
+              <p>Cada roteiro é criado a partir da pregação real do seu pastor. Nada de conteúdo genérico que não tem nada a ver com sua igreja.</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📝</div>
+            <div class="feature-content">
+              <h3>Múltiplos Templates</h3>
+              <p>Escolha entre modelos para jovens, casais, novos convertidos e mais. Cada público com linguagem adequada.</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">✏️</div>
+            <div class="feature-content">
+              <h3>Edição Inline</h3>
+              <p>Edite qualquer parte do roteiro diretamente no app. Adicione, remova ou modifique seções com facilidade.</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📄</div>
+            <div class="feature-content">
+              <h3>PDF Profissional</h3>
+              <p>Exporte roteiros em PDF com o logo da sua igreja, formatação bonita e pronta para impressão ou WhatsApp.</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <div class="feature-content">
+              <h3>Dashboard de Feedback</h3>
+              <p>Saiba quais células aconteceram, quantas pessoas participaram e como os líderes avaliaram o roteiro.</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔔</div>
+            <div class="feature-content">
+              <h3>Alertas Automáticos</h3>
+              <p>Receba notificações quando uma célula não acontecer ou quando um líder precisar de atenção.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPARISON -->
+    <section class="comparison section">
+      <div class="container">
+        <h2 class="section-title">Antes vs <span class="gradient-text">Depois</span></h2>
+        <p class="section-subtitle">Veja como Casa de Lídia transforma o processo de criação de roteiros.</p>
+
+        <div class="comparison-table">
+          <div class="comparison-row header">
+            <div class="comparison-cell"></div>
+            <div class="comparison-cell old">Jeito Antigo</div>
+            <div class="comparison-cell new">Com Casa de Lídia</div>
+          </div>
+          <div class="comparison-row">
+            <div class="comparison-cell feature">Tempo para criar roteiro</div>
+            <div class="comparison-cell old" data-label="Antes">2-4 horas</div>
+            <div class="comparison-cell new" data-label="Depois">5 minutos</div>
+          </div>
+          <div class="comparison-row">
+            <div class="comparison-cell feature">Conteúdo baseado no culto</div>
+            <div class="comparison-cell old" data-label="Antes"><span class="cross">✕</span></div>
+            <div class="comparison-cell new" data-label="Depois"><span class="check">✓</span></div>
+          </div>
+          <div class="comparison-row">
+            <div class="comparison-cell feature">Saber se células aconteceram</div>
+            <div class="comparison-cell old" data-label="Antes"><span class="cross">✕</span></div>
+            <div class="comparison-cell new" data-label="Depois"><span class="check">✓</span></div>
+          </div>
+          <div class="comparison-row">
+            <div class="comparison-cell feature">PDF com logo da igreja</div>
+            <div class="comparison-cell old" data-label="Antes"><span class="cross">✕</span></div>
+            <div class="comparison-cell new" data-label="Depois"><span class="check">✓</span></div>
+          </div>
+          <div class="comparison-row">
+            <div class="comparison-cell feature">Versões para públicos diferentes</div>
+            <div class="comparison-cell old" data-label="Antes">Trabalho manual</div>
+            <div class="comparison-cell new" data-label="Depois">1 clique</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials section">
+      <div class="container">
+        <h2 class="section-title">O Que Pastores <span class="gradient-text">Estão Dizendo</span></h2>
+        <p class="section-subtitle">Igrejas de todo o Brasil já economizam tempo e fortalecem suas células.</p>
+
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"Eu gastava toda segunda-feira criando roteiros. Agora faço em 10 minutos no domingo à noite e os líderes recebem antes de dormir. Revolucionou nosso ministério."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">JM</div>
+              <div class="testimonial-info">
+                <strong>Pr. João Marcos</strong>
+                <span>Igreja Vida Nova • 45 células</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"O melhor é que o roteiro realmente reflete a pregação. Nossos líderes comentam que nunca foi tão fácil conduzir as células com conteúdo relevante."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">AS</div>
+              <div class="testimonial-info">
+                <strong>Pra. Ana Silva</strong>
+                <span>Comunidade Graça • 28 células</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"O dashboard de feedback mudou tudo. Agora sei exatamente quais células precisam de atenção e quais estão crescendo. Gestão de verdade."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">PR</div>
+              <div class="testimonial-info">
+                <strong>Pr. Paulo Roberto</strong>
+                <span>Igreja Renovar • 120 células</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="pricing section" id="planos">
+      <div class="container">
+        <h2 class="section-title">Planos para <span class="gradient-text">Cada Igreja</span></h2>
+        <p class="section-subtitle">Comece pequeno e cresça conosco. Todos os planos incluem 14 dias grátis.</p>
+
+        <div class="pricing-grid">
+          <div class="pricing-card">
+            <div class="pricing-name">Célula</div>
+            <div class="pricing-description">Para igrejas começando</div>
+            <div class="pricing-price">
+              <span class="currency">R$</span>
+              <span class="amount">49</span>
+              <span class="period">/mês</span>
+            </div>
+            <ul class="pricing-features">
+              <li>Até 5 células</li>
+              <li>8 roteiros por mês</li>
+              <li>2 modelos de roteiro</li>
+              <li>Export PDF</li>
+              <li>Feedback de líderes</li>
+            </ul>
+            <a href="#" class="btn btn-secondary pricing-cta">Testar Grátis</a>
+          </div>
+
+          <div class="pricing-card featured">
+            <div class="pricing-badge">Mais Popular</div>
+            <div class="pricing-name">Crescimento</div>
+            <div class="pricing-description">Para igrejas em expansão</div>
+            <div class="pricing-price">
+              <span class="currency">R$</span>
+              <span class="amount">99</span>
+              <span class="period">/mês</span>
+            </div>
+            <ul class="pricing-features">
+              <li>Até 20 células</li>
+              <li>20 roteiros por mês</li>
+              <li>5 modelos de roteiro</li>
+              <li>Logo personalizado no PDF</li>
+              <li>3 coordenadores</li>
+              <li>Dashboard básico</li>
+            </ul>
+            <a href="#" class="btn btn-primary pricing-cta">Testar Grátis</a>
+          </div>
+
+          <div class="pricing-card">
+            <div class="pricing-name">Coordenação</div>
+            <div class="pricing-description">Gestão profissional</div>
+            <div class="pricing-price">
+              <span class="currency">R$</span>
+              <span class="amount">199</span>
+              <span class="period">/mês</span>
+            </div>
+            <ul class="pricing-features">
+              <li>Até 60 células</li>
+              <li>Roteiros ilimitados</li>
+              <li>Biblioteca completa</li>
+              <li>Alertas automáticos</li>
+              <li>Relatórios gerenciais</li>
+              <li>Tags de células</li>
+            </ul>
+            <a href="#" class="btn btn-secondary pricing-cta">Testar Grátis</a>
+          </div>
+
+          <div class="pricing-card">
+            <div class="pricing-name">Igreja</div>
+            <div class="pricing-description">Máximo impacto</div>
+            <div class="pricing-price">
+              <span class="currency">R$</span>
+              <span class="amount">399</span>
+              <span class="period">/mês</span>
+            </div>
+            <ul class="pricing-features">
+              <li>Até 250 células</li>
+              <li>Usuários ilimitados</li>
+              <li>Analytics avançado</li>
+              <li>API REST</li>
+              <li>PDF sem marca</li>
+              <li>Suporte prioritário</li>
+            </ul>
+            <a href="#" class="btn btn-secondary pricing-cta">Testar Grátis</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq section" id="faq">
+      <div class="container">
+        <h2 class="section-title">Perguntas <span class="gradient-text">Frequentes</span></h2>
+        <p class="section-subtitle">Tire suas dúvidas sobre o Casa de Lídia.</p>
+
+        <div class="faq-grid">
+          <div class="faq-item">
+            <div class="faq-question">Preciso ter o culto no YouTube?</div>
+            <p class="faq-answer">Sim, atualmente geramos roteiros a partir de vídeos do YouTube. Pode ser transmissão ao vivo ou vídeo já gravado. Estamos trabalhando em suporte para outras plataformas.</p>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">A IA pode errar teologicamente?</div>
+            <p class="faq-answer">A IA é uma ferramenta que ajuda, mas o pastor sempre tem a palavra final. Você pode revisar e editar qualquer parte do roteiro antes de publicar. Recomendamos sempre uma revisão rápida.</p>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">Posso cancelar a qualquer momento?</div>
+            <p class="faq-answer">Sim! Não há fidelidade. Você pode cancelar quando quiser diretamente no app. Seus dados ficam disponíveis por 30 dias após o cancelamento.</p>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">Os líderes precisam pagar?</div>
+            <p class="faq-answer">Não! Apenas a igreja paga. Líderes de célula recebem o roteiro gratuitamente via link, WhatsApp ou email e podem enviar feedback sem custo.</p>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">Funciona com qualquer denominação?</div>
+            <p class="faq-answer">Sim! Casa de Lídia é agnóstico teologicamente. A IA se baseia na pregação do seu pastor, respeitando a linha doutrinária da sua igreja.</p>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">Como funciona o teste grátis?</div>
+            <p class="faq-answer">Você tem 14 dias para testar todas as funcionalidades do plano escolhido, sem precisar cadastrar cartão de crédito. Se gostar, é só assinar!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta">
+      <div class="container">
+        <h2>Pare de Perder Tempo<br><span class="gradient-text">Comece Hoje</span></h2>
+        <p>Junte-se a centenas de igrejas que já economizam horas toda semana e fortalecem suas células com roteiros profissionais.</p>
+        <div class="final-cta-buttons">
+          <a href="#" class="btn btn-primary btn-large">Começar Teste Grátis de 14 Dias</a>
+        </div>
+        <p class="final-cta-note">Sem cartão de crédito • Cancele quando quiser • Suporte em português</p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <img src="assets/logo.jpg" alt="Casa de Lídia">
+            <p>Equipando igrejas brasileiras com tecnologia para criar células transformadoras. Inspirado em Lídia de Tiatira (Atos 16:14-15).</p>
+          </div>
+          <div class="footer-links">
+            <h4>Produto</h4>
+            <a href="#como-funciona">Como Funciona</a>
+            <a href="#recursos">Recursos</a>
+            <a href="#planos">Planos</a>
+            <a href="#faq">FAQ</a>
+          </div>
+          <div class="footer-links">
+            <h4>Empresa</h4>
+            <a href="#">Sobre Nós</a>
+            <a href="#">Blog</a>
+            <a href="#">Contato</a>
+            <a href="#">Parcerias</a>
+          </div>
+          <div class="footer-links">
+            <h4>Legal</h4>
+            <a href="privacy.html">Privacidade</a>
+            <a href="terms.html">Termos de Uso</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Casa de Lídia. Todos os direitos reservados.</p>
+          <p>Feito com ❤️ para igrejas brasileiras</p>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
