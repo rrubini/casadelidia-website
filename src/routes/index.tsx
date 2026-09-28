@@ -2,6 +2,10 @@ import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Switch } from "@/components/ui/switch";
 import roteiroMockup from "@/assets/roteiro-mockup.jpg";
+import logo from "@/assets/casadelidia-retangular-header.png";
+
+// Preços ocultos por enquanto: o site mostra só o teste grátis. Mude para true para reexibir.
+const SHOW_PRICING = false;
 
 const REGISTER_URL = "https://forms.gle/fWRDsymoN5dMZFkb9";
 const LOGIN_URL = "https://app.casadelidia.com.br";
@@ -145,9 +149,7 @@ function PricingCard() {
       <h3 className="mt-7 text-xl">Plano {plan.label}</h3>
       <p className="mt-3 font-display text-5xl font-semibold">
         {plan.price}
-        <span className="font-sans text-base font-medium text-muted-foreground">
-          {plan.period}
-        </span>
+        <span className="font-sans text-base font-medium text-muted-foreground">{plan.period}</span>
       </p>
       <p className="mt-3 min-h-10 text-sm text-muted-foreground">{plan.note}</p>
 
@@ -194,16 +196,14 @@ function Landing() {
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-5 py-3.5 sm:px-8">
-          <a href="#topo" className="flex items-center gap-2.5">
-            <span
-              aria-hidden="true"
-              className="flex size-9 items-center justify-center rounded-full bg-primary font-display text-lg text-primary-foreground"
-            >
-              L
-            </span>
-            <span className="font-display text-lg font-semibold sm:text-xl">
-              Casa de Lídia
-            </span>
+          <a href="#topo" className="flex shrink-0 items-center">
+            <img
+              src={logo}
+              width={447}
+              height={120}
+              alt="Casa de Lídia"
+              className="h-9 w-auto sm:h-10"
+            />
           </a>
 
           <nav
@@ -213,9 +213,11 @@ function Landing() {
             <a href="#como-funciona" className="hover:text-accent-foreground/80">
               Como funciona
             </a>
-            <a href="#precos" className="hover:text-accent-foreground/80">
-              Preços
-            </a>
+            {SHOW_PRICING ? (
+              <a href="#precos" className="hover:text-accent-foreground/80">
+                Preços
+              </a>
+            ) : null}
             <a href="#duvidas" className="hover:text-accent-foreground/80">
               Dúvidas
             </a>
@@ -248,9 +250,9 @@ function Landing() {
                 Do culto de domingo ao roteiro da célula em 1 minuto
               </h1>
               <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
-                Você cola o link do culto no YouTube e recebe um roteiro pronto para a
-                reunião da semana: quebra-gelo, leitura bíblica, perguntas e aplicação —
-                tudo a partir do que foi pregado na sua igreja.
+                Você cola o link do culto no YouTube e recebe um roteiro pronto para a reunião da
+                semana: quebra-gelo, leitura bíblica, perguntas e aplicação — tudo a partir do que
+                foi pregado na sua igreja.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <PrimaryButton href={REGISTER_URL}>Começar teste grátis</PrimaryButton>
@@ -284,13 +286,12 @@ function Landing() {
             </h2>
             <div className="space-y-4 text-lg leading-relaxed text-primary-foreground/85">
               <p>
-                Você passa horas montando o roteiro da célula: escolhe o texto, pensa nas
-                perguntas, escreve a aplicação — geralmente na véspera da reunião.
+                Você passa horas montando o roteiro da célula: escolhe o texto, pensa nas perguntas,
+                escreve a aplicação — geralmente na véspera da reunião.
               </p>
               <p>
-                E quando recorre a um material pronto da internet, ele não conversa com o
-                que a igreja ouviu no domingo. A célula acaba puxando para um lado e o
-                púlpito para outro.
+                E quando recorre a um material pronto da internet, ele não conversa com o que a
+                igreja ouviu no domingo. A célula acaba puxando para um lado e o púlpito para outro.
               </p>
             </div>
           </div>
@@ -324,10 +325,7 @@ function Landing() {
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((f) => (
               <div key={f.title} className="surface-card p-7">
-                <span
-                  aria-hidden="true"
-                  className="block size-2.5 rounded-full bg-accent"
-                />
+                <span aria-hidden="true" className="block size-2.5 rounded-full bg-accent" />
                 <h3 className="mt-4 text-lg">{f.title}</h3>
                 <p className="mt-2 leading-relaxed text-muted-foreground">{f.text}</p>
               </div>
@@ -342,48 +340,49 @@ function Landing() {
             <blockquote className="mt-5 font-display text-2xl leading-snug sm:text-3xl">
               “O Senhor abriu o seu coração para atender às coisas que Paulo dizia.”
             </blockquote>
-            <p className="mt-3 text-sm font-semibold text-gold-foreground">
-              Atos 16:14
-            </p>
+            <p className="mt-3 text-sm font-semibold text-gold-foreground">Atos 16:14</p>
             <p className="mt-6 leading-relaxed text-muted-foreground">
-              Lídia de Tiatira abriu o coração ao Senhor e, logo depois, abriu a casa
-              para a igreja. É exatamente isso que uma célula faz toda semana: alguém
-              abre a porta, e a Palavra encontra pessoas em volta da mesa.
+              Lídia de Tiatira abriu o coração ao Senhor e, logo depois, abriu a casa para a igreja.
+              É exatamente isso que uma célula faz toda semana: alguém abre a porta, e a Palavra
+              encontra pessoas em volta da mesa.
             </p>
           </div>
         </Section>
 
         {/* Preços */}
-        <Section id="precos" className="bg-muted/60">
-          <div className="text-center">
-            <p className="eyebrow">Preços</p>
-            <h2 className="mt-3 text-3xl leading-tight sm:text-4xl">
-              Um plano só, com 30 roteiros por mês
-            </h2>
-            <p className="mt-4 text-lg text-muted-foreground">
-              Escolha como prefere pagar. Pix, cartão ou boleto.
-            </p>
-            <p className="mt-5 inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-3xl bg-gold px-5 py-2 text-sm font-semibold text-gold-foreground">
-              Oferta de lançamento: R$ 19,90/mês nos 3 primeiros meses para os 50
-              primeiros assinantes
-              <span>
-                <span className="hidden sm:inline">· </span>Cupom{" "}
-                <span className="rounded-md bg-background/70 px-2 py-0.5 font-mono tracking-wider">
-                  {LAUNCH_COUPON}
+        {SHOW_PRICING ? (
+          <Section id="precos" className="bg-muted/60">
+            <div className="text-center">
+              <p className="eyebrow">Preços</p>
+              <h2 className="mt-3 text-3xl leading-tight sm:text-4xl">
+                Um plano só, com 30 roteiros por mês
+              </h2>
+              <p className="mt-4 text-lg text-muted-foreground">
+                Escolha como prefere pagar. Pix, cartão ou boleto.
+              </p>
+              <p className="mt-5 inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-3xl bg-gold px-5 py-2 text-sm font-semibold text-gold-foreground">
+                Oferta de lançamento: R$ 19,90/mês nos 3 primeiros meses para os 50 primeiros
+                assinantes
+                <span>
+                  <span className="hidden sm:inline">· </span>Cupom{" "}
+                  <span className="rounded-md bg-background/70 px-2 py-0.5 font-mono tracking-wider">
+                    {LAUNCH_COUPON}
+                  </span>
                 </span>
-              </span>
+              </p>
+            </div>
+
+            <PricingCard />
+
+            <p className="mt-6 text-center text-sm text-muted-foreground">
+              Os dois planos começam com 30 dias de teste grátis e 5 roteiros.
             </p>
-          </div>
-
-          <PricingCard />
-
-          <p className="mt-6 text-center text-sm text-muted-foreground">
-            Os dois planos começam com 30 dias de teste grátis e 5 roteiros.
-          </p>
-        </Section>
+          </Section>
+        ) : null}
 
         {/* FAQ */}
-        <Section id="duvidas">
+        {/* Sem a seção de preços, o fundo alternado passa para cá */}
+        <Section id="duvidas" className={SHOW_PRICING ? "" : "bg-muted/60"}>
           <p className="eyebrow">Dúvidas</p>
           <h2 className="mt-3 text-3xl leading-tight sm:text-4xl">
             Perguntas que a gente sempre recebe
@@ -413,8 +412,8 @@ function Landing() {
               O próximo domingo já pode virar roteiro
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-primary-foreground/85">
-              Teste por 30 dias, com 5 roteiros, e veja como a sua célula fica alinhada
-              com o que foi pregado.
+              Teste por 30 dias, com 5 roteiros, e veja como a sua célula fica alinhada com o que
+              foi pregado.
             </p>
             <PrimaryButton href={REGISTER_URL} className="mt-8">
               Começar teste grátis
@@ -428,14 +427,10 @@ function Landing() {
           <div className="max-w-sm">
             <p className="font-display text-xl font-semibold">Casa de Lídia</p>
             <p className="mt-3 text-sm italic leading-relaxed text-muted-foreground">
-              “O Senhor abriu o seu coração para atender às coisas que Paulo dizia.”
-              — Atos 16:14
+              “O Senhor abriu o seu coração para atender às coisas que Paulo dizia.” — Atos 16:14
             </p>
           </div>
-          <nav
-            aria-label="Links do rodapé"
-            className="flex flex-col gap-3 text-sm font-medium"
-          >
+          <nav aria-label="Links do rodapé" className="flex flex-col gap-3 text-sm font-medium">
             <a href={TERMS_URL} className="hover:underline">
               Termos de Uso
             </a>
