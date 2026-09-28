@@ -67,3 +67,12 @@ node_modules/
 
 # dataconnect generated files
 .dataconnect
+
+# Build (Vite / TanStack Start)
+dist
+dist-ssr
+.output
+.vinxi
+.tanstack/**
+.nitro
+*.local
