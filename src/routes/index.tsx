@@ -52,7 +52,7 @@ function PrimaryButton({
   return (
     <a
       href={href}
-      className={`inline-flex items-center justify-center rounded-full bg-accent px-7 py-3.5 text-base font-semibold text-accent-foreground shadow-[var(--shadow-soft)] transition-transform duration-200 hover:-translate-y-0.5 hover:brightness-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${className}`}
+      className={`inline-flex items-center justify-center whitespace-nowrap rounded-full bg-accent px-7 py-3.5 text-base font-semibold text-accent-foreground shadow-[var(--shadow-soft)] transition-transform duration-200 hover:-translate-y-0.5 hover:brightness-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${className}`}
     >
       {children}
     </a>
@@ -256,9 +256,10 @@ function Landing() {
                 semana: quebra-gelo, leitura bíblica, perguntas e aplicação — tudo a partir do que
                 foi pregado na sua igreja.
               </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              {/* Sem espaço para os dois lado a lado, o texto desce inteiro para a linha de baixo */}
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5">
                 <PrimaryButton href={REGISTER_URL}>Começar teste grátis</PrimaryButton>
-                <span className="text-sm text-muted-foreground">
+                <span className="whitespace-nowrap text-sm text-muted-foreground">
                   30 dias grátis · 5 roteiros · sem cartão obrigatório
                 </span>
               </div>
