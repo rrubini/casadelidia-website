@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Switch } from "@/components/ui/switch";
+import { LegalDialog } from "@/components/legal/legal-dialog";
+import { CONTACT_EMAIL } from "@/lib/site";
 import roteiroMockup from "@/assets/roteiro-mockup.jpg";
 import logo from "@/assets/casadelidia-retangular-header.png";
 
@@ -9,9 +11,9 @@ const SHOW_PRICING = false;
 
 const REGISTER_URL = "https://forms.gle/fWRDsymoN5dMZFkb9";
 const LOGIN_URL = "https://app.casadelidia.com.br";
-const TERMS_URL = "/terms.html";
-const PRIVACY_URL = "/privacy.html";
-const CONTACT_EMAIL = "contato@casadelidia.com.br";
+// Abrem a modal de Termos/Política (LegalDialog).
+const TERMS_URL = "#termos";
+const PRIVACY_URL = "#privacidade";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -179,11 +181,11 @@ const faqs = [
   },
   {
     q: "Como faço o pagamento?",
-    a: "Pix, cartão ou boleto.",
+    a: "No cartão de crédito, com renovação automática. Você pode cancelar quando quiser e mantém o acesso até o fim do período pago.",
   },
   {
     q: "O que acontece quando o teste acaba?",
-    a: "O teste grátis dura 30 dias e inclui 5 roteiros. Ao fim, você escolhe entre o plano mensal ou o anual para continuar. Nada é cobrado automaticamente sem a sua escolha.",
+    a: "O teste grátis dura 30 dias e inclui 5 roteiros. Ao fim, você decide se quer assinar para continuar. Nada é cobrado automaticamente sem a sua escolha.",
   },
   {
     q: "Meus dados estão seguros?",
@@ -446,6 +448,8 @@ function Landing() {
           © {new Date().getFullYear()} Casa de Lídia. Todos os direitos reservados.
         </p>
       </footer>
+
+      <LegalDialog />
     </div>
   );
 }
