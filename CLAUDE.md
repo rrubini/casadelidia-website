@@ -1,0 +1,1 @@
+Antes de mexer em preço, teste grátis, PRIMEIROS50, pagamento ou vigia, leia D:\pessoal\Casa de Lidia\casadelidia-docs\SPEC-CasaDeLidia.md
