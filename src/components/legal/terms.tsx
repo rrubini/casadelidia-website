@@ -4,13 +4,20 @@ import { LegalHeader, Summary } from "./legal-layout";
 export function TermsContent() {
   return (
     <article className="legal-prose">
-      <LegalHeader title="Termos de Uso" updated="29 de setembro de 2026" version="2.0" />
+      <LegalHeader title="Termos de Uso" updated="29 de setembro de 2026" version="2.1" />
 
       <Summary>
         <li>Teste grátis de 30 dias com até 5 roteiros, sem cartão.</li>
         <li>Um plano com até 30 roteiros por mês.</li>
         <li>Pagamento por cartão de crédito, processado pela Asaas, com renovação automática.</li>
-        <li>Você cancela quando quiser e tem 7 dias de arrependimento na primeira contratação.</li>
+        <li>
+          Você cancela quando quiser, pelo app. Em até 7 dias depois de assinar, pode desistir e
+          receber tudo de volta.
+        </li>
+        <li>
+          No Anual, se cancelar depois dos 7 dias, cobramos cada mês já iniciado pelo preço do
+          Mensal e devolvemos o restante.
+        </li>
         <li>O roteiro é gerado por IA: revise antes de compartilhar.</li>
       </Summary>
 
@@ -109,22 +116,43 @@ export function TermsContent() {
         afetam o período que você já pagou.
       </p>
 
-      <h3>5. Cancelamento e reembolso</h3>
+      <h3>5. Cancelamento, desistência e reembolso</h3>
+      <h4>5.1 Cancelamento</h4>
       <ul>
         <li>
-          Você pode cancelar a qualquer momento escrevendo para{" "}
+          Você pode cancelar a qualquer momento no app, em <strong>Minha assinatura</strong> (no
+          menu da sua conta ou em Configurações), ou escrevendo para{" "}
           <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
         </li>
         <li>
           O cancelamento interrompe as próximas cobranças, e você mantém o acesso até o fim do
           período já pago.
         </li>
+      </ul>
+      <h4>5.2 Desistência em até 7 dias</h4>
+      <p>
+        Em até 7 dias depois de assinar um plano, você pode desistir e receber de volta todo o valor
+        pago, conforme o art. 49 do Código de Defesa do Consumidor. Isso vale para cada nova
+        assinatura, inclusive quando você troca de plano ou volta a assinar; as renovações
+        automáticas não abrem um novo prazo. A desistência pode ser feita no próprio app, em Minha
+        assinatura, ou por e-mail. O acesso ao plano termina quando a desistência é feita, e você
+        recebe a confirmação por e-mail. O valor volta no mesmo cartão, e o prazo para aparecer na
+        fatura depende da operadora.
+      </p>
+      <h4>5.3 Depois dos 7 dias</h4>
+      <ul>
         <li>
-          Direito de arrependimento: em até 7 dias após a primeira contratação de um plano, você
-          pode desistir e receber o valor pago de volta, conforme o art. 49 do Código de Defesa do
-          Consumidor.
+          <strong>Plano Mensal:</strong> não há reembolso do mês já pago. Você cancela e mantém o
+          acesso até o fim dele.
         </li>
-        <li>Fora desse prazo, não há reembolso proporcional de período já pago.</li>
+        <li>
+          <strong>Plano Anual:</strong> o preço menor do Anual pressupõe o uso pelo ano inteiro. Se
+          você cancelar depois dos 7 dias, peça o reembolso por e-mail em{" "}
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Cobramos cada mês já iniciado
+          pelo preço do plano Mensal e devolvemos o restante do valor pago. O acesso continua até o
+          fim do último mês cobrado, e a assinatura não é renovada. Se o valor dos meses usados
+          chegar ao valor pago, não há devolução.
+        </li>
       </ul>
 
       <h3>6. Uso aceitável</h3>
