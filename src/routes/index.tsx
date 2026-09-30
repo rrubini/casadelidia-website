@@ -245,7 +245,8 @@ function Landing() {
       <main id="topo">
         {/* Abertura */}
         <Section className="pt-12 md:pt-20">
-          <div className="grid items-center gap-12 md:grid-cols-2 md:gap-14">
+          {/* Coluna do texto um pouco mais larga para o botão e o "30 dias grátis..." caberem lado a lado */}
+          <div className="grid items-center gap-12 md:grid-cols-[1.15fr_1fr] md:gap-14">
             <div>
               <p className="eyebrow">Para líderes de célula</p>
               <h1 className="mt-4 text-4xl leading-[1.08] sm:text-5xl md:text-6xl">
@@ -257,7 +258,7 @@ function Landing() {
                 foi pregado na sua igreja.
               </p>
               {/* Sem espaço para os dois lado a lado, o texto desce inteiro para a linha de baixo */}
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4">
                 <PrimaryButton href={REGISTER_URL}>Começar teste grátis</PrimaryButton>
                 <span className="whitespace-nowrap text-sm text-muted-foreground">
                   30 dias grátis · 5 roteiros · sem cartão obrigatório
