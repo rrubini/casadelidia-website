@@ -14,7 +14,9 @@ export default defineConfig({
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
     server: { entry: "server" },
-    // Só a home é gerada; privacy.html/terms.html/404.html já são estáticos em public/.
+    // A home e as páginas só com o texto legal (lidas pelo app); privacy.html/terms.html/404.html
+    // já são estáticos em public/.
     prerender: { enabled: true, crawlLinks: false },
+    pages: [{ path: "/legal/privacidade" }, { path: "/legal/termos" }],
   },
 });
