@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Switch } from "@/components/ui/switch";
+import { Skeleton } from "@/components/ui/skeleton";
 import { LegalDialog } from "@/components/legal/legal-dialog";
 import { CONTACT_EMAIL } from "@/lib/site";
+import { formatarReais, type ConfigPublica, type PlanoId } from "@/lib/config-publica";
+import { useConfigPublica } from "@/hooks/use-config-publica";
 import roteiroMockup from "@/assets/roteiro-mockup.jpg";
 import logo from "@/assets/casadelidia-retangular-header.png";
 
 // Preços ocultos por enquanto: o site mostra só o teste grátis. Mude para true para reexibir.
+// Os valores da seção vêm do app (/api/public/config), nunca do código do site.
 const SHOW_PRICING = false;
 
 const REGISTER_URL = "https://forms.gle/fWRDsymoN5dMZFkb9";
@@ -120,44 +124,162 @@ const features = [
   },
 ];
 
-const plans = {
-  mensal: {
-    label: "Mensal",
-    price: "R$ 29,99",
-    period: "/mês",
-    note: "Cobrança mensal. Cancele quando quiser.",
-  },
-  anual: {
-    label: "Anual",
-    price: "R$ 24,99",
-    period: "/mês",
-    note: "R$\u00a0299,90 cobrados uma vez por ano — 2 meses grátis",
-  },
+// Preços: todos os números e condições vêm de useConfigPublica(). Nada de valor fixo aqui.
+const NOME_DO_PLANO: Record<PlanoId, string> = { mensal: "Mensal", anual: "Anual" };
+const PERIODO_DO_PLANO: Record<PlanoId, string> = { mensal: "/mês", anual: "/ano" };
+const NOME_DA_FORMA_DE_PAGAMENTO: Record<string, string> = {
+  cartao_de_credito: "cartão de crédito",
 };
 
-const LAUNCH_COUPON = "PRIMEIROS50";
+function plural(n: number, um: string, varios: string) {
+  return `${n} ${n === 1 ? um : varios}`;
+}
 
-function PricingCard() {
+function frasePagamento(formas: string[]) {
+  if (formas.length === 0) return null;
+  const nomes = formas.map((f) => NOME_DA_FORMA_DE_PAGAMENTO[f] ?? f.replaceAll("_", " "));
+  const lista =
+    nomes.length < 2 ? nomes.join("") : `${nomes.slice(0, -1).join(", ")} ou ${nomes.at(-1)}`;
+  const soCartao = formas.every((f) => f === "cartao_de_credito");
+  return `Pagamento com ${lista}${soCartao ? ", com renovação automática" : ""}.`;
+}
+
+function fraseTeste(teste: ConfigPublica["teste_gratis"]) {
+  const dias = plural(teste.dias, "dia", "dias");
+  const roteiros = plural(teste.roteiros, "roteiro", "roteiros");
+  return `Todo plano começa com ${dias} de teste grátis e ${roteiros}${teste.exige_cartao ? "" : ", sem cartão"}.`;
+}
+
+function OfertaDeLancamento({ oferta }: { oferta: ConfigPublica["primeiros50"] }) {
+  const plano = NOME_DO_PLANO[oferta.plano] ?? oferta.plano;
+  const periodo = PERIODO_DO_PLANO[oferta.plano] ?? "";
+  const restam = oferta.vagas_restantes === 1 ? "Resta" : "Restam";
+
+  return (
+    <>
+      <p className="mt-5 inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-3xl bg-gold px-5 py-2 text-sm font-semibold text-gold-foreground">
+        Oferta de lançamento: {formatarReais(oferta.preco)}
+        {periodo} no plano {plano}, com preço travado enquanto a assinatura estiver ativa
+        <span>
+          <span className="hidden sm:inline">· </span>
+          {restam} {oferta.vagas_restantes} de {oferta.vagas_total} vagas
+        </span>
+      </p>
+      <p className="mt-2 text-sm text-muted-foreground">
+        O desconto entra sozinho no checkout do plano {plano}, sem cupom para digitar.
+      </p>
+    </>
+  );
+}
+
+function PricingCard({
+  config,
+  erro,
+  tentarDeNovo,
+}: {
+  config: ConfigPublica | undefined;
+  erro: boolean;
+  tentarDeNovo: () => void;
+}) {
   const [annual, setAnnual] = useState(false);
-  const plan = annual ? plans.anual : plans.mensal;
+
+  let corpo: React.ReactNode;
+  if (config) {
+    const { mensal, anual } = config.planos;
+    const id: PlanoId = annual ? "anual" : "mensal";
+    corpo = (
+      <>
+        <label className="flex cursor-pointer items-center justify-center gap-3 text-sm font-semibold">
+          <Switch checked={annual} onCheckedChange={setAnnual} />
+          Ativar desconto do plano anual
+        </label>
+
+        <div className="mt-7 flex flex-wrap items-center justify-center gap-2">
+          <h3 className="text-xl">Plano {NOME_DO_PLANO[id]}</h3>
+          {annual && anual.meses_gratis > 0 ? (
+            <span className="rounded-full bg-gold px-2.5 py-0.5 text-xs font-semibold text-gold-foreground">
+              {plural(anual.meses_gratis, "mês grátis", "meses grátis")}
+            </span>
+          ) : null}
+        </div>
+        <p className="mt-3 font-display text-4xl font-semibold sm:text-5xl">
+          {formatarReais(annual ? anual.preco : mensal.preco)}
+          <span className="font-sans text-base font-medium text-muted-foreground">
+            {PERIODO_DO_PLANO[id]}
+          </span>
+        </p>
+        <p className="mt-3 min-h-10 text-sm text-muted-foreground">
+          {annual
+            ? `Cobrado uma vez por ano. Equivale a ${formatarReais(anual.equivale_por_mes)} por mês.`
+            : "Cobrado todo mês. Cancele quando quiser."}
+        </p>
+      </>
+    );
+  } else if (erro) {
+    corpo = (
+      <p className="text-sm text-muted-foreground">
+        Não deu para carregar os preços agora.{" "}
+        <button
+          type="button"
+          onClick={tentarDeNovo}
+          className="font-semibold text-foreground underline underline-offset-4 hover:text-accent-foreground/80"
+        >
+          Tentar de novo
+        </button>
+      </p>
+    );
+  } else {
+    corpo = (
+      <div role="status">
+        <span className="sr-only">Carregando preços…</span>
+        <Skeleton aria-hidden="true" className="mx-auto h-6 w-56 max-w-full" />
+        <Skeleton aria-hidden="true" className="mx-auto mt-7 h-7 w-36" />
+        <Skeleton aria-hidden="true" className="mx-auto mt-3 h-12 w-48 max-w-full" />
+        <Skeleton aria-hidden="true" className="mx-auto mt-3 h-10 w-full" />
+      </div>
+    );
+  }
 
   return (
     <div className="surface-card mx-auto mt-10 flex max-w-md flex-col p-8 text-center">
-      <label className="flex cursor-pointer items-center justify-center gap-3 text-sm font-semibold">
-        <Switch checked={annual} onCheckedChange={setAnnual} />
-        Ativar desconto do plano anual
-      </label>
-
-      <h3 className="mt-7 text-xl">Plano {plan.label}</h3>
-      <p className="mt-3 font-display text-5xl font-semibold">
-        {plan.price}
-        <span className="font-sans text-base font-medium text-muted-foreground">{plan.period}</span>
-      </p>
-      <p className="mt-3 min-h-10 text-sm text-muted-foreground">{plan.note}</p>
+      {corpo}
 
       <PrimaryButton href={REGISTER_URL} className="mt-6 w-full">
         Começar teste grátis
       </PrimaryButton>
+    </div>
+  );
+}
+
+function Precos() {
+  const { data: config, isError, refetch } = useConfigPublica();
+  // Se uma nova busca falhar depois de já ter dados, continua mostrando os dados.
+  const carregando = !config && !isError;
+  const pagamento = config ? frasePagamento(config.pagamento) : null;
+
+  return (
+    <div aria-busy={carregando}>
+      <div className="text-center">
+        <p className="eyebrow">Preços</p>
+        <h2 className="mt-3 text-3xl leading-tight sm:text-4xl">
+          {config
+            ? `Um plano só, com ${plural(config.planos.mensal.roteiros_por_mes, "roteiro", "roteiros")} por mês`
+            : "Um plano só"}
+        </h2>
+        {carregando ? (
+          <Skeleton aria-hidden="true" className="mx-auto mt-5 h-6 w-80 max-w-full" />
+        ) : null}
+        {pagamento ? <p className="mt-4 text-lg text-muted-foreground">{pagamento}</p> : null}
+        {config?.primeiros50.disponivel ? <OfertaDeLancamento oferta={config.primeiros50} /> : null}
+      </div>
+
+      <PricingCard config={config} erro={isError && !config} tentarDeNovo={() => void refetch()} />
+
+      {config ? (
+        <p className="mt-6 text-center text-sm text-muted-foreground">
+          {fraseTeste(config.teste_gratis)}
+        </p>
+      ) : null}
     </div>
   );
 }
@@ -356,31 +478,7 @@ function Landing() {
         {/* Preços */}
         {SHOW_PRICING ? (
           <Section id="precos" className="bg-muted/60">
-            <div className="text-center">
-              <p className="eyebrow">Preços</p>
-              <h2 className="mt-3 text-3xl leading-tight sm:text-4xl">
-                Um plano só, com 30 roteiros por mês
-              </h2>
-              <p className="mt-4 text-lg text-muted-foreground">
-                Escolha como prefere pagar. Pix, cartão ou boleto.
-              </p>
-              <p className="mt-5 inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-3xl bg-gold px-5 py-2 text-sm font-semibold text-gold-foreground">
-                Oferta de lançamento: R$ 19,90/mês nos 3 primeiros meses para os 50 primeiros
-                assinantes
-                <span>
-                  <span className="hidden sm:inline">· </span>Cupom{" "}
-                  <span className="rounded-md bg-background/70 px-2 py-0.5 font-mono tracking-wider">
-                    {LAUNCH_COUPON}
-                  </span>
-                </span>
-              </p>
-            </div>
-
-            <PricingCard />
-
-            <p className="mt-6 text-center text-sm text-muted-foreground">
-              Os dois planos começam com 30 dias de teste grátis e 5 roteiros.
-            </p>
+            <Precos />
           </Section>
         ) : null}
 
