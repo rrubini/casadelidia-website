@@ -11,7 +11,7 @@ import logo from "@/assets/casadelidia-retangular-header.png";
 
 // Preços ocultos por enquanto: o site mostra só o teste grátis. Mude para true para reexibir.
 // Os valores da seção vêm do app (/api/public/config), nunca do código do site.
-const SHOW_PRICING = false;
+const SHOW_PRICING = true;
 
 const REGISTER_URL = "https://forms.gle/fWRDsymoN5dMZFkb9";
 const LOGIN_URL = "https://app.casadelidia.com.br";
