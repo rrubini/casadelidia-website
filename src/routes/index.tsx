@@ -17,7 +17,7 @@ import printPasso3 from "@/assets/como-funciona-3.webp";
 // Os valores da seção vêm do app (/api/public/config), nunca do código do site.
 const SHOW_PRICING = true;
 
-const REGISTER_URL = "https://forms.gle/fWRDsymoN5dMZFkb9";
+const REGISTER_URL = "https://app.casadelidia.com.br/auth/register";
 const LOGIN_URL = "https://app.casadelidia.com.br";
 // Abrem a modal de Termos/Política (LegalDialog).
 const TERMS_URL = "#termos";
