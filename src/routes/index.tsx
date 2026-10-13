@@ -3,11 +3,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Switch } from "@/components/ui/switch";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LegalDialog } from "@/components/legal/legal-dialog";
+import { DemoVideo } from "@/components/demo-video";
 import { CONTACT_EMAIL } from "@/lib/site";
 import { formatarReais, type ConfigPublica, type PlanoId } from "@/lib/config-publica";
 import { useConfigPublica } from "@/hooks/use-config-publica";
 import roteiroMockup from "@/assets/roteiro-mockup.jpg";
 import logo from "@/assets/casadelidia-retangular-header.png";
+import printPasso1 from "@/assets/como-funciona-1.webp";
+import printPasso2 from "@/assets/como-funciona-2.webp";
+import printPasso3 from "@/assets/como-funciona-3.webp";
 
 // Preços ocultos por enquanto: o site mostra só o teste grátis. Mude para true para reexibir.
 // Os valores da seção vêm do app (/api/public/config), nunca do código do site.
@@ -26,7 +30,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Cole o link do culto no YouTube e receba um roteiro pronto para a reunião de célula: quebra-gelo, leitura bíblica, perguntas e aplicação. Teste grátis de 30 dias.",
+          "O culto de domingo vira um roteiro pronto para a reunião de célula, com quebra-gelo, perguntas e aplicação, no modelo e com a logo da sua igreja. Teste grátis de 30 dias.",
       },
       {
         property: "og:title",
@@ -35,7 +39,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "Cole o link do culto no YouTube e receba um roteiro pronto para a célula, editável e exportável em Word.",
+          "O culto de domingo vira um roteiro pronto para a célula, no modelo da sua igreja, editável e exportável em Word e PDF.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -79,21 +83,28 @@ function Section({
   );
 }
 
+// Prints do app no celular (780x1200), um por passo.
 const steps = [
   {
     n: "1",
-    title: "Cole o link do culto",
-    text: "Marque onde começa e onde termina a pregação. Só isso.",
+    title: "Escolha o culto",
+    text: "O culto de domingo aparece sozinho no app quando termina no canal da igreja. É só tocar nele.",
+    img: printPasso1,
+    alt: "Tela Novo roteiro do app com os últimos cultos do canal",
   },
   {
     n: "2",
     title: "A IA escreve o roteiro",
-    text: "O material sai do que foi pregado no domingo, não de um texto genérico.",
+    text: "O roteiro sai do que foi pregado, no modelo da sua igreja e com a logo dela.",
+    img: printPasso2,
+    alt: "Roteiro gerado pela IA no celular",
   },
   {
     n: "3",
-    title: "Revise e baixe em Word",
-    text: "Ajuste o que quiser e mande para os líderes de célula.",
+    title: "Revise e envie",
+    text: "Ajuste o que quiser, baixe em Word ou PDF e mande para os líderes pelo WhatsApp.",
+    img: printPasso3,
+    alt: "Menu Exportar com Word, PDF e envio aos líderes",
   },
 ];
 
@@ -334,6 +345,10 @@ function Landing() {
             aria-label="Navegação principal"
             className="hidden items-center gap-7 text-sm font-medium md:flex"
           >
+            {/* Só a partir de lg: em md os quatro links não cabem ao lado do logo e dos botões */}
+            <a href="#demonstracao" className="hidden hover:text-accent-foreground/80 lg:block">
+              Demonstração
+            </a>
             <a href="#como-funciona" className="hover:text-accent-foreground/80">
               Como funciona
             </a>
@@ -375,9 +390,9 @@ function Landing() {
                 Do culto de domingo ao roteiro da célula em 1 minuto
               </h1>
               <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
-                Você cola o link do culto no YouTube e recebe um roteiro pronto para a reunião da
-                semana: quebra-gelo, leitura bíblica, perguntas e aplicação — tudo a partir do que
-                foi pregado na sua igreja.
+                O culto de domingo aparece sozinho no app (ou você cola o link do YouTube) e vira um
+                roteiro pronto para a reunião da semana: quebra-gelo, leitura bíblica, perguntas e
+                aplicação — tudo a partir do que foi pregado na sua igreja.
               </p>
               {/* Sem espaço para os dois lado a lado, o texto desce inteiro para a linha de baixo */}
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4">
@@ -388,7 +403,8 @@ function Landing() {
               </div>
             </div>
 
-            <div className="relative">
+            {/* No celular fica só o vídeo da demonstração logo abaixo, sem duas imagens altas seguidas */}
+            <div className="relative hidden md:block">
               <div
                 aria-hidden="true"
                 className="absolute -inset-4 -z-10 rounded-[2.5rem] bg-accent/15 blur-2xl"
@@ -402,6 +418,12 @@ function Landing() {
               />
             </div>
           </div>
+        </Section>
+
+        {/* Demonstração em vídeo */}
+        {/* md:pt-0 porque o md:py-24 do Section venceria o pt-0 sozinho */}
+        <Section id="demonstracao" className="pt-0 md:pt-0">
+          <DemoVideo />
         </Section>
 
         {/* O problema */}
@@ -431,12 +453,22 @@ function Landing() {
           </h2>
           <ol className="mt-10 grid gap-5 md:grid-cols-3">
             {steps.map((s) => (
-              <li key={s.n} className="surface-card p-7">
+              <li key={s.n} className="surface-card flex flex-col p-7">
                 <span className="flex size-11 items-center justify-center rounded-full bg-gold font-display text-xl font-semibold text-gold-foreground">
                   {s.n}
                 </span>
                 <h3 className="mt-5 text-xl">{s.title}</h3>
-                <p className="mt-2 leading-relaxed text-muted-foreground">{s.text}</p>
+                {/* mb-6 garante o respiro quando o mt-auto do print (que alinha os três no md) é zero */}
+                <p className="mt-2 mb-6 leading-relaxed text-muted-foreground">{s.text}</p>
+                <img
+                  src={s.img}
+                  alt={s.alt}
+                  width={780}
+                  height={1200}
+                  loading="lazy"
+                  decoding="async"
+                  className="mx-auto mt-auto w-full max-w-[260px] rounded-[1.5rem] border border-border shadow-[var(--shadow-soft)] md:max-w-none"
+                />
               </li>
             ))}
           </ol>

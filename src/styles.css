@@ -90,6 +90,11 @@
     border-color: var(--color-border);
   }
 
+  /* Os links do menu (#demonstracao, #precos...) param abaixo do cabeçalho fixo */
+  html {
+    scroll-padding-top: 5.5rem;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
