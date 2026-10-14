@@ -7,7 +7,6 @@ import { DemoVideo } from "@/components/demo-video";
 import { CONTACT_EMAIL } from "@/lib/site";
 import { formatarReais, type ConfigPublica, type PlanoId } from "@/lib/config-publica";
 import { useConfigPublica } from "@/hooks/use-config-publica";
-import roteiroMockup from "@/assets/roteiro-mockup.jpg";
 import logo from "@/assets/casadelidia-retangular-header.png";
 import printPasso1 from "@/assets/como-funciona-1.webp";
 import printPasso2 from "@/assets/como-funciona-2.webp";
@@ -97,14 +96,14 @@ const steps = [
     title: "A IA escreve o roteiro",
     text: "O roteiro sai do que foi pregado, no modelo da sua igreja e com a logo dela.",
     img: printPasso2,
-    alt: "Roteiro gerado pela IA no celular",
+    alt: "Roteiro gerado pela IA no celular, com a logo da igreja",
   },
   {
     n: "3",
     title: "Revise e envie",
     text: "Ajuste o que quiser, baixe em Word ou PDF e mande para os líderes pelo WhatsApp.",
     img: printPasso3,
-    alt: "Menu Exportar com Word, PDF e envio aos líderes",
+    alt: "Janela Enviar aos líderes com o botão Abrir no WhatsApp",
   },
 ];
 
@@ -345,10 +344,6 @@ function Landing() {
             aria-label="Navegação principal"
             className="hidden items-center gap-7 text-sm font-medium md:flex"
           >
-            {/* Só a partir de lg: em md os quatro links não cabem ao lado do logo e dos botões */}
-            <a href="#demonstracao" className="hidden hover:text-accent-foreground/80 lg:block">
-              Demonstração
-            </a>
             <a href="#como-funciona" className="hover:text-accent-foreground/80">
               Como funciona
             </a>
@@ -403,27 +398,15 @@ function Landing() {
               </div>
             </div>
 
-            {/* No celular fica só o vídeo da demonstração logo abaixo, sem duas imagens altas seguidas */}
-            <div className="relative hidden md:block">
+            {/* O celular navegando até o roteiro pronto: o pôster e o último quadro são o próprio roteiro */}
+            <div className="relative">
               <div
                 aria-hidden="true"
                 className="absolute -inset-4 -z-10 rounded-[2.5rem] bg-accent/15 blur-2xl"
               />
-              <img
-                src={roteiroMockup}
-                width={1024}
-                height={1280}
-                alt="Exemplo de roteiro de célula com as seções quebra-gelo, leitura bíblica, perguntas para discussão e aplicação da semana"
-                className="mx-auto w-full max-w-md rounded-[2rem] border border-border shadow-[var(--shadow-lift)]"
-              />
+              <DemoVideo />
             </div>
           </div>
-        </Section>
-
-        {/* Demonstração em vídeo */}
-        {/* md:pt-0 porque o md:py-24 do Section venceria o pt-0 sozinho */}
-        <Section id="demonstracao" className="pt-0 md:pt-0">
-          <DemoVideo />
         </Section>
 
         {/* O problema */}
