@@ -11,7 +11,17 @@ export const Route = createFileRoute("/legal/privacidade")({
     links: [{ rel: "canonical", href: `${SITE_URL}/legal/privacidade/` }],
   }),
   component: () => (
-    <main className="mx-auto max-w-3xl px-5 py-10">
+    // Na página avulsa, o link "#termos" (que no site abre a janela) leva à página da outra política
+    <main
+      className="mx-auto max-w-3xl px-5 py-10"
+      onClickCapture={(e) => {
+        const link = (e.target as HTMLElement).closest('a[href="#termos"]');
+        if (link) {
+          e.preventDefault();
+          window.location.href = "/legal/termos/";
+        }
+      }}
+    >
       <a href="/" className="text-sm font-semibold text-muted-foreground hover:underline">
         ← Casa de Lídia
       </a>

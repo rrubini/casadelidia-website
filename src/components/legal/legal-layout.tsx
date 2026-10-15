@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { COMPANY_CNPJ, COMPANY_NAME, CONTACT_EMAIL } from "@/lib/site";
+import { COMPANY_CNPJ, COMPANY_NAME, COMPANY_REGION, CONTACT_EMAIL } from "@/lib/site";
 
 /**
  * Link de e-mail que o Cloudflare não embaralha. O Cloudflare troca os e-mails do HTML por
@@ -34,7 +34,7 @@ export function LegalHeader({
       {/* Identificação do fornecedor (Decreto 7.962/2013, art. 2º) */}
       <p className="mt-1 text-sm text-muted-foreground">
         {COMPANY_NAME} · <span className="whitespace-nowrap">CNPJ {COMPANY_CNPJ}</span> ·{" "}
-        <EmailLink email={CONTACT_EMAIL} />
+        {COMPANY_REGION} · <EmailLink email={CONTACT_EMAIL} />
       </p>
     </header>
   );

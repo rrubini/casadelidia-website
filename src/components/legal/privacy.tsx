@@ -1,4 +1,10 @@
-import { COMPANY_CNPJ, COMPANY_NAME, CONTACT_EMAIL, PRIVACY_EMAIL } from "@/lib/site";
+import {
+  COMPANY_CNPJ,
+  COMPANY_NAME,
+  COMPANY_REGION,
+  CONTACT_EMAIL,
+  PRIVACY_EMAIL,
+} from "@/lib/site";
 import { EmailLink, LegalHeader, Summary } from "./legal-layout";
 
 export function PrivacyContent() {
@@ -26,9 +32,10 @@ export function PrivacyContent() {
         Esta Política explica como o Casa de Lídia (“nós”) coleta, usa, guarda e protege os seus
         dados pessoais no site casadelidia.com.br e no app app.casadelidia.com.br, de acordo com a
         Lei Geral de Proteção de Dados (LGPD, Lei 13.709/2018). O controlador dos dados tratados no
-        serviço é a {COMPANY_NAME}, inscrita no CNPJ sob o nº {COMPANY_CNPJ}, que oferece o Casa de
-        Lídia. Para falar sobre os seus dados pessoais, use o canal do titular:{" "}
-        <EmailLink email={PRIVACY_EMAIL} />.
+        serviço é a {COMPANY_NAME}, inscrita no CNPJ sob o nº {COMPANY_CNPJ}, com sede em{" "}
+        {COMPANY_REGION}, que oferece o Casa de Lídia, exceto nos dados das células e dos
+        relatórios, em que atuamos como operador de quem tem a conta (seção 1.3). Para falar sobre
+        os seus dados pessoais, use o canal do titular: <EmailLink email={PRIVACY_EMAIL} />.
       </p>
 
       <h3>1. Dados que coletamos</h3>
@@ -77,11 +84,13 @@ export function PrivacyContent() {
         </li>
       </ul>
       <p>
-        Nesses dados, quem decide o que é registrado é você e os líderes da sua igreja; nós os
-        tratamos só para prestar o serviço a você. Pedidos de oração e testemunhos podem conter
-        dados sensíveis de outras pessoas, como informações de saúde ou de fé. No app, eles aparecem
-        só para você, não são enviados aos provedores de IA e não são usados para nenhuma outra
-        finalidade. Oriente os líderes a escrever só o necessário.
+        Nesses dados, quem decide o que é registrado e para quê é você (ou a sua igreja), que atua
+        como controlador; nós os tratamos como operador, só para prestar o serviço e seguindo as
+        suas instruções (LGPD, art. 5º, VI e VII, e art. 39). Cabe ao controlador ter a base legal
+        para registrar esses dados, inclusive os sensíveis (art. 11). Pedidos de oração e
+        testemunhos podem conter dados sensíveis de outras pessoas, como informações de saúde ou de
+        fé. No app, eles aparecem só para você, não são enviados aos provedores de IA e não são
+        usados para nenhuma outra finalidade. Oriente os líderes a escrever só o necessário.
       </p>
       <h4>1.4 Uso e dispositivo</h4>
       <ul>
@@ -90,12 +99,12 @@ export function PrivacyContent() {
       </ul>
       <h4>1.5 Pagamento e nota fiscal</h4>
       <p>
-        Para cobrar o plano e emitir a nota fiscal, pedimos o seu CPF ou CNPJ, um telefone celular,
-        o CEP e o número do endereço. Esses dados ficam na sua conta e são enviados à Asaas, que
-        processa o pagamento e emite a nota fiscal. O número e o código de segurança do cartão são
-        digitados na página de pagamento da Asaas: nós não os recebemos nem guardamos. Ficamos
-        apenas com os identificadores da cobrança, o status da assinatura, o histórico de pagamentos
-        e os dados das notas fiscais emitidas.
+        Para cobrar o plano e emitir a nota fiscal, pedimos o seu CPF ou CNPJ (e, se for CNPJ, a
+        razão social), um telefone celular, o CEP e o número do endereço. Esses dados ficam na sua
+        conta e são enviados à Asaas, que processa o pagamento e emite a nota fiscal. O número e o
+        código de segurança do cartão são digitados na página de pagamento da Asaas: nós não os
+        recebemos nem guardamos. Ficamos apenas com os identificadores da cobrança, o status da
+        assinatura, o histórico de pagamentos e os dados das notas fiscais emitidas.
       </p>
 
       <h3>2. Para que usamos os dados</h3>
@@ -117,7 +126,7 @@ export function PrivacyContent() {
             Cadastrar as células, preparar o envio do roteiro aos líderes e mostrar os relatórios a
             você
           </strong>
-          : execução de contrato.
+          : como operador, em nome de quem tem a conta (seção 1.3).
         </li>
         <li>
           <strong>Cobrar o plano e emitir notas fiscais</strong>: execução de contrato e cumprimento
@@ -258,9 +267,9 @@ export function PrivacyContent() {
 
       <h3>11. Contato</h3>
       <p>
-        Controlador: {COMPANY_NAME}, CNPJ {COMPANY_CNPJ}. Dúvidas, pedidos e reclamações sobre os
-        seus dados pessoais: <EmailLink email={PRIVACY_EMAIL} />. Outros assuntos:{" "}
-        <EmailLink email={CONTACT_EMAIL} />.
+        Controlador: {COMPANY_NAME}, CNPJ {COMPANY_CNPJ}, {COMPANY_REGION}. Dúvidas, pedidos e
+        reclamações sobre os seus dados pessoais: <EmailLink email={PRIVACY_EMAIL} />. Outros
+        assuntos: <EmailLink email={CONTACT_EMAIL} />.
       </p>
       <p>
         Se entender que o tratamento dos seus dados não está de acordo com a lei, você também pode

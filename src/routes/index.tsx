@@ -4,7 +4,7 @@ import { Switch } from "@/components/ui/switch";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LegalDialog } from "@/components/legal/legal-dialog";
 import { DemoVideo } from "@/components/demo-video";
-import { COMPANY_CNPJ, COMPANY_NAME, CONTACT_EMAIL, SITE_URL } from "@/lib/site";
+import { COMPANY_CNPJ, COMPANY_NAME, COMPANY_REGION, CONTACT_EMAIL, SITE_URL } from "@/lib/site";
 import { formatarReais, type ConfigPublica, type PlanoId } from "@/lib/config-publica";
 import { useConfigPublica } from "@/hooks/use-config-publica";
 import logo from "@/assets/casadelidia-retangular-header.png";
@@ -23,9 +23,9 @@ const TERMS_URL = "#termos";
 const PRIVACY_URL = "#privacidade";
 
 // Prévia do link no WhatsApp e nas redes: as URLs precisam ser absolutas.
-// A imagem (public/og.png, 1200x630) foi gerada a partir da logo e do roteiro-mockup.
+// A imagem (public/og.jpg, 1200x630, JPEG leve para o WhatsApp mostrar) foi gerada a partir da logo e do roteiro-mockup.
 const HOME_URL = `${SITE_URL}/`;
-const OG_IMAGE = `${SITE_URL}/og.png`;
+const OG_IMAGE = `${SITE_URL}/og.jpg`;
 const OG_IMAGE_ALT =
   "Casa de Lídia: do culto de domingo ao roteiro da célula em 1 minuto, com um roteiro pronto ao lado";
 
@@ -52,7 +52,7 @@ export const Route = createFileRoute("/")({
       { property: "og:site_name", content: "Casa de Lídia" },
       { property: "og:locale", content: "pt_BR" },
       { property: "og:image", content: OG_IMAGE },
-      { property: "og:image:type", content: "image/png" },
+      { property: "og:image:type", content: "image/jpeg" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { property: "og:image:alt", content: OG_IMAGE_ALT },
@@ -582,7 +582,7 @@ function Landing() {
         <div className="mx-auto mt-10 w-full max-w-6xl space-y-1 text-xs leading-relaxed text-muted-foreground">
           <p>
             Casa de Lídia é um serviço da {COMPANY_NAME} ·{" "}
-            <span className="whitespace-nowrap">CNPJ {COMPANY_CNPJ}</span>
+            <span className="whitespace-nowrap">CNPJ {COMPANY_CNPJ}</span> · {COMPANY_REGION}
           </p>
           <p>© {new Date().getFullYear()} Casa de Lídia. Todos os direitos reservados.</p>
         </div>

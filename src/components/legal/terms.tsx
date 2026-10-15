@@ -1,4 +1,10 @@
-import { COMPANY_CNPJ, COMPANY_NAME, CONTACT_EMAIL, PRIVACY_EMAIL } from "@/lib/site";
+import {
+  COMPANY_CNPJ,
+  COMPANY_NAME,
+  COMPANY_REGION,
+  CONTACT_EMAIL,
+  PRIVACY_EMAIL,
+} from "@/lib/site";
 import { EmailLink, LegalHeader, Summary } from "./legal-layout";
 
 export function TermsContent() {
@@ -30,10 +36,10 @@ export function TermsContent() {
       <p>
         Estes Termos de Uso regulam o uso do Casa de Lídia, disponível em casadelidia.com.br e
         app.casadelidia.com.br. O Casa de Lídia é oferecido pela {COMPANY_NAME}, inscrita no CNPJ
-        sob o nº {COMPANY_CNPJ} (“Casa de Lídia” ou “nós”), com atendimento pelo e-mail{" "}
-        <EmailLink email={CONTACT_EMAIL} />. Ao criar uma conta ou usar o serviço, você concorda com
-        estes Termos e com a nossa <a href="#privacidade">Política de Privacidade</a>. Se não
-        concordar, não use o serviço.
+        sob o nº {COMPANY_CNPJ}, com sede em {COMPANY_REGION} (“Casa de Lídia” ou “nós”), com
+        atendimento pelo e-mail <EmailLink email={CONTACT_EMAIL} />. Ao criar uma conta ou usar o
+        serviço, você concorda com estes Termos e com a nossa{" "}
+        <a href="#privacidade">Política de Privacidade</a>. Se não concordar, não use o serviço.
       </p>
 
       <h3>1. O que é o Casa de Lídia</h3>
@@ -120,8 +126,8 @@ export function TermsContent() {
         A cada cobrança paga, emitimos uma nota fiscal de serviço eletrônica (NFS-e) em nome do CPF
         ou CNPJ informado no pagamento e a enviamos para o seu e-mail. Se você desistir em até 7
         dias (seção 5.2), a nota dessa cobrança é cancelada. No reembolso proporcional do Anual
-        (seção 5.3), a nota é substituída por outra com o valor que fica com o Casa de Lídia, isto
-        é, o dos meses cobrados.
+        (seção 5.3), ajustamos a nota fiscal conforme a legislação, para que ela reflita o valor que
+        fica com o Casa de Lídia, isto é, o dos meses cobrados.
       </p>
       <h4>4.5 Renovação</h4>
       <p>
@@ -177,9 +183,9 @@ export function TermsContent() {
           <EmailLink email={CONTACT_EMAIL} />. Cobramos cada mês já iniciado pelo preço do plano
           Mensal em vigor na data em que você assinou o Anual e devolvemos o restante do valor pago.
           Mudanças posteriores no preço do Mensal não alteram essa conta. O acesso continua até o
-          fim do último mês cobrado, e a assinatura não é renovada. A nota fiscal é substituída por
-          outra só com o valor dos meses cobrados. Se o valor dos meses cobrados chegar ao valor
-          pago, não há devolução.
+          fim do último mês cobrado, e a assinatura não é renovada. A nota fiscal é ajustada
+          conforme a legislação. Se o valor dos meses cobrados chegar ao valor pago, não há
+          devolução.
         </li>
       </ul>
 
@@ -280,7 +286,7 @@ export function TermsContent() {
 
       <h3>14. Contato</h3>
       <p>
-        {COMPANY_NAME}, CNPJ {COMPANY_CNPJ}. Dúvidas sobre estes Termos:{" "}
+        {COMPANY_NAME}, CNPJ {COMPANY_CNPJ}, {COMPANY_REGION}. Dúvidas sobre estes Termos:{" "}
         <EmailLink email={CONTACT_EMAIL} />. Assuntos de privacidade e dados pessoais:{" "}
         <EmailLink email={PRIVACY_EMAIL} />.
       </p>
