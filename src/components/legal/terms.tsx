@@ -1,31 +1,39 @@
-import { CONTACT_EMAIL } from "@/lib/site";
-import { LegalHeader, Summary } from "./legal-layout";
+import { COMPANY_CNPJ, COMPANY_NAME, CONTACT_EMAIL, PRIVACY_EMAIL } from "@/lib/site";
+import { EmailLink, LegalHeader, Summary } from "./legal-layout";
 
 export function TermsContent() {
   return (
     <article className="legal-prose">
-      <LegalHeader title="Termos de Uso" updated="29 de setembro de 2026" version="2.1" />
+      <LegalHeader title="Termos de Uso" updated="15 de outubro de 2026" version="2.2" />
 
       <Summary>
         <li>Teste grátis de 30 dias com até 5 roteiros, sem cartão.</li>
-        <li>Um plano com até 30 roteiros por mês.</li>
-        <li>Pagamento por cartão de crédito, processado pela Asaas, com renovação automática.</li>
+        <li>
+          Um plano com até 30 roteiros por mês. A assinatura dá uma licença de uso do software pelo
+          período contratado.
+        </li>
+        <li>
+          Pagamento por cartão de crédito, processado pela Asaas, com renovação automática e nota
+          fiscal a cada cobrança.
+        </li>
         <li>
           Você cancela quando quiser, pelo app. Em até 7 dias depois de assinar, pode desistir e
           receber tudo de volta.
         </li>
         <li>
           No Anual, se cancelar depois dos 7 dias, cobramos cada mês já iniciado pelo preço do
-          Mensal e devolvemos o restante.
+          Mensal na data em que você assinou e devolvemos o restante.
         </li>
         <li>O roteiro é gerado por IA: revise antes de compartilhar.</li>
       </Summary>
 
       <p>
         Estes Termos de Uso regulam o uso do Casa de Lídia, disponível em casadelidia.com.br e
-        app.casadelidia.com.br. Ao criar uma conta ou usar o serviço, você concorda com estes Termos
-        e com a nossa <a href="#privacidade">Política de Privacidade</a>. Se não concordar, não use
-        o serviço.
+        app.casadelidia.com.br. O Casa de Lídia é oferecido pela {COMPANY_NAME}, inscrita no CNPJ
+        sob o nº {COMPANY_CNPJ} (“Casa de Lídia” ou “nós”), com atendimento pelo e-mail{" "}
+        <EmailLink email={CONTACT_EMAIL} />. Ao criar uma conta ou usar o serviço, você concorda com
+        estes Termos e com a nossa <a href="#privacidade">Política de Privacidade</a>. Se não
+        concordar, não use o serviço.
       </p>
 
       <h3>1. O que é o Casa de Lídia</h3>
@@ -66,22 +74,24 @@ export function TermsContent() {
           feitas com o seu acesso.
         </li>
         <li>
-          Se suspeitar de uso indevido, avise-nos em{" "}
-          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+          Se suspeitar de uso indevido, avise-nos em <EmailLink email={CONTACT_EMAIL} />.
         </li>
       </ul>
 
       <h3>3. Teste grátis</h3>
       <ul>
-        <li>Novas contas têm 30 dias de teste grátis, com até 5 roteiros.</li>
+        <li>
+          Novas contas têm 30 dias de teste grátis, com até 5 roteiros no total. O limite do teste
+          não se renova.
+        </li>
         <li>Não é preciso cadastrar cartão para começar.</li>
         <li>
           Durante o teste, os roteiros exportados levam a marca “Gerado com Casa de Lídia” no
           rodapé.
         </li>
         <li>
-          Ao fim do teste, nada é cobrado automaticamente. Para continuar usando, você escolhe um
-          plano.
+          Ao fim do teste, nada é cobrado automaticamente. Os roteiros que você criou continuam na
+          sua conta para consulta. Para gerar novos, você escolhe um plano.
         </li>
       </ul>
 
@@ -92,25 +102,41 @@ export function TermsContent() {
         um roteiro não conta nesse limite. As opções de pagamento e os valores em vigor são
         mostrados no app antes da contratação.
       </p>
-      <h4>4.2 Forma de pagamento</h4>
+      <h4>4.2 Licença de uso</h4>
+      <p>
+        A assinatura concede a você uma licença de uso do software Casa de Lídia, pessoal, não
+        exclusiva e intransferível, pelo período contratado (o mês ou o ano pago) e dentro dos
+        limites do plano. O teste grátis dá a mesma licença, pelo prazo e com os limites do teste. A
+        licença não transfere a você a propriedade da plataforma (seção 9). Os roteiros que você
+        gera continuam sendo seus (seção 8).
+      </p>
+      <h4>4.3 Forma de pagamento</h4>
       <p>
         O pagamento é feito por cartão de crédito, dentro do app, e processado pela Asaas. O Casa de
         Lídia não armazena o número nem o código de segurança do seu cartão.
       </p>
-      <h4>4.3 Renovação</h4>
+      <h4>4.4 Nota fiscal</h4>
+      <p>
+        A cada cobrança paga, emitimos uma nota fiscal de serviço eletrônica (NFS-e) em nome do CPF
+        ou CNPJ informado no pagamento e a enviamos para o seu e-mail. Se você desistir em até 7
+        dias (seção 5.2), a nota dessa cobrança é cancelada. No reembolso proporcional do Anual
+        (seção 5.3), a nota é substituída por outra com o valor que fica com o Casa de Lídia, isto
+        é, o dos meses cobrados.
+      </p>
+      <h4>4.5 Renovação</h4>
       <p>
         A assinatura é renovada automaticamente no mesmo cartão ao fim de cada período, até você
         cancelar. Se a cobrança não for aprovada, você tem 3 dias para regularizar o pagamento;
         depois disso, o acesso aos recursos do plano é suspenso.
       </p>
-      <h4>4.4 Ofertas promocionais</h4>
+      <h4>4.6 Ofertas promocionais</h4>
       <p>
         Ofertas promocionais podem ter regras próprias, como quantidade de vagas, informadas na
         divulgação de cada oferta. Quando um preço promocional vale enquanto a assinatura continuar
         ativa e em dia, cancelar a assinatura encerra a oferta: uma nova assinatura segue o preço em
         vigor.
       </p>
-      <h4>4.5 Alteração de preço</h4>
+      <h4>4.7 Alteração de preço</h4>
       <p>
         Mudanças de preço são avisadas por e-mail com pelo menos 30 dias de antecedência e não
         afetam o período que você já pagou.
@@ -122,7 +148,7 @@ export function TermsContent() {
         <li>
           Você pode cancelar a qualquer momento no app, em <strong>Minha assinatura</strong> (no
           menu da sua conta ou em Configurações), ou escrevendo para{" "}
-          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+          <EmailLink email={CONTACT_EMAIL} />.
         </li>
         <li>
           O cancelamento interrompe as próximas cobranças, e você mantém o acesso até o fim do
@@ -137,7 +163,7 @@ export function TermsContent() {
         automáticas não abrem um novo prazo. A desistência pode ser feita no próprio app, em Minha
         assinatura, ou por e-mail. O acesso ao plano termina quando a desistência é feita, e você
         recebe a confirmação por e-mail. O valor volta no mesmo cartão, e o prazo para aparecer na
-        fatura depende da operadora.
+        fatura depende da operadora. A nota fiscal dessa cobrança é cancelada.
       </p>
       <h4>5.3 Depois dos 7 dias</h4>
       <ul>
@@ -148,10 +174,12 @@ export function TermsContent() {
         <li>
           <strong>Plano Anual:</strong> o preço menor do Anual pressupõe o uso pelo ano inteiro. Se
           você cancelar depois dos 7 dias, peça o reembolso por e-mail em{" "}
-          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Cobramos cada mês já iniciado
-          pelo preço do plano Mensal e devolvemos o restante do valor pago. O acesso continua até o
-          fim do último mês cobrado, e a assinatura não é renovada. Se o valor dos meses usados
-          chegar ao valor pago, não há devolução.
+          <EmailLink email={CONTACT_EMAIL} />. Cobramos cada mês já iniciado pelo preço do plano
+          Mensal em vigor na data em que você assinou o Anual e devolvemos o restante do valor pago.
+          Mudanças posteriores no preço do Mensal não alteram essa conta. O acesso continua até o
+          fim do último mês cobrado, e a assinatura não é renovada. A nota fiscal é substituída por
+          outra só com o valor dos meses cobrados. Se o valor dos meses cobrados chegar ao valor
+          pago, não há devolução.
         </li>
       </ul>
 
@@ -206,8 +234,10 @@ export function TermsContent() {
 
       <h3>9. Propriedade intelectual</h3>
       <p>
-        A plataforma Casa de Lídia, incluindo código, design, marca e logotipo, pertence ao Casa de
-        Lídia e é protegida pela legislação de direitos autorais e de propriedade industrial.
+        A plataforma Casa de Lídia, incluindo código, design, marca e logotipo, pertence à{" "}
+        {COMPANY_NAME} e é protegida pela legislação de direitos autorais, de programas de
+        computador e de propriedade industrial. A assinatura dá apenas a licença de uso descrita na
+        seção 4.2.
       </p>
 
       <h3>10. Disponibilidade e responsabilidade</h3>
@@ -250,7 +280,9 @@ export function TermsContent() {
 
       <h3>14. Contato</h3>
       <p>
-        Dúvidas sobre estes Termos: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+        {COMPANY_NAME}, CNPJ {COMPANY_CNPJ}. Dúvidas sobre estes Termos:{" "}
+        <EmailLink email={CONTACT_EMAIL} />. Assuntos de privacidade e dados pessoais:{" "}
+        <EmailLink email={PRIVACY_EMAIL} />.
       </p>
     </article>
   );

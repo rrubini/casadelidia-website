@@ -1,33 +1,45 @@
-import { CONTACT_EMAIL } from "@/lib/site";
-import { LegalHeader, Summary } from "./legal-layout";
+import { COMPANY_CNPJ, COMPANY_NAME, CONTACT_EMAIL, PRIVACY_EMAIL } from "@/lib/site";
+import { EmailLink, LegalHeader, Summary } from "./legal-layout";
 
 export function PrivacyContent() {
   return (
     <article className="legal-prose">
-      <LegalHeader title="Política de Privacidade" updated="29 de setembro de 2026" version="2.0" />
+      <LegalHeader title="Política de Privacidade" updated="15 de outubro de 2026" version="2.1" />
 
       <Summary>
-        <li>Coletamos só o necessário para criar sua conta, gerar roteiros e cobrar o plano.</li>
+        <li>
+          Coletamos só o necessário para criar sua conta, gerar roteiros, cobrar o plano e emitir a
+          nota fiscal.
+        </li>
         <li>Não vendemos seus dados nem os usamos para publicidade.</li>
         <li>
           O conteúdo do culto é processado por IA (Google Gemini, por padrão) para gerar o roteiro.
         </li>
         <li>Os pagamentos com cartão ficam com a Asaas; não guardamos os dados do seu cartão.</li>
-        <li>Você pode pedir acesso, correção ou exclusão dos seus dados a qualquer momento.</li>
+        <li>
+          Você pode pedir acesso, correção ou exclusão dos seus dados a qualquer momento, pelo
+          e-mail <EmailLink email={PRIVACY_EMAIL} />.
+        </li>
       </Summary>
 
       <p>
         Esta Política explica como o Casa de Lídia (“nós”) coleta, usa, guarda e protege os seus
         dados pessoais no site casadelidia.com.br e no app app.casadelidia.com.br, de acordo com a
-        Lei Geral de Proteção de Dados (LGPD, Lei 13.709/2018). O Casa de Lídia é o controlador dos
-        dados tratados no serviço.
+        Lei Geral de Proteção de Dados (LGPD, Lei 13.709/2018). O controlador dos dados tratados no
+        serviço é a {COMPANY_NAME}, inscrita no CNPJ sob o nº {COMPANY_CNPJ}, que oferece o Casa de
+        Lídia. Para falar sobre os seus dados pessoais, use o canal do titular:{" "}
+        <EmailLink email={PRIVACY_EMAIL} />.
       </p>
 
       <h3>1. Dados que coletamos</h3>
       <h4>1.1 Cadastro</h4>
       <ul>
         <li>Nome e e-mail.</li>
-        <li>Nome da igreja e canal do YouTube, se você informar.</li>
+        <li>Nome da igreja, canal do YouTube e logo da igreja, se você informar.</li>
+        <li>
+          Se você responder na configuração inicial: o seu papel na igreja, quantas células ela tem
+          e como conheceu o Casa de Lídia.
+        </li>
         <li>
           Se você entrar com o Google, recebemos da sua conta Google o nome, o e-mail e a foto de
           perfil.
@@ -48,17 +60,42 @@ export function PrivacyContent() {
         A transcrição de um culto público fica guardada e pode ser reaproveitada quando outra conta
         usar o mesmo vídeo, sem precisar transcrevê-lo de novo.
       </p>
-      <h4>1.3 Uso e dispositivo</h4>
+      <h4>1.3 Células e relatórios dos líderes</h4>
+      <p>Se você usar as células, guardamos:</p>
+      <ul>
+        <li>
+          o nome de cada célula e, se você informar, o dia, o horário e o endereço da reunião;
+        </li>
+        <li>
+          o nome e o WhatsApp do líder, usados para montar a mensagem com o roteiro e o link do
+          relatório, que você envia pelo seu próprio WhatsApp. O líder não precisa de conta;
+        </li>
+        <li>
+          os relatórios que o líder preenche pelo link: o nome de quem preencheu, se a reunião
+          aconteceu, o número de participantes, visitantes e conversões, a nota do roteiro,
+          observações, pedidos de oração e testemunhos.
+        </li>
+      </ul>
+      <p>
+        Nesses dados, quem decide o que é registrado é você e os líderes da sua igreja; nós os
+        tratamos só para prestar o serviço a você. Pedidos de oração e testemunhos podem conter
+        dados sensíveis de outras pessoas, como informações de saúde ou de fé. No app, eles aparecem
+        só para você, não são enviados aos provedores de IA e não são usados para nenhuma outra
+        finalidade. Oriente os líderes a escrever só o necessário.
+      </p>
+      <h4>1.4 Uso e dispositivo</h4>
       <ul>
         <li>data e hora de acesso, endereço IP, navegador e dispositivo;</li>
         <li>histórico de roteiros gerados, usado para controlar o limite do teste e do plano.</li>
       </ul>
-      <h4>1.4 Pagamento</h4>
+      <h4>1.5 Pagamento e nota fiscal</h4>
       <p>
-        Os pagamentos com cartão de crédito são processados pela Asaas, que recebe os dados do
-        cartão e pode pedir dados de cobrança como nome, e-mail e CPF ou CNPJ. Nós não guardamos o
-        número nem o código de segurança do seu cartão: ficamos apenas com os identificadores da
-        cobrança, o status da assinatura e o histórico de pagamentos.
+        Para cobrar o plano e emitir a nota fiscal, pedimos o seu CPF ou CNPJ, um telefone celular,
+        o CEP e o número do endereço. Esses dados ficam na sua conta e são enviados à Asaas, que
+        processa o pagamento e emite a nota fiscal. O número e o código de segurança do cartão são
+        digitados na página de pagamento da Asaas: nós não os recebemos nem guardamos. Ficamos
+        apenas com os identificadores da cobrança, o status da assinatura, o histórico de pagamentos
+        e os dados das notas fiscais emitidas.
       </p>
 
       <h3>2. Para que usamos os dados</h3>
@@ -76,6 +113,13 @@ export function PrivacyContent() {
           culto novo puder virar roteiro: execução de contrato.
         </li>
         <li>
+          <strong>
+            Cadastrar as células, preparar o envio do roteiro aos líderes e mostrar os relatórios a
+            você
+          </strong>
+          : execução de contrato.
+        </li>
+        <li>
           <strong>Cobrar o plano e emitir notas fiscais</strong>: execução de contrato e cumprimento
           de obrigação legal (art. 7º, II).
         </li>
@@ -88,7 +132,8 @@ export function PrivacyContent() {
           cumprimento de obrigação legal e legítimo interesse (art. 7º, IX).
         </li>
         <li>
-          <strong>Suporte e melhoria do produto</strong>: execução de contrato e legítimo interesse.
+          <strong>Suporte e melhoria do produto</strong>, inclusive com as respostas opcionais da
+          configuração inicial: execução de contrato e legítimo interesse.
         </li>
         <li>
           <strong>Novidades e ofertas por e-mail</strong>: somente com o seu consentimento (art. 7º,
@@ -106,6 +151,11 @@ export function PrivacyContent() {
           <strong>Google Cloud</strong>: hospedagem do app e do banco de dados.
         </li>
         <li>
+          <strong>Cloudflare</strong>: rede e proteção do site e do app. As visitas passam pela rede
+          da Cloudflare, que recebe dados técnicos, como o endereço IP e o navegador, para entregar
+          as páginas e bloquear ataques e robôs.
+        </li>
+        <li>
           <strong>Provedores de IA</strong>: o Google (Gemini) é usado por padrão, e a OpenAI e a
           Anthropic podem ser usadas como alternativa. Eles recebem o conteúdo necessário para a
           tarefa, como o vídeo público do culto, a transcrição, o esboço e o modelo do roteiro.
@@ -119,7 +169,7 @@ export function PrivacyContent() {
           .
         </li>
         <li>
-          <strong>Asaas</strong>: processamento dos pagamentos.
+          <strong>Asaas</strong>: processamento dos pagamentos e emissão das notas fiscais.
         </li>
         <li>
           <strong>Resend</strong>: envio dos e-mails do serviço.
@@ -128,15 +178,18 @@ export function PrivacyContent() {
           <strong>Google (login)</strong>: apenas se você escolher entrar com a sua conta Google.
         </li>
         <li>
-          <strong>Autoridades</strong>: quando exigido por lei ou por ordem judicial.
+          <strong>Autoridades</strong>: quando exigido por lei ou por ordem judicial. Os dados de
+          cada nota fiscal (nome, CPF ou CNPJ, endereço e valor) também vão para o sistema oficial
+          da NFS-e, por obrigação legal.
         </li>
       </ul>
 
       <h3>4. Transferência internacional</h3>
       <p>
         O app e o banco de dados ficam em servidores do Google Cloud nos Estados Unidos, e os
-        provedores de IA e a Resend também processam dados fora do Brasil. Nesses casos, usamos
-        fornecedores que oferecem garantias de proteção de dados compatíveis com a LGPD (art. 33).
+        provedores de IA, a Resend e a Cloudflare também processam dados fora do Brasil. Nesses
+        casos, usamos fornecedores que oferecem garantias de proteção de dados compatíveis com a
+        LGPD (art. 33).
       </p>
 
       <h3>5. Por quanto tempo guardamos</h3>
@@ -146,7 +199,8 @@ export function PrivacyContent() {
           conta, apagamos seus dados, exceto os que a lei nos obriga a manter.
         </li>
         <li>
-          <strong>Registros de pagamento</strong>: 5 anos, conforme a legislação fiscal.
+          <strong>Registros de pagamento e notas fiscais</strong>: 5 anos, conforme a legislação
+          fiscal.
         </li>
         <li>
           <strong>Registros de acesso</strong>: 6 meses, conforme o Marco Civil da Internet (art.
@@ -169,24 +223,25 @@ export function PrivacyContent() {
         <li>retirar o consentimento dado para e-mails de novidades.</li>
       </ul>
       <p>
-        Para exercer esses direitos, escreva para{" "}
-        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Respondemos em até 15 dias.
+        Para exercer esses direitos, escreva para <EmailLink email={PRIVACY_EMAIL} />. Respondemos
+        em até 15 dias.
       </p>
 
       <h3>7. Segurança</h3>
       <p>
-        Usamos conexões criptografadas (HTTPS), guardamos senhas com hash, fazemos cópias de
-        segurança diárias do banco de dados e restringimos o acesso aos dados a quem precisa deles
-        para operar o serviço. Nenhum sistema é totalmente invulnerável: se houver um incidente de
-        segurança que possa trazer risco a você, comunicaremos você e a ANPD, como prevê a LGPD
-        (art. 48).
+        Usamos conexões criptografadas (HTTPS) e a proteção da Cloudflare contra ataques, guardamos
+        senhas com hash, fazemos cópias de segurança diárias do banco de dados e restringimos o
+        acesso aos dados a quem precisa deles para operar o serviço. Nenhum sistema é totalmente
+        invulnerável: se houver um incidente de segurança que possa trazer risco a você,
+        comunicaremos você e a ANPD, como prevê a LGPD (art. 48).
       </p>
 
       <h3>8. Cookies</h3>
       <p>
-        O site casadelidia.com.br não usa cookies. O app usa apenas cookies essenciais, para manter
-        você conectado e proteger a sua sessão. Não usamos cookies de publicidade nem de
-        rastreamento de terceiros.
+        O site casadelidia.com.br não usa cookies próprios. O app usa apenas cookies essenciais,
+        para manter você conectado e proteger a sua sessão. A Cloudflare pode gravar cookies
+        técnicos de segurança, usados só para distinguir pessoas de robôs. Não usamos cookies de
+        publicidade nem de rastreamento de terceiros.
       </p>
 
       <h3>9. Menores de idade</h3>
@@ -203,8 +258,9 @@ export function PrivacyContent() {
 
       <h3>11. Contato</h3>
       <p>
-        Dúvidas, pedidos e reclamações sobre os seus dados pessoais:{" "}
-        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+        Controlador: {COMPANY_NAME}, CNPJ {COMPANY_CNPJ}. Dúvidas, pedidos e reclamações sobre os
+        seus dados pessoais: <EmailLink email={PRIVACY_EMAIL} />. Outros assuntos:{" "}
+        <EmailLink email={CONTACT_EMAIL} />.
       </p>
       <p>
         Se entender que o tratamento dos seus dados não está de acordo com a lei, você também pode
