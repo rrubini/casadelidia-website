@@ -2,18 +2,12 @@ import type { ReactNode } from "react";
 import { COMPANY_CNPJ, COMPANY_NAME, COMPANY_REGION, CONTACT_EMAIL } from "@/lib/site";
 
 /**
- * Link de e-mail que o Cloudflare não embaralha. O Cloudflare troca os e-mails do HTML por
- * "[email protected]" e só os mostra de novo com um script dele; o app lê os textos legais direto
- * do HTML, sem esse script. O que fica entre <!--email_off--> e <!--/email_off--> ele não mexe.
+ * Link de e-mail. No site, o Cloudflare embaralha os e-mails do HTML (proteção contra robôs que
+ * coletam endereços para spam) e o script dele os mostra de novo para quem visita. O app, que lê
+ * os textos legais direto do HTML, desembaralha do lado dele (helpers/legal.py).
  */
 export function EmailLink({ email }: { email: string }) {
-  return (
-    <span
-      dangerouslySetInnerHTML={{
-        __html: `<!--email_off--><a href="mailto:${email}">${email}</a><!--/email_off-->`,
-      }}
-    />
-  );
+  return <a href={`mailto:${email}`}>{email}</a>;
 }
 
 export function LegalHeader({
