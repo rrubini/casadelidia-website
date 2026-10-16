@@ -92,8 +92,8 @@ export function TermsContent() {
         </li>
         <li>Não é preciso cadastrar cartão para começar.</li>
         <li>
-          Durante o teste, os roteiros exportados levam a marca “Gerado com Casa de Lídia” no
-          rodapé.
+          Durante o teste, os roteiros exportados levam no rodapé o slogan e o endereço do site do
+          Casa de Lídia.
         </li>
         <li>
           Ao fim do teste, nada é cobrado automaticamente. Os roteiros que você criou continuam na
