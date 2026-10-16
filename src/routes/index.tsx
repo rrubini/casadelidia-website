@@ -4,7 +4,14 @@ import { Switch } from "@/components/ui/switch";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LegalDialog } from "@/components/legal/legal-dialog";
 import { DemoVideo } from "@/components/demo-video";
-import { COMPANY_CNPJ, COMPANY_NAME, COMPANY_REGION, CONTACT_EMAIL, SITE_URL } from "@/lib/site";
+import {
+  COMPANY_CNPJ,
+  COMPANY_NAME,
+  COMPANY_REGION,
+  CONTACT_EMAIL,
+  SITE_URL,
+  SLOGAN,
+} from "@/lib/site";
 import { formatarReais, type ConfigPublica, type PlanoId } from "@/lib/config-publica";
 import { useConfigPublica } from "@/hooks/use-config-publica";
 import logo from "@/assets/casadelidia-retangular-header.png";
@@ -580,6 +587,11 @@ function Landing() {
         {/* Identificação do fornecedor (Decreto 7.962/2013, art. 2º), sem endereço físico.
             O e-mail de contato fica nos links do rodapé, logo acima. */}
         <div className="mx-auto mt-10 w-full max-w-6xl space-y-1 text-xs leading-relaxed text-muted-foreground">
+          <p>
+            <a href={SITE_URL} className="font-semibold text-primary hover:underline">
+              {SLOGAN}
+            </a>
+          </p>
           <p>
             Casa de Lídia é um serviço da {COMPANY_NAME} ·{" "}
             <span className="whitespace-nowrap">CNPJ {COMPANY_CNPJ}</span> · {COMPANY_REGION}
