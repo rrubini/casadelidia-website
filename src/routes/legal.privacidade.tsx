@@ -7,7 +7,7 @@ import { SITE_URL } from "@/lib/site";
 // Está no sitemap, então pode ser indexada; o app lê só o <article>, não o link de volta.
 export const Route = createFileRoute("/legal/privacidade")({
   head: () => ({
-    meta: [{ title: "Política de Privacidade — Casa de Lídia" }],
+    meta: [{ title: "Política de Privacidade | Casa de Lídia" }],
     links: [{ rel: "canonical", href: `${SITE_URL}/legal/privacidade/` }],
   }),
   component: () => (

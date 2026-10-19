@@ -49,23 +49,23 @@ export function TermsContent() {
         pode:
       </p>
       <ul>
-        <li>colar o link de um culto no YouTube e marcar onde a pregação começa e termina;</li>
-        <li>enviar o esboço do sermão, quando não houver vídeo;</li>
+        <li>colar o link de um culto no YouTube e marcar onde a pregação começa e termina</li>
+        <li>enviar o esboço do sermão, quando não houver vídeo</li>
         <li>
           informar o canal do YouTube da igreja e receber um aviso por e-mail quando um culto novo
-          já puder virar roteiro. Esse acompanhamento só identifica o culto e avisa: nenhum roteiro
-          é gerado sem você pedir;
+          já puder virar roteiro (esse acompanhamento só identifica o culto e avisa, e nenhum
+          roteiro é gerado sem você pedir)
         </li>
         <li>
           criar modelos de roteiro com as seções que a sua igreja usa, inclusive a partir de um PDF
-          ou de um prompt que você já tenha;
+          ou de um prompt que você já tenha
         </li>
-        <li>revisar, editar e pedir para refazer só uma parte do roteiro;</li>
-        <li>exportar o roteiro em Word ou PDF, ou copiá-lo formatado para o WhatsApp.</li>
+        <li>revisar, editar e pedir para refazer só uma parte do roteiro</li>
+        <li>exportar o roteiro em Word ou PDF, ou copiá-lo formatado para o WhatsApp</li>
       </ul>
       <p>
         Quando o vídeo não tem legenda, a pregação é transcrita automaticamente por IA. O vídeo
-        precisa ser público no YouTube; para vídeos não listados ou privados, use o esboço.
+        precisa ser público no YouTube. Para vídeos não listados ou privados, use o esboço.
       </p>
 
       <h3>2. Sua conta</h3>
@@ -132,8 +132,8 @@ export function TermsContent() {
       <h4>4.5 Renovação</h4>
       <p>
         A assinatura é renovada automaticamente no mesmo cartão ao fim de cada período, até você
-        cancelar. Se a cobrança não for aprovada, você tem 3 dias para regularizar o pagamento;
-        depois disso, o acesso aos recursos do plano é suspenso.
+        cancelar. Se a cobrança não for aprovada, você tem 3 dias para regularizar o pagamento.
+        Depois disso, o acesso aos recursos do plano é suspenso.
       </p>
       <h4>4.6 Ofertas promocionais</h4>
       <p>
@@ -165,7 +165,7 @@ export function TermsContent() {
       <p>
         Em até 7 dias depois de assinar um plano, você pode desistir e receber de volta todo o valor
         pago, conforme o art. 49 do Código de Defesa do Consumidor. Isso vale para cada nova
-        assinatura, inclusive quando você troca de plano ou volta a assinar; as renovações
+        assinatura, inclusive quando você troca de plano ou volta a assinar. As renovações
         automáticas não abrem um novo prazo. A desistência pode ser feita no próprio app, em Minha
         assinatura, ou por e-mail. O acesso ao plano termina quando a desistência é feita, e você
         recebe a confirmação por e-mail. O valor volta no mesmo cartão, e o prazo para aparecer na
@@ -192,18 +192,18 @@ export function TermsContent() {
       <h3>6. Uso aceitável</h3>
       <h4>Você pode</h4>
       <ul>
-        <li>criar roteiros para uso próprio, da sua célula ou da sua igreja;</li>
-        <li>compartilhar os roteiros com líderes e membros;</li>
-        <li>editar e adaptar o conteúdo gerado como quiser.</li>
+        <li>criar roteiros para uso próprio, da sua célula ou da sua igreja</li>
+        <li>compartilhar os roteiros com líderes e membros</li>
+        <li>editar e adaptar o conteúdo gerado como quiser</li>
       </ul>
       <h4>Você não pode</h4>
       <ul>
-        <li>revender ou repassar o acesso ao serviço sem autorização;</li>
-        <li>compartilhar sua conta com outras pessoas;</li>
-        <li>usar o serviço para fins ilegais;</li>
-        <li>tentar burlar os limites do plano ou do teste grátis;</li>
-        <li>usar robôs ou scripts para acessar o serviço ou sobrecarregar nossos servidores;</li>
-        <li>copiar, modificar ou fazer engenharia reversa da plataforma.</li>
+        <li>revender ou repassar o acesso ao serviço sem autorização</li>
+        <li>compartilhar sua conta com outras pessoas</li>
+        <li>usar o serviço para fins ilegais</li>
+        <li>tentar burlar os limites do plano ou do teste grátis</li>
+        <li>usar robôs ou scripts para acessar o serviço ou sobrecarregar nossos servidores</li>
+        <li>copiar, modificar ou fazer engenharia reversa da plataforma</li>
       </ul>
 
       <h3>7. Conteúdo que você envia e YouTube</h3>

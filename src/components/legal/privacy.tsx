@@ -21,7 +21,7 @@ export function PrivacyContent() {
         <li>
           O conteúdo do culto é processado por IA (Google Gemini, por padrão) para gerar o roteiro.
         </li>
-        <li>Os pagamentos com cartão ficam com a Asaas; não guardamos os dados do seu cartão.</li>
+        <li>Os pagamentos com cartão ficam com a Asaas. Não guardamos os dados do seu cartão.</li>
         <li>
           Você pode pedir acesso, correção ou exclusão dos seus dados a qualquer momento, pelo
           e-mail <EmailLink email={PRIVACY_EMAIL} />.
@@ -58,10 +58,10 @@ export function PrivacyContent() {
       </ul>
       <h4>1.2 Conteúdo que você envia e gera</h4>
       <ul>
-        <li>links de vídeos do YouTube e as marcações de início e fim da pregação;</li>
-        <li>transcrições dos vídeos e esboços de sermão enviados;</li>
-        <li>modelos de roteiro, inclusive os criados a partir de um PDF ou de um prompt seu;</li>
-        <li>os roteiros gerados e editados.</li>
+        <li>links de vídeos do YouTube e as marcações de início e fim da pregação</li>
+        <li>transcrições dos vídeos e esboços de sermão enviados</li>
+        <li>modelos de roteiro, inclusive os criados a partir de um PDF ou de um prompt seu</li>
+        <li>os roteiros gerados e editados</li>
       </ul>
       <p>
         A transcrição de um culto público fica guardada e pode ser reaproveitada quando outra conta
@@ -70,22 +70,20 @@ export function PrivacyContent() {
       <h4>1.3 Células e relatórios dos líderes</h4>
       <p>Se você usar as células, guardamos:</p>
       <ul>
-        <li>
-          o nome de cada célula e, se você informar, o dia, o horário e o endereço da reunião;
-        </li>
+        <li>o nome de cada célula e, se você informar, o dia, o horário e o endereço da reunião</li>
         <li>
           o nome e o WhatsApp do líder, usados para montar a mensagem com o roteiro e o link do
-          relatório, que você envia pelo seu próprio WhatsApp. O líder não precisa de conta;
+          relatório, que você envia pelo seu próprio WhatsApp (o líder não precisa de conta)
         </li>
         <li>
           os relatórios que o líder preenche pelo link: o nome de quem preencheu, se a reunião
           aconteceu, o número de participantes, visitantes e conversões, a nota do roteiro,
-          observações, pedidos de oração e testemunhos.
+          observações, pedidos de oração e testemunhos
         </li>
       </ul>
       <p>
         Nesses dados, quem decide o que é registrado e para quê é você (ou a sua igreja), que atua
-        como controlador; nós os tratamos como operador, só para prestar o serviço e seguindo as
+        como controlador. Nós os tratamos como operador, só para prestar o serviço e seguindo as
         suas instruções (LGPD, art. 5º, VI e VII, e art. 39). Cabe ao controlador ter a base legal
         para registrar esses dados, inclusive os sensíveis (art. 11). Pedidos de oração e
         testemunhos podem conter dados sensíveis de outras pessoas, como informações de saúde ou de
@@ -94,8 +92,8 @@ export function PrivacyContent() {
       </p>
       <h4>1.4 Uso e dispositivo</h4>
       <ul>
-        <li>data e hora de acesso, endereço IP, navegador e dispositivo;</li>
-        <li>histórico de roteiros gerados, usado para controlar o limite do teste e do plano.</li>
+        <li>data e hora de acesso, endereço IP, navegador e dispositivo</li>
+        <li>histórico de roteiros gerados, usado para controlar o limite do teste e do plano</li>
       </ul>
       <h4>1.5 Pagamento e nota fiscal</h4>
       <p>
@@ -223,13 +221,13 @@ export function PrivacyContent() {
       <h3>6. Seus direitos</h3>
       <p>Pela LGPD (art. 18), você pode, a qualquer momento:</p>
       <ul>
-        <li>confirmar se tratamos seus dados e ter acesso a eles;</li>
-        <li>corrigir dados incompletos, errados ou desatualizados;</li>
-        <li>pedir a anonimização, o bloqueio ou a eliminação de dados desnecessários;</li>
-        <li>pedir a portabilidade dos seus dados;</li>
-        <li>pedir a exclusão da sua conta e dos seus dados;</li>
-        <li>saber com quem compartilhamos seus dados;</li>
-        <li>retirar o consentimento dado para e-mails de novidades.</li>
+        <li>confirmar se tratamos seus dados e ter acesso a eles</li>
+        <li>corrigir dados incompletos, errados ou desatualizados</li>
+        <li>pedir a anonimização, o bloqueio ou a eliminação de dados desnecessários</li>
+        <li>pedir a portabilidade dos seus dados</li>
+        <li>pedir a exclusão da sua conta e dos seus dados</li>
+        <li>saber com quem compartilhamos seus dados</li>
+        <li>retirar o consentimento dado para e-mails de novidades</li>
       </ul>
       <p>
         Para exercer esses direitos, escreva para <EmailLink email={PRIVACY_EMAIL} />. Respondemos

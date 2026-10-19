@@ -39,7 +39,7 @@ const OG_IMAGE_ALT =
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Casa de Lídia — do culto de domingo ao roteiro da célula" },
+      { title: "Casa de Lídia | Do culto ao roteiro da célula em 1 minuto" },
       {
         name: "description",
         content:
@@ -47,7 +47,7 @@ export const Route = createFileRoute("/")({
       },
       {
         property: "og:title",
-        content: "Casa de Lídia — do culto de domingo ao roteiro da célula",
+        content: "Casa de Lídia | Do culto ao roteiro da célula em 1 minuto",
       },
       {
         property: "og:description",
@@ -112,7 +112,7 @@ const steps = [
   {
     n: "1",
     title: "Escolha o culto",
-    text: "O culto de domingo aparece sozinho no app quando termina no canal da igreja. É só tocar nele.",
+    text: "O culto de domingo aparece sozinho no app quando termina no canal da igreja. É só tocar nele. Se não houver vídeo, cole o esboço da pregação.",
     img: printPasso1,
     alt: "Tela Novo roteiro do app com os últimos cultos do canal",
   },
@@ -139,7 +139,7 @@ const features = [
   },
   {
     title: "Também a partir do esboço",
-    text: "Sem vídeo? Envie o esboço do sermão e o roteiro é gerado do mesmo jeito.",
+    text: "Sem vídeo do culto? Cole o esboço ou as anotações da pregação e a IA monta o roteiro a partir desse texto.",
   },
   {
     title: "Modelos personalizáveis",
@@ -333,8 +333,8 @@ const faqs = [
     a: "Sim. O roteiro segue a sua pregação e os modelos são definidos por você, então ele acompanha a linguagem e a prática da sua igreja.",
   },
   {
-    q: "Posso usar o esboço em vez do vídeo?",
-    a: "Pode. É só enviar o esboço do sermão e o roteiro é gerado sem vídeo nenhum.",
+    q: "Minha igreja não transmite o culto. Posso usar?",
+    a: "Pode. Cole o esboço ou as anotações da pregação e o roteiro é gerado sem vídeo nenhum. Serve também quando o vídeo do culto não é público no YouTube.",
   },
   {
     q: "Como faço o pagamento?",
@@ -412,7 +412,11 @@ function Landing() {
               <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
                 O culto de domingo aparece sozinho no app (ou você cola o link do YouTube) e vira um
                 roteiro pronto para a reunião da semana: quebra-gelo, leitura bíblica, perguntas e
-                aplicação — tudo a partir do que foi pregado na sua igreja.
+                aplicação. Tudo feito a partir do que foi pregado na sua igreja.
+              </p>
+              <p className="mt-3 max-w-xl text-lg leading-relaxed text-muted-foreground">
+                Não tem live do seu culto? Não tem problema: cole o esboço ou as anotações da
+                pregação e o roteiro sai do mesmo jeito.
               </p>
               {/* Sem espaço para os dois lado a lado, o texto desce inteiro para a linha de baixo */}
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4">
@@ -442,8 +446,8 @@ function Landing() {
             </h2>
             <div className="space-y-4 text-lg leading-relaxed text-primary-foreground/85">
               <p>
-                Você passa horas montando o roteiro da célula: escolhe o texto, pensa nas perguntas,
-                escreve a aplicação — geralmente na véspera da reunião.
+                Você passa horas montando o roteiro da célula: escolhe o texto, pensa nas perguntas
+                e escreve a aplicação. Geralmente na véspera da reunião.
               </p>
               <p>
                 E quando recorre a um material pronto da internet, ele não conversa com o que a
@@ -457,7 +461,7 @@ function Landing() {
         <Section id="como-funciona">
           <p className="eyebrow">Como funciona</p>
           <h2 className="mt-3 max-w-2xl text-3xl leading-tight sm:text-4xl">
-            Três passos, do vídeo ao arquivo no grupo dos líderes
+            Três passos, do culto ao arquivo no grupo dos líderes
           </h2>
           <ol className="mt-10 grid gap-5 md:grid-cols-3">
             {steps.map((s) => (
@@ -569,7 +573,7 @@ function Landing() {
           <div className="max-w-sm">
             <p className="font-display text-xl font-semibold">Casa de Lídia</p>
             <p className="mt-3 text-sm italic leading-relaxed text-muted-foreground">
-              “O Senhor abriu o seu coração para atender às coisas que Paulo dizia.” — Atos 16:14
+              “O Senhor abriu o seu coração para atender às coisas que Paulo dizia.” (Atos 16:14)
             </p>
           </div>
           <nav aria-label="Links do rodapé" className="flex flex-col gap-3 text-sm font-medium">
