@@ -124,7 +124,7 @@ const destaques = [
   },
   {
     icone: Timer,
-    titulo: "Roteiro pronto em 1 minuto",
+    titulo: "Roteiro pronto em 1\u00a0minuto",
     texto:
       "Quebra-gelo, leitura bíblica, perguntas e aplicação, no modelo e com a logo da sua igreja.",
   },
@@ -576,7 +576,7 @@ function Landing() {
               className="absolute inset-0 -z-10 overflow-hidden rounded-[2rem]"
             >
               {/* Brilho magenta atrás do celular */}
-              <div className="absolute -bottom-40 left-1/2 size-[32rem] -translate-x-1/2 rounded-full bg-accent/35 blur-3xl md:left-3/4" />
+              <div className="absolute -top-24 left-1/2 size-[32rem] -translate-x-1/2 rounded-full bg-accent/35 blur-3xl md:top-auto md:-bottom-40 md:left-3/4" />
             </div>
             <div className="grid gap-8 px-6 pb-10 sm:px-12 md:grid-cols-2 md:gap-12 md:pb-12 lg:px-20">
               <div className="order-2 mx-auto max-w-md text-center md:order-1 md:mx-0 md:self-center md:py-12 md:text-left">

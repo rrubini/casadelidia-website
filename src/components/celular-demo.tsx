@@ -120,7 +120,7 @@ export function CelularDemo() {
             type="button"
             onClick={alternar}
             aria-label={tocando ? "Pausar vídeo" : "Tocar vídeo"}
-            className="group absolute inset-0 flex cursor-pointer items-center justify-center rounded-[2.1rem] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-accent"
+            className="group absolute inset-0 flex cursor-pointer items-center justify-center rounded-[2.1rem] focus-visible:outline-4 focus-visible:-outline-offset-4 focus-visible:outline-accent"
           >
             <span
               className={`flex size-14 items-center justify-center rounded-full bg-black/55 text-white shadow-lg backdrop-blur-sm transition-opacity duration-200 ${
