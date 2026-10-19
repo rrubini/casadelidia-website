@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Switch } from "@/components/ui/switch";
+import { Check, NotebookPen, Radio, Timer } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LegalDialog } from "@/components/legal/legal-dialog";
 import { DemoVideo } from "@/components/demo-video";
@@ -107,6 +107,29 @@ function Section({
   );
 }
 
+// Foto da abertura (uma célula reunida). Enquanto não houver, fica só o fundo púrpura com as camadas de cor.
+const HERO_FOTO: string | null = null;
+
+const destaques = [
+  {
+    icone: Radio,
+    titulo: "O culto aparece sozinho",
+    texto:
+      "Quando a transmissão termina, o culto de domingo aparece no app, pronto para virar roteiro.",
+  },
+  {
+    icone: Timer,
+    titulo: "Roteiro pronto em 1 minuto",
+    texto:
+      "Quebra-gelo, leitura bíblica, perguntas e aplicação, no modelo e com a logo da sua igreja.",
+  },
+  {
+    icone: NotebookPen,
+    titulo: "Sem live? Sem problema",
+    texto: "Cole o esboço ou as anotações da pregação e o roteiro sai do mesmo jeito.",
+  },
+];
+
 // Prints do app no celular (780x1200), um por passo.
 const steps = [
   {
@@ -160,8 +183,6 @@ const features = [
 ];
 
 // Preços: todos os números e condições vêm de useConfigPublica(). Nada de valor fixo aqui.
-const NOME_DO_PLANO: Record<PlanoId, string> = { mensal: "Mensal", anual: "Anual" };
-const PERIODO_DO_PLANO: Record<PlanoId, string> = { mensal: "/mês", anual: "/ano" };
 const NOME_DA_FORMA_DE_PAGAMENTO: Record<string, string> = {
   cartao_de_credito: "cartão de crédito",
 };
@@ -185,25 +206,26 @@ function fraseTeste(teste: ConfigPublica["teste_gratis"]) {
   return `Todo plano começa com ${dias} de teste grátis e ${roteiros}${teste.exige_cartao ? "" : ", sem cartão"}.`;
 }
 
-function OfertaDeLancamento({ oferta }: { oferta: ConfigPublica["primeiros50"] }) {
-  const plano = NOME_DO_PLANO[oferta.plano] ?? oferta.plano;
-  const periodo = PERIODO_DO_PLANO[oferta.plano] ?? "";
-  const restam = oferta.vagas_restantes === 1 ? "Resta" : "Restam";
+// O que vem no plano (SPEC, seção 6: "Tudo incluso")
+const incluso = [
+  "O culto do canal aparece sozinho no app",
+  "Seus modelos e a logo da igreja nos roteiros",
+  "Envio aos líderes e relatórios das células",
+  "Word e PDF sem marca d'água",
+];
 
+function Vagas({ oferta }: { oferta: ConfigPublica["primeiros50"] }) {
+  const restam = oferta.vagas_restantes === 1 ? "Resta" : "Restam";
+  const pct = oferta.vagas_total ? (oferta.vagas_restantes / oferta.vagas_total) * 100 : 0;
   return (
-    <>
-      <p className="mt-5 inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-3xl bg-gold px-5 py-2 text-sm font-semibold text-gold-foreground">
-        Oferta de lançamento: {formatarReais(oferta.preco)}
-        {periodo} no plano {plano}, com preço travado enquanto a assinatura estiver ativa
-        <span>
-          <span className="hidden sm:inline">· </span>
-          {restam} {oferta.vagas_restantes} de {oferta.vagas_total} vagas
-        </span>
+    <div className="mx-auto mt-5 w-full max-w-60">
+      <div className="h-2 overflow-hidden rounded-full bg-muted" aria-hidden="true">
+        <div className="h-full rounded-full bg-gold" style={{ width: `${pct}%` }} />
+      </div>
+      <p className="mt-2 text-xs font-semibold text-muted-foreground">
+        {restam} {oferta.vagas_restantes} de {oferta.vagas_total} vagas
       </p>
-      <p className="mt-2 text-sm text-muted-foreground">
-        O desconto entra sozinho no checkout do plano {plano}, sem cupom para digitar.
-      </p>
-    </>
+    </div>
   );
 }
 
@@ -221,33 +243,105 @@ function PricingCard({
   let corpo: React.ReactNode;
   if (config) {
     const { mensal, anual } = config.planos;
-    const id: PlanoId = annual ? "anual" : "mensal";
+    const oferta = config.primeiros50;
+    const comOferta = !annual && oferta.disponivel && oferta.plano === "mensal";
+    const opcao = (ativo: boolean) =>
+      `rounded-full px-4 py-2 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+        ativo
+          ? "bg-background text-foreground shadow-sm"
+          : "text-muted-foreground hover:text-foreground"
+      }`;
+
     corpo = (
       <>
-        <label className="flex cursor-pointer items-center justify-center gap-3 text-sm font-semibold">
-          <Switch checked={annual} onCheckedChange={setAnnual} />
-          Ativar desconto do plano anual
-        </label>
-
-        <div className="mt-7 flex flex-wrap items-center justify-center gap-2">
-          <h3 className="text-xl">Plano {NOME_DO_PLANO[id]}</h3>
-          {annual && anual.meses_gratis > 0 ? (
-            <span className="rounded-full bg-gold px-2.5 py-0.5 text-xs font-semibold text-gold-foreground">
-              {plural(anual.meses_gratis, "mês grátis", "meses grátis")}
-            </span>
-          ) : null}
+        <div
+          role="radiogroup"
+          aria-label="Forma de cobrança"
+          className="mx-auto grid w-full max-w-xs grid-cols-2 gap-1 rounded-full bg-muted p-1 text-sm font-semibold"
+        >
+          <button
+            type="button"
+            role="radio"
+            aria-checked={!annual}
+            onClick={() => setAnnual(false)}
+            className={opcao(!annual)}
+          >
+            Mensal
+          </button>
+          <button
+            type="button"
+            role="radio"
+            aria-checked={annual}
+            onClick={() => setAnnual(true)}
+            className={opcao(annual)}
+          >
+            Anual
+          </button>
         </div>
-        <p className="mt-3 font-display text-4xl font-semibold sm:text-5xl">
-          {formatarReais(annual ? anual.preco : mensal.preco)}
-          <span className="font-sans text-base font-medium text-muted-foreground">
-            {PERIODO_DO_PLANO[id]}
-          </span>
-        </p>
-        <p className="mt-3 min-h-10 text-sm text-muted-foreground">
-          {annual
-            ? `Cobrado uma vez por ano. Equivale a ${formatarReais(anual.equivale_por_mes)} por mês.`
-            : "Cobrado todo mês. Cancele quando quiser."}
-        </p>
+
+        {comOferta ? (
+          <>
+            <span className="mx-auto mt-7 inline-flex rounded-full bg-gold px-3 py-1 text-xs font-bold uppercase tracking-wider text-gold-foreground">
+              Oferta de lançamento
+            </span>
+            <p className="mt-4 text-lg text-muted-foreground">
+              <span className="sr-only">De </span>
+              <s>{formatarReais(mensal.preco)}</s>
+              <span className="sr-only"> por</span>
+            </p>
+            <p className="font-display text-5xl font-semibold leading-none sm:text-6xl">
+              {formatarReais(oferta.preco)}
+              <span className="font-sans text-base font-medium text-muted-foreground">/mês</span>
+            </p>
+            <p className="mx-auto mt-4 max-w-xs text-sm leading-relaxed">
+              Para os {oferta.vagas_total} primeiros assinantes, com o preço travado enquanto a
+              assinatura continuar ativa.
+            </p>
+            <Vagas oferta={oferta} />
+          </>
+        ) : annual ? (
+          <>
+            {anual.meses_gratis > 0 ? (
+              <span className="mx-auto mt-7 inline-flex rounded-full bg-gold px-3 py-1 text-xs font-bold uppercase tracking-wider text-gold-foreground">
+                {plural(anual.meses_gratis, "mês grátis", "meses grátis")}
+              </span>
+            ) : null}
+            <p className="mt-4 text-lg text-muted-foreground">
+              <span className="sr-only">De </span>
+              <s>{formatarReais(mensal.preco * 12)}</s>
+              <span className="sr-only"> por</span>
+            </p>
+            <p className="font-display text-5xl font-semibold leading-none sm:text-6xl">
+              {formatarReais(anual.preco)}
+              <span className="font-sans text-base font-medium text-muted-foreground">/ano</span>
+            </p>
+            <p className="mt-4 text-sm leading-relaxed">
+              Cobrado uma vez por ano. Equivale a {formatarReais(anual.equivale_por_mes)} por mês.
+            </p>
+          </>
+        ) : (
+          <>
+            <p className="mt-8 font-display text-5xl font-semibold leading-none sm:text-6xl">
+              {formatarReais(mensal.preco)}
+              <span className="font-sans text-base font-medium text-muted-foreground">/mês</span>
+            </p>
+            <p className="mt-4 text-sm leading-relaxed">Cobrado todo mês. Cancele quando quiser.</p>
+          </>
+        )}
+
+        <ul className="mt-7 space-y-2.5 border-t border-border pt-6 text-left text-sm">
+          {[`${plural(mensal.roteiros_por_mes, "roteiro", "roteiros")} por mês`, ...incluso].map(
+            (item) => (
+              <li key={item} className="flex gap-2.5">
+                <Check
+                  aria-hidden="true"
+                  className="mt-0.5 size-4 shrink-0 text-accent-foreground"
+                />
+                <span>{item}</span>
+              </li>
+            ),
+          )}
+        </ul>
       </>
     );
   } else if (erro) {
@@ -267,21 +361,26 @@ function PricingCard({
     corpo = (
       <div role="status">
         <span className="sr-only">Carregando preços…</span>
-        <Skeleton aria-hidden="true" className="mx-auto h-6 w-56 max-w-full" />
-        <Skeleton aria-hidden="true" className="mx-auto mt-7 h-7 w-36" />
-        <Skeleton aria-hidden="true" className="mx-auto mt-3 h-12 w-48 max-w-full" />
-        <Skeleton aria-hidden="true" className="mx-auto mt-3 h-10 w-full" />
+        <Skeleton aria-hidden="true" className="mx-auto h-10 w-56 max-w-full rounded-full" />
+        <Skeleton aria-hidden="true" className="mx-auto mt-8 h-14 w-48 max-w-full" />
+        <Skeleton aria-hidden="true" className="mx-auto mt-4 h-10 w-full" />
+        <Skeleton aria-hidden="true" className="mx-auto mt-7 h-32 w-full" />
       </div>
     );
   }
 
   return (
-    <div className="surface-card mx-auto mt-10 flex max-w-md flex-col p-8 text-center">
+    <div className="surface-card mx-auto mt-10 flex w-full max-w-md flex-col p-7 text-center sm:p-9">
       {corpo}
 
-      <PrimaryButton href={REGISTER_URL} className="mt-6 w-full">
+      <PrimaryButton href={REGISTER_URL} className="mt-7 w-full">
         Começar teste grátis
       </PrimaryButton>
+      {config ? (
+        <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+          {fraseTeste(config.teste_gratis)} Desistência em 7 dias com reembolso integral.
+        </p>
+      ) : null}
     </div>
   );
 }
@@ -305,16 +404,9 @@ function Precos() {
           <Skeleton aria-hidden="true" className="mx-auto mt-5 h-6 w-80 max-w-full" />
         ) : null}
         {pagamento ? <p className="mt-4 text-lg text-muted-foreground">{pagamento}</p> : null}
-        {config?.primeiros50.disponivel ? <OfertaDeLancamento oferta={config.primeiros50} /> : null}
       </div>
 
       <PricingCard config={config} erro={isError && !config} tentarDeNovo={() => void refetch()} />
-
-      {config ? (
-        <p className="mt-6 text-center text-sm text-muted-foreground">
-          {fraseTeste(config.teste_gratis)}
-        </p>
-      ) : null}
     </div>
   );
 }
@@ -400,32 +492,73 @@ function Landing() {
       </header>
 
       <main id="topo">
-        {/* Abertura */}
-        <Section className="pt-12 md:pt-20">
-          {/* Coluna do texto um pouco mais larga para o botão e o "30 dias grátis..." caberem lado a lado */}
-          <div className="grid items-center gap-12 md:grid-cols-[1.15fr_1fr] md:gap-14">
-            <div>
-              <p className="eyebrow">Para líderes de célula</p>
-              <h1 className="mt-4 text-4xl leading-[1.08] sm:text-5xl md:text-6xl">
+        {/* Abertura: foto de uma célula com as camadas de cor da marca e o título por cima */}
+        <section className="relative isolate overflow-hidden bg-primary text-white">
+          {HERO_FOTO ? (
+            <img
+              src={HERO_FOTO}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 -z-20 h-full w-full object-cover object-[70%_center]"
+            />
+          ) : null}
+          {/* Púrpura à esquerda (onde fica o texto), clareando para a direita; no celular, de cima para baixo */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,oklch(0.24_0.1_320/0.55)_0%,oklch(0.24_0.1_320/0.92)_65%)] md:bg-[linear-gradient(100deg,oklch(0.22_0.1_320/0.96)_0%,oklch(0.27_0.12_320/0.86)_40%,oklch(0.29_0.12_320/0.35)_75%,oklch(0.29_0.12_320/0.1)_100%)]"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute -bottom-40 -left-32 -z-10 size-[30rem] rounded-full bg-accent/30 blur-3xl"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute -right-24 -top-32 -z-10 size-[24rem] rounded-full bg-gold/20 blur-3xl"
+          />
+          <div className="mx-auto flex min-h-[32rem] w-full max-w-6xl items-end px-5 pb-14 pt-24 sm:px-8 md:min-h-[36rem] md:items-center md:py-24">
+            <div className="max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
+                Para líderes de célula
+              </p>
+              <h1 className="mt-4 text-4xl leading-[1.06] text-white sm:text-5xl md:text-6xl">
                 Do culto de domingo ao roteiro da célula em 1 minuto
               </h1>
-              <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
-                O culto de domingo aparece sozinho no app (ou você cola o link do YouTube) e vira um
-                roteiro pronto para a reunião da semana: quebra-gelo, leitura bíblica, perguntas e
-                aplicação. Tudo feito a partir do que foi pregado na sua igreja.
+              <p className="mt-5 max-w-lg text-lg leading-relaxed text-white/85">
+                Quebra-gelo, leitura bíblica, perguntas e aplicação, a partir da pregação da sua
+                igreja.
               </p>
-              <p className="mt-3 max-w-xl text-lg leading-relaxed text-muted-foreground">
-                Não tem live do seu culto? Não tem problema: cole o esboço ou as anotações da
-                pregação e o roteiro sai do mesmo jeito.
-              </p>
-              {/* Sem espaço para os dois lado a lado, o texto desce inteiro para a linha de baixo */}
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <PrimaryButton href={REGISTER_URL}>Começar teste grátis</PrimaryButton>
-                <span className="whitespace-nowrap text-sm text-muted-foreground">
-                  30 dias grátis · 5 roteiros · sem cartão obrigatório
-                </span>
+                <a
+                  href="#destaques"
+                  className="inline-flex items-center justify-center rounded-full border border-white/45 px-7 py-3.5 text-base font-semibold text-white transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  Saiba mais
+                </a>
               </div>
+              <p className="mt-4 text-sm text-white/75">
+                30 dias grátis · 5 roteiros · sem cartão obrigatório
+              </p>
             </div>
+          </div>
+        </section>
+
+        {/* Destaques: o que acontece, em três boxes curtos, ao lado do celular navegando no app */}
+        <Section id="destaques" className="scroll-mt-16">
+          <div className="grid items-center gap-12 md:grid-cols-[1.1fr_1fr] md:gap-14">
+            <ul className="grid gap-4">
+              {destaques.map(({ icone: Icone, titulo, texto }) => (
+                <li key={titulo} className="surface-card flex gap-4 p-6">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-muted text-primary">
+                    <Icone aria-hidden="true" className="size-5" />
+                  </span>
+                  <div className="min-w-0">
+                    <h2 className="font-display text-xl leading-snug">{titulo}</h2>
+                    <p className="mt-1.5 leading-relaxed text-muted-foreground">{texto}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
 
             {/* O celular navegando até o roteiro pronto: o pôster e o último quadro são o próprio roteiro */}
             <div className="relative">
