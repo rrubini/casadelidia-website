@@ -140,23 +140,29 @@ const steps = [
   {
     n: "1",
     title: "Escolha o culto",
-    text: "O culto de domingo aparece sozinho no app quando termina no canal da igreja. É só tocar nele. Se não houver vídeo, cole o esboço da pregação.",
+    text: "O culto de domingo chega sozinho do YouTube. É só tocar nele.",
     img: printPasso1,
-    alt: "Tela Novo roteiro do app com os últimos cultos do canal",
+    largura: 1020,
+    altura: 756,
+    alt: "Opção Link do culto e os últimos cultos do canal, com o de domingo marcado como novo",
   },
   {
     n: "2",
     title: "A IA escreve o roteiro",
-    text: "O roteiro sai do que foi pregado, no modelo da sua igreja e com a logo dela.",
+    text: "Sai da pregação, no modelo e com a logo da sua igreja.",
     img: printPasso2,
-    alt: "Roteiro gerado pela IA no celular, com a logo da igreja",
+    largura: 1170,
+    altura: 948,
+    alt: "Começo de um roteiro pronto, com a logo da igreja, o título e o quebra-gelo",
   },
   {
     n: "3",
     title: "Revise e envie",
-    text: "Ajuste o que quiser, baixe em Word ou PDF e mande para os líderes pelo WhatsApp.",
+    text: "Ajuste e mande aos líderes pelo WhatsApp.",
     img: printPasso3,
-    alt: "Janela Enviar aos líderes com o botão Abrir no WhatsApp",
+    largura: 502,
+    altura: 141,
+    alt: "Botão Abrir no WhatsApp",
   },
 ];
 
@@ -604,24 +610,32 @@ function Landing() {
           <h2 className="mt-3 max-w-2xl text-3xl leading-tight sm:text-4xl">
             Três passos, do culto ao arquivo no grupo dos líderes
           </h2>
-          <ol className="mt-10 grid gap-5 md:grid-cols-3">
+          {/* Sem card em volta: o detalhe da tela, ampliado, flutua sobre um brilho lilás (nada de caixa dentro de caixa) */}
+          <ol className="mt-12 grid gap-12 md:grid-cols-3 md:gap-8">
             {steps.map((s) => (
-              <li key={s.n} className="surface-card flex flex-col p-7">
-                <span className="flex size-11 items-center justify-center rounded-full bg-gold font-display text-xl font-semibold text-gold-foreground">
-                  {s.n}
-                </span>
-                <h3 className="mt-5 text-xl">{s.title}</h3>
-                {/* mb-6 garante o respiro quando o mt-auto do print (que alinha os três no md) é zero */}
-                <p className="mt-2 mb-6 leading-relaxed text-muted-foreground">{s.text}</p>
-                <img
-                  src={s.img}
-                  alt={s.alt}
-                  width={780}
-                  height={1200}
-                  loading="lazy"
-                  decoding="async"
-                  className="mx-auto mt-auto w-full max-w-[260px] rounded-[1.5rem] border border-border shadow-[var(--shadow-soft)] md:max-w-none"
-                />
+              <li key={s.n} className="flex flex-col">
+                <div className="relative flex items-center justify-center py-2 md:h-52 md:py-0">
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-x-6 inset-y-2 -z-10 rounded-full bg-accent/15 blur-2xl"
+                  />
+                  <img
+                    src={s.img}
+                    alt={s.alt}
+                    width={s.largura}
+                    height={s.altura}
+                    loading="lazy"
+                    decoding="async"
+                    className="max-h-44 w-auto max-w-[88%] rounded-2xl shadow-[var(--shadow-lift)] md:max-h-full"
+                  />
+                </div>
+                <div className="mt-6 flex items-center gap-3">
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-gold font-display text-lg font-semibold text-gold-foreground">
+                    {s.n}
+                  </span>
+                  <h3 className="text-xl">{s.title}</h3>
+                </div>
+                <p className="mt-2 leading-relaxed text-muted-foreground">{s.text}</p>
               </li>
             ))}
           </ol>
