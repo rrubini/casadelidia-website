@@ -17,6 +17,12 @@ import { useConfigPublica } from "@/hooks/use-config-publica";
 import logo from "@/assets/casadelidia-retangular-header.png";
 import heroFoto from "@/assets/hero-celula.webp";
 import heroFotoCelular from "@/assets/hero-celula-cel.webp";
+import imgRecurso1 from "@/assets/recurso-1.webp";
+import imgRecurso2 from "@/assets/recurso-2.webp";
+import imgRecurso3 from "@/assets/recurso-3.webp";
+import imgRecurso4 from "@/assets/recurso-4.webp";
+import imgRecurso5 from "@/assets/recurso-5.webp";
+import imgRecurso6 from "@/assets/recurso-6.webp";
 import printPasso1 from "@/assets/como-funciona-1.webp";
 import printPasso2 from "@/assets/como-funciona-2.webp";
 import printPasso3 from "@/assets/como-funciona-3.webp";
@@ -156,26 +162,32 @@ const steps = [
 
 const features = [
   {
+    img: imgRecurso1,
     title: "Funciona sem legenda",
     text: "Se o vídeo do culto não tem legenda, a transcrição é feita automaticamente.",
   },
   {
+    img: imgRecurso2,
     title: "Também a partir do esboço",
     text: "Sem vídeo do culto? Cole o esboço ou as anotações da pregação e a IA monta o roteiro a partir desse texto.",
   },
   {
+    img: imgRecurso3,
     title: "Modelos personalizáveis",
     text: "Você define as seções do roteiro do jeito que a sua igreja usa.",
   },
   {
+    img: imgRecurso4,
     title: "Editor com refazer por parte",
     text: "Ajuste o texto e peça para refazer só um trecho do roteiro.",
   },
   {
+    img: imgRecurso5,
     title: "Exportação em Word",
     text: "Baixe em .docx e compartilhe com a liderança.",
   },
   {
+    img: imgRecurso6,
     title: "Aviso por e-mail",
     text: "Você recebe um e-mail quando o culto de domingo já pode virar roteiro.",
   },
@@ -631,8 +643,16 @@ function Landing() {
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((f) => (
               <div key={f.title} className="surface-card p-7">
-                <span aria-hidden="true" className="block size-2.5 rounded-full bg-accent" />
-                <h3 className="mt-4 text-lg">{f.title}</h3>
+                <img
+                  src={f.img}
+                  alt=""
+                  aria-hidden="true"
+                  width={384}
+                  height={384}
+                  loading="lazy"
+                  className="-ml-2 -mt-2 size-24 object-contain sm:size-28"
+                />
+                <h3 className="mt-3 text-lg">{f.title}</h3>
                 <p className="mt-2 leading-relaxed text-muted-foreground">{f.text}</p>
               </div>
             ))}
