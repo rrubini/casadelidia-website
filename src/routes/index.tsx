@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Check, NotebookPen, Radio, Timer } from "lucide-react";
+import { AlarmClock, Check, NotebookPen, Radio, Timer } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LegalDialog } from "@/components/legal/legal-dialog";
 import { CelularDemo } from "@/components/celular-demo";
@@ -598,11 +598,17 @@ function Landing() {
           </div>
         </Section>
 
-        {/* O problema */}
-        <Section className="bg-primary text-primary-foreground">
-          <div className="grid gap-8 md:grid-cols-2 md:gap-14">
-            <h2 className="text-3xl leading-tight sm:text-4xl">
-              Toda semana a mesma corrida contra o relógio
+        {/* O problema: título bem grande, com "contra o relógio" em dourado e um relógio de marca
+            d'água, para quem só passa os olhos pegar a ideia sem ler o resto */}
+        <Section className="relative isolate overflow-hidden bg-primary text-primary-foreground">
+          <AlarmClock
+            aria-hidden="true"
+            strokeWidth={1.1}
+            className="absolute -right-20 -top-12 -z-10 size-[24rem] text-white/[0.06] md:-right-10 md:-top-16 md:size-[30rem]"
+          />
+          <div className="grid items-end gap-8 lg:grid-cols-[1.15fr_1fr] lg:gap-14">
+            <h2 className="text-5xl leading-[1.02] sm:text-6xl xl:text-7xl">
+              Toda semana a mesma corrida <span className="text-gold">contra o relógio</span>
             </h2>
             <div className="space-y-4 text-lg leading-relaxed text-primary-foreground/85">
               <p>
