@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Check, NotebookPen, Radio, Timer } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LegalDialog } from "@/components/legal/legal-dialog";
-import { DemoVideo } from "@/components/demo-video";
+import { CelularDemo } from "@/components/celular-demo";
 import {
   COMPANY_CNPJ,
   COMPANY_NAME,
@@ -557,30 +557,43 @@ function Landing() {
           </div>
         </section>
 
-        {/* Destaques: o que acontece, em três boxes curtos, ao lado do celular navegando no app */}
+        {/* Destaques: três pontos abertos, sem caixa, e uma faixa escura com o celular saindo pela borda de cima */}
         <Section id="destaques" className="scroll-mt-16">
-          <div className="grid items-center gap-12 md:grid-cols-[1.1fr_1fr] md:gap-14">
-            <ul className="grid gap-4">
-              {destaques.map(({ icone: Icone, titulo, texto }) => (
-                <li key={titulo} className="surface-card flex gap-4 p-6">
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-muted text-primary">
-                    <Icone aria-hidden="true" className="size-5" />
-                  </span>
-                  <div className="min-w-0">
-                    <h2 className="font-display text-xl leading-snug">{titulo}</h2>
-                    <p className="mt-1.5 leading-relaxed text-muted-foreground">{texto}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
+          <ul className="grid gap-10 md:grid-cols-3 md:gap-0 md:divide-x md:divide-border">
+            {destaques.map(({ icone: Icone, titulo, texto }) => (
+              <li key={titulo} className="md:px-8 md:first:pl-0 md:last:pr-0">
+                <Icone aria-hidden="true" className="size-8 text-accent" />
+                <h2 className="mt-4 font-display text-2xl leading-snug">{titulo}</h2>
+                <p className="mt-2 leading-relaxed text-muted-foreground">{texto}</p>
+              </li>
+            ))}
+          </ul>
 
-            {/* O celular navegando até o roteiro pronto: o pôster e o último quadro são o próprio roteiro */}
-            <div className="relative">
-              <div
-                aria-hidden="true"
-                className="absolute -inset-4 -z-10 rounded-[2.5rem] bg-accent/15 blur-2xl"
-              />
-              <DemoVideo />
+          {/* Quase preta, para não emendar no roxo de "O problema", logo abaixo */}
+          <div className="relative isolate mt-24 rounded-[2rem] bg-[#22102b] text-white md:mt-28">
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 -z-10 overflow-hidden rounded-[2rem]"
+            >
+              {/* Brilho magenta atrás do celular */}
+              <div className="absolute -bottom-40 left-1/2 size-[32rem] -translate-x-1/2 rounded-full bg-accent/35 blur-3xl md:left-3/4" />
+            </div>
+            <div className="grid gap-8 px-6 pb-10 sm:px-12 md:grid-cols-2 md:gap-12 md:pb-12 lg:px-20">
+              <div className="order-2 mx-auto max-w-md text-center md:order-1 md:mx-0 md:self-center md:py-12 md:text-left">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-gold">
+                  Veja funcionando
+                </p>
+                <h2 className="mt-3 font-display text-3xl leading-tight sm:text-4xl md:text-3xl lg:text-4xl">
+                  Do culto de domingo ao roteiro na mão dos líderes
+                </h2>
+                <p className="mt-4 text-lg leading-relaxed text-white/75">
+                  Escolha o culto, toque em gerar e mande aos líderes pelo WhatsApp. Tudo pelo
+                  celular.
+                </p>
+              </div>
+              <div className="order-1 -mt-16 justify-self-center md:order-2 md:-mt-20">
+                <CelularDemo />
+              </div>
             </div>
           </div>
         </Section>
