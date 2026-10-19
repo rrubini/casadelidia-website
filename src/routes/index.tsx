@@ -142,8 +142,8 @@ const steps = [
     title: "Escolha o culto",
     text: "O culto de domingo chega sozinho do YouTube. É só tocar nele.",
     img: printPasso1,
-    largura: 1020,
-    altura: 756,
+    largura: 1200,
+    altura: 900,
     alt: "Opção Link do culto e os últimos cultos do canal, com o de domingo marcado como novo",
   },
   {
@@ -151,18 +151,18 @@ const steps = [
     title: "A IA escreve o roteiro",
     text: "Sai da pregação, no modelo e com a logo da sua igreja.",
     img: printPasso2,
-    largura: 1170,
-    altura: 948,
+    largura: 1200,
+    altura: 900,
     alt: "Começo de um roteiro pronto, com a logo da igreja, o título e o quebra-gelo",
   },
   {
     n: "3",
     title: "Revise e envie",
-    text: "Ajuste e mande aos líderes pelo WhatsApp.",
+    text: "Baixe em PDF ou mande aos líderes pelo WhatsApp.",
     img: printPasso3,
-    largura: 502,
-    altura: 141,
-    alt: "Botão Abrir no WhatsApp",
+    largura: 1200,
+    altura: 900,
+    alt: "Botões Baixar como PDF e Enviar pelo WhatsApp",
   },
 ];
 
@@ -614,7 +614,7 @@ function Landing() {
           <ol className="mt-12 grid gap-12 md:grid-cols-3 md:gap-8">
             {steps.map((s) => (
               <li key={s.n} className="flex flex-col">
-                <div className="relative flex items-center justify-center py-2 md:h-52 md:py-0">
+                <div className="relative mx-auto w-full max-w-sm md:max-w-none">
                   <div
                     aria-hidden="true"
                     className="absolute inset-x-6 inset-y-2 -z-10 rounded-full bg-accent/15 blur-2xl"
@@ -626,7 +626,7 @@ function Landing() {
                     height={s.altura}
                     loading="lazy"
                     decoding="async"
-                    className="max-h-44 w-auto max-w-[88%] rounded-2xl shadow-[var(--shadow-lift)] md:max-h-full"
+                    className="aspect-[4/3] w-full rounded-2xl object-cover shadow-[var(--shadow-lift)]"
                   />
                 </div>
                 <div className="mt-6 flex items-center gap-3">
