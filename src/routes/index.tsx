@@ -15,6 +15,8 @@ import {
 import { formatarReais, type ConfigPublica, type PlanoId } from "@/lib/config-publica";
 import { useConfigPublica } from "@/hooks/use-config-publica";
 import logo from "@/assets/casadelidia-retangular-header.png";
+import heroFoto from "@/assets/hero-celula.webp";
+import heroFotoCelular from "@/assets/hero-celula-cel.webp";
 import printPasso1 from "@/assets/como-funciona-1.webp";
 import printPasso2 from "@/assets/como-funciona-2.webp";
 import printPasso3 from "@/assets/como-funciona-3.webp";
@@ -106,9 +108,6 @@ function Section({
     </section>
   );
 }
-
-// Foto da abertura (uma célula reunida). Enquanto não houver, fica só o fundo púrpura com as camadas de cor.
-const HERO_FOTO: string | null = null;
 
 const destaques = [
   {
@@ -494,30 +493,34 @@ function Landing() {
       <main id="topo">
         {/* Abertura: foto de uma célula com as camadas de cor da marca e o título por cima */}
         <section className="relative isolate overflow-hidden bg-primary text-white">
-          {HERO_FOTO ? (
+          {/* Foto de uma célula: horizontal no computador, vertical no celular (pessoas em cima, texto embaixo) */}
+          <picture>
+            <source media="(max-width: 767px)" srcSet={heroFotoCelular} />
             <img
-              src={HERO_FOTO}
+              src={heroFoto}
               alt=""
               aria-hidden="true"
-              className="absolute inset-0 -z-20 h-full w-full object-cover object-[70%_center]"
+              fetchPriority="high"
+              className="absolute inset-0 -z-20 h-full w-full object-cover object-top md:object-[65%_center]"
             />
-          ) : null}
-          {/* Púrpura à esquerda (onde fica o texto), clareando para a direita; no celular, de cima para baixo */}
+          </picture>
+          {/* Camadas de cor: no computador, púrpura à esquerda (onde fica o texto) clareando até a foto;
+              no celular, a foto limpa em cima e o púrpura subindo de baixo, atrás do texto */}
           <div
             aria-hidden="true"
-            className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,oklch(0.24_0.1_320/0.55)_0%,oklch(0.24_0.1_320/0.92)_65%)] md:bg-[linear-gradient(100deg,oklch(0.22_0.1_320/0.96)_0%,oklch(0.27_0.12_320/0.86)_40%,oklch(0.29_0.12_320/0.35)_75%,oklch(0.29_0.12_320/0.1)_100%)]"
+            className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,oklch(0.24_0.1_320/0)_0%,oklch(0.24_0.1_320/0.1)_36%,oklch(0.22_0.1_320/0.84)_58%,oklch(0.2_0.09_320/0.96)_100%)] md:bg-[linear-gradient(100deg,oklch(0.2_0.09_320/0.94)_0%,oklch(0.24_0.1_320/0.8)_30%,oklch(0.27_0.12_320/0.32)_56%,oklch(0.29_0.12_320/0)_78%)]"
           />
           <div
             aria-hidden="true"
-            className="absolute -bottom-40 -left-32 -z-10 size-[30rem] rounded-full bg-accent/30 blur-3xl"
+            className="absolute -bottom-40 -left-32 -z-10 size-[30rem] rounded-full bg-accent/25 blur-3xl"
           />
           <div
             aria-hidden="true"
-            className="absolute -right-24 -top-32 -z-10 size-[24rem] rounded-full bg-gold/20 blur-3xl"
+            className="absolute -left-20 -top-40 -z-10 size-[22rem] rounded-full bg-gold/15 blur-3xl"
           />
-          <div className="mx-auto flex min-h-[32rem] w-full max-w-6xl items-end px-5 pb-14 pt-24 sm:px-8 md:min-h-[36rem] md:items-center md:py-24">
-            <div className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
+          <div className="mx-auto flex min-h-[48rem] w-full max-w-6xl items-end px-5 pb-10 pt-72 sm:px-8 md:min-h-[38rem] md:items-center md:py-24">
+            <div className="max-w-xl [text-shadow:0_1px_18px_oklch(0.2_0.09_320/0.45)]">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/85">
                 Para líderes de célula
               </p>
               <h1 className="mt-4 text-4xl leading-[1.06] text-white sm:text-5xl md:text-6xl">
