@@ -476,13 +476,13 @@ function Landing() {
           <div className="flex items-center gap-2 sm:gap-3">
             <a
               href={LOGIN_URL}
-              className="rounded-full px-3 py-2 text-sm font-semibold hover:bg-muted"
+              className="whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold hover:bg-muted"
             >
               Entrar
             </a>
             <a
               href={REGISTER_URL}
-              className="rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground transition hover:brightness-105"
+              className="whitespace-nowrap rounded-full bg-accent px-3.5 py-2 text-sm font-semibold text-accent-foreground transition hover:brightness-105 sm:px-4"
             >
               Teste grátis
             </a>
@@ -493,22 +493,22 @@ function Landing() {
       <main id="topo">
         {/* Abertura: foto de uma célula com as camadas de cor da marca e o título por cima */}
         <section className="relative isolate overflow-hidden bg-primary text-white">
-          {/* Foto de uma célula: horizontal no computador, vertical no celular (pessoas em cima, texto embaixo) */}
+          {/* Foto de uma célula: horizontal no computador, vertical no celular e no tablet em pé (pessoas em cima, texto embaixo) */}
           <picture>
-            <source media="(max-width: 767px)" srcSet={heroFotoCelular} />
+            <source media="(max-width: 1023px)" srcSet={heroFotoCelular} />
             <img
               src={heroFoto}
               alt=""
               aria-hidden="true"
               fetchPriority="high"
-              className="absolute inset-0 -z-20 h-full w-full object-cover object-top md:object-[65%_center]"
+              className="absolute inset-0 -z-20 h-full w-full object-cover object-[center_18%] lg:object-[65%_22%]"
             />
           </picture>
           {/* Camadas de cor: no computador, púrpura à esquerda (onde fica o texto) clareando até a foto;
               no celular, a foto limpa em cima e o púrpura subindo de baixo, atrás do texto */}
           <div
             aria-hidden="true"
-            className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,oklch(0.24_0.1_320/0)_0%,oklch(0.24_0.1_320/0.1)_36%,oklch(0.22_0.1_320/0.84)_58%,oklch(0.2_0.09_320/0.96)_100%)] md:bg-[linear-gradient(100deg,oklch(0.2_0.09_320/0.94)_0%,oklch(0.24_0.1_320/0.8)_30%,oklch(0.27_0.12_320/0.32)_56%,oklch(0.29_0.12_320/0)_78%)]"
+            className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,oklch(0.24_0.1_320/0)_0%,oklch(0.24_0.1_320/0.1)_36%,oklch(0.22_0.1_320/0.84)_58%,oklch(0.2_0.09_320/0.96)_100%)] lg:bg-[linear-gradient(100deg,oklch(0.2_0.09_320/0.94)_0%,oklch(0.24_0.1_320/0.8)_30%,oklch(0.27_0.12_320/0.32)_56%,oklch(0.29_0.12_320/0)_78%)]"
           />
           <div
             aria-hidden="true"
@@ -518,7 +518,7 @@ function Landing() {
             aria-hidden="true"
             className="absolute -left-20 -top-40 -z-10 size-[22rem] rounded-full bg-gold/15 blur-3xl"
           />
-          <div className="mx-auto flex min-h-[48rem] w-full max-w-6xl items-end px-5 pb-10 pt-72 sm:px-8 md:min-h-[38rem] md:items-center md:py-24">
+          <div className="mx-auto flex min-h-[max(38rem,calc(100svh-65px))] w-full max-w-6xl items-end px-5 pb-10 pt-40 sm:min-h-[max(38rem,calc(100svh-69px))] sm:px-8 lg:items-center lg:py-20">
             <div className="max-w-xl [text-shadow:0_1px_18px_oklch(0.2_0.09_320/0.45)]">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/85">
                 Para líderes de célula
