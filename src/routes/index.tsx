@@ -587,8 +587,8 @@ function Landing() {
                   Do culto de domingo ao roteiro na mão dos líderes
                 </h2>
                 <p className="mt-4 text-lg leading-relaxed text-white/75">
-                  Escolha o culto, toque em gerar e mande aos líderes pelo WhatsApp. Tudo pelo
-                  celular.
+                  Escolha o culto, toque em gerar, revise e edite o que precisar e então mande aos
+                  líderes pelo WhatsApp. Tudo pelo celular.
                 </p>
               </div>
               <div className="order-1 -mt-16 justify-self-center md:order-2 md:-mt-20">
