@@ -1,6 +1,18 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { AlarmClock, Check, NotebookPen, Radio, Timer } from "lucide-react";
+import {
+  AlarmClock,
+  AudioLines,
+  Check,
+  FileDown,
+  LayoutTemplate,
+  MailCheck,
+  NotebookPen,
+  Radio,
+  RefreshCw,
+  Timer,
+  type LucideIcon,
+} from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LegalDialog } from "@/components/legal/legal-dialog";
 import { CelularDemo } from "@/components/celular-demo";
@@ -17,12 +29,7 @@ import { useConfigPublica } from "@/hooks/use-config-publica";
 import logo from "@/assets/casadelidia-retangular-header.png";
 import heroFoto from "@/assets/hero-celula.webp";
 import heroFotoCelular from "@/assets/hero-celula-cel.webp";
-import imgRecurso1 from "@/assets/recurso-1.webp";
-import imgRecurso2 from "@/assets/recurso-2.webp";
-import imgRecurso3 from "@/assets/recurso-3.webp";
-import imgRecurso4 from "@/assets/recurso-4.webp";
-import imgRecurso5 from "@/assets/recurso-5.webp";
-import imgRecurso6 from "@/assets/recurso-6.webp";
+import imgModelos from "@/assets/recurso-modelos.webp";
 import printPasso1 from "@/assets/como-funciona-1.webp";
 import printPasso2 from "@/assets/como-funciona-2.webp";
 import printPasso3 from "@/assets/como-funciona-3.webp";
@@ -166,34 +173,40 @@ const steps = [
   },
 ];
 
-const features = [
+const features: {
+  icone: LucideIcon;
+  title: string;
+  text: string;
+  tela?: { src: string; largura: number; altura: number };
+}[] = [
   {
-    img: imgRecurso1,
+    icone: AudioLines,
     title: "Funciona sem legenda",
     text: "Se o vídeo do culto não tem legenda, a transcrição é feita automaticamente.",
   },
   {
-    img: imgRecurso2,
+    icone: NotebookPen,
     title: "Também a partir do esboço",
     text: "Sem vídeo do culto? Cole o esboço ou as anotações da pregação e a IA monta o roteiro a partir desse texto.",
   },
   {
-    img: imgRecurso3,
+    icone: LayoutTemplate,
     title: "Modelos personalizáveis",
     text: "Você define as seções do roteiro do jeito que a sua igreja usa.",
+    tela: { src: imgModelos, largura: 720, altura: 838 },
   },
   {
-    img: imgRecurso4,
-    title: "Editor com refazer por parte",
+    icone: RefreshCw,
+    title: "Você pode pedir pra IA gerar de novo",
     text: "Ajuste o texto e peça para refazer só um trecho do roteiro.",
   },
   {
-    img: imgRecurso5,
-    title: "Exportação em Word",
-    text: "Baixe em .docx e compartilhe com a liderança.",
+    icone: FileDown,
+    title: "Exportação em Word e PDF",
+    text: "Baixe em Word ou PDF e compartilhe com a liderança.",
   },
   {
-    img: imgRecurso6,
+    icone: MailCheck,
     title: "Aviso por e-mail",
     text: "Você recebe um e-mail quando o culto de domingo já pode virar roteiro.",
   },
@@ -660,28 +673,54 @@ function Landing() {
           </ol>
         </Section>
 
-        {/* Recursos */}
+        {/* Recursos: mosaico. Modelos em destaque, com a tela de verdade do app (o roteiro com a logo da
+            igreja), e os outros recursos em blocos menores, com ícone de linha */}
         <Section className="bg-muted/60">
           <p className="eyebrow">Recursos</p>
           <h2 className="mt-3 max-w-2xl text-3xl leading-tight sm:text-4xl">
             O que você tem em mãos
           </h2>
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {features.map((f) => (
-              <div key={f.title} className="surface-card p-7">
-                <img
-                  src={f.img}
-                  alt=""
-                  aria-hidden="true"
-                  width={384}
-                  height={384}
-                  loading="lazy"
-                  className="-ml-2 -mt-2 size-24 object-contain sm:size-28"
-                />
-                <h3 className="mt-3 text-lg">{f.title}</h3>
-                <p className="mt-2 leading-relaxed text-muted-foreground">{f.text}</p>
-              </div>
-            ))}
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {features
+              .filter((f) => f.tela)
+              .map(({ icone: Icone, title, text, tela }) => (
+                <div
+                  key={title}
+                  className="relative isolate grid items-center gap-8 overflow-hidden rounded-[2rem] bg-[#22102b] p-8 text-white sm:p-10 md:col-span-2 md:grid-cols-[1fr_1.1fr] lg:row-span-2"
+                >
+                  <div
+                    aria-hidden="true"
+                    className="absolute -bottom-32 -right-24 -z-10 size-[26rem] rounded-full bg-accent/30 blur-3xl"
+                  />
+                  <div>
+                    <Icone aria-hidden="true" className="size-8 text-gold" />
+                    <h3 className="mt-4 text-2xl text-white sm:text-3xl">{title}</h3>
+                    <p className="mt-3 text-lg leading-relaxed text-white/75">{text}</p>
+                  </div>
+                  {tela ? (
+                    <img
+                      src={tela.src}
+                      alt="Roteiro no modelo Encontro, com a logo da igreja e as seções Quebra-gelo e Leitura bíblica"
+                      width={tela.largura}
+                      height={tela.altura}
+                      loading="lazy"
+                      className="mx-auto max-h-[24rem] w-auto rounded-2xl shadow-[0_30px_60px_-30px_rgba(0,0,0,0.6)]"
+                    />
+                  ) : null}
+                </div>
+              ))}
+            {features
+              .filter((f) => !f.tela)
+              .map(({ icone: Icone, title, text }) => (
+                <div
+                  key={title}
+                  className="rounded-[1.5rem] bg-card p-6 ring-1 ring-primary/5 md:last:col-span-2 lg:last:col-span-1"
+                >
+                  <Icone aria-hidden="true" className="size-7 text-accent" />
+                  <h3 className="mt-4 text-lg">{title}</h3>
+                  <p className="mt-2 leading-relaxed text-muted-foreground">{text}</p>
+                </div>
+              ))}
           </div>
         </Section>
 
