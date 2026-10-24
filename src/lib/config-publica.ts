@@ -93,3 +93,15 @@ export function formatarData(iso: string): string {
   const [ano, mes, dia] = iso.split("-");
   return dia && mes && ano ? `${dia}/${mes}/${ano}` : iso;
 }
+
+/** Dias de hoje (no relógio de quem vê) até a data "AAAA-MM-DD": 0 no próprio dia, null se já passou. */
+export function diasAte(iso: string): number | null {
+  const [ano, mes, dia] = iso.split("-").map(Number);
+  if (!ano || !mes || !dia) return null;
+  const hoje = new Date();
+  const dias = Math.round(
+    (Date.UTC(ano, mes - 1, dia) - Date.UTC(hoje.getFullYear(), hoje.getMonth(), hoje.getDate())) /
+      86_400_000,
+  );
+  return dias >= 0 ? dias : null;
+}

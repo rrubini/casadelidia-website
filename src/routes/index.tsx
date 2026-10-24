@@ -24,7 +24,13 @@ import {
   SITE_URL,
   SLOGAN,
 } from "@/lib/site";
-import { formatarData, formatarReais, type ConfigPublica, type Plano } from "@/lib/config-publica";
+import {
+  diasAte,
+  formatarData,
+  formatarReais,
+  type ConfigPublica,
+  type Plano,
+} from "@/lib/config-publica";
 import { useConfigPublica } from "@/hooks/use-config-publica";
 import logo from "@/assets/casadelidia-retangular-header.png";
 import heroFoto from "@/assets/hero-celula.webp";
@@ -213,21 +219,15 @@ const features: {
 ];
 
 // Preços: todos os números e condições vêm de useConfigPublica(). Nada de valor fixo aqui.
-const NOME_DA_FORMA_DE_PAGAMENTO: Record<string, string> = {
-  cartao_de_credito: "cartão de crédito",
-};
-
 function plural(n: number, um: string, varios: string) {
   return `${n} ${n === 1 ? um : varios}`;
 }
 
-function frasePagamento(formas: string[]) {
-  if (formas.length === 0) return null;
-  const nomes = formas.map((f) => NOME_DA_FORMA_DE_PAGAMENTO[f] ?? f.replaceAll("_", " "));
-  const lista =
-    nomes.length < 2 ? nomes.join("") : `${nomes.slice(0, -1).join(", ")} ou ${nomes.at(-1)}`;
-  const soCartao = formas.every((f) => f === "cartao_de_credito");
-  return `Pagamento com ${lista}${soCartao ? ", com renovação automática" : ""}.`;
+/** O contador do desconto de lançamento, por cima de cada plano. */
+function fraseDoPrazo(dias: number) {
+  if (dias === 0) return "Desconto termina hoje";
+  if (dias === 1) return "Desconto termina amanhã";
+  return `Desconto termina em ${dias} dias`;
 }
 
 function fraseTeste(teste: ConfigPublica["teste_gratis"]) {
@@ -238,12 +238,12 @@ function fraseTeste(teste: ConfigPublica["teste_gratis"]) {
 
 // O que vem em todos os planos (SPEC, seção 6.1): entre eles muda só o tamanho
 const incluso = [
-  "Transcrição automática, mesmo sem legenda",
-  "O culto do canal aparece sozinho no app",
-  "Seus modelos e a logo da igreja",
+  "Transcrição automática do seu culto no YouTube",
+  "Seu culto transmitido no YouTube aparece automaticamente no Casa de Lídia",
+  "Você usa seu modelo de roteiro atual, dentro do Casa de Lídia",
   "Envio aos líderes e relatórios das células",
   "Word e PDF sem marca d'água",
-  "Equipe com papéis",
+  "Adicione seu time de apoio, cada um com sua função: roteiro, envio, líder de célula etc.",
 ];
 
 function limitesDoPlano(p: Plano) {
@@ -258,11 +258,28 @@ function limitesDoPlano(p: Plano) {
   ];
 }
 
-function CartaoDoPlano({ plano, anual }: { plano: Plano; anual: boolean }) {
+function CartaoDoPlano({
+  plano,
+  anual,
+  noCartao,
+  diasDeDesconto,
+}: {
+  plano: Plano;
+  anual: boolean;
+  noCartao: boolean;
+  diasDeDesconto: number | null;
+}) {
   const preco = anual ? plano.anual : plano.mensal;
   const regular = anual ? plano.anual_regular : plano.mensal_regular;
+  const cartao = noCartao ? " no cartão" : "";
   return (
-    <div className="surface-card flex flex-col p-6 sm:p-7">
+    <div className="surface-card @container relative flex flex-col p-5 sm:p-7">
+      {plano.fundador && diasDeDesconto !== null ? (
+        <span className="absolute left-1/2 top-0 inline-flex -translate-x-1/2 -translate-y-1/2 items-center gap-1.5 whitespace-nowrap rounded-full bg-gold px-3.5 py-1.5 text-xs font-bold text-gold-foreground shadow-md">
+          <Timer aria-hidden="true" className="size-3.5" />
+          {fraseDoPrazo(diasDeDesconto)}
+        </span>
+      ) : null}
       <h3 className="font-display text-2xl">{plano.nome}</h3>
       <p className="mt-1 text-sm text-muted-foreground">{plano.perfil}</p>
       <p className="mt-6 min-h-6 text-sm text-muted-foreground">
@@ -274,16 +291,17 @@ function CartaoDoPlano({ plano, anual }: { plano: Plano; anual: boolean }) {
           </>
         ) : null}
       </p>
-      <p className="font-display text-4xl font-semibold leading-none sm:text-5xl">
+      <p className="font-display text-4xl font-semibold leading-none sm:text-[min(3rem,calc((100cqi_-_2.5rem)/5))]">
         {formatarReais(preco)}
         <span className="font-sans text-base font-medium text-muted-foreground">
           {anual ? "/ano" : "/mês"}
         </span>
       </p>
-      <p className="mt-3 min-h-10 text-sm leading-relaxed">
+      {/* A fonte acompanha a largura do cartão para "Cobrado todo mês no cartão. Cancele quando quiser." caber numa linha */}
+      <p className="mt-3 min-h-10 text-[clamp(0.75rem,3.85cqi,0.8125rem)] leading-relaxed">
         {anual
-          ? `Cobrado uma vez por ano. Equivale a ${formatarReais(plano.anual_equivale_por_mes)} por mês.`
-          : "Cobrado todo mês. Cancele quando quiser."}
+          ? `Cobrado uma vez por ano${cartao}. Equivale a ${formatarReais(plano.anual_equivale_por_mes)} por mês.`
+          : `Cobrado todo mês${cartao}. Cancele quando quiser.`}
       </p>
       <ul className="mt-5 space-y-2.5 border-t border-border pt-5 text-sm">
         {limitesDoPlano(plano).map((item) => (
@@ -302,7 +320,9 @@ function Precos() {
   const [anual, setAnual] = useState(false);
   // Se uma nova busca falhar depois de já ter dados, continua mostrando os dados.
   const carregando = !config && !isError;
-  const pagamento = config ? frasePagamento(config.pagamento) : null;
+  const noCartao =
+    !!config?.pagamento.length && config.pagamento.every((f) => f === "cartao_de_credito");
+  const diasDeDesconto = config?.fundador.disponivel ? diasAte(config.fundador.ate) : null;
   const mesesGratis = config?.planos_v3[0]?.meses_gratis ?? 0;
   const opcao = (ativo: boolean) =>
     `rounded-full px-4 py-2 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
@@ -345,30 +365,38 @@ function Precos() {
           </button>
         </div>
 
-        <div className="mt-8 grid gap-5 md:grid-cols-3">
+        <div className="mt-11 grid gap-x-5 gap-y-9 md:grid-cols-3">
           {config.planos_v3.map((plano) => (
-            <CartaoDoPlano key={plano.id} plano={plano} anual={anual} />
+            <CartaoDoPlano
+              key={plano.id}
+              plano={plano}
+              anual={anual}
+              noCartao={noCartao}
+              diasDeDesconto={diasDeDesconto}
+            />
           ))}
         </div>
 
-        <div className="mx-auto mt-9 max-w-3xl text-center">
-          <p className="text-sm font-semibold">Em todos os planos</p>
-          <ul className="mt-3 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
+        <div className="mt-9 text-center">
+          <PrimaryButton href={REGISTER_URL}>Começar teste grátis</PrimaryButton>
+          <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+            {fraseTeste(config.teste_gratis)}
+          </p>
+        </div>
+
+        <div className="mx-auto mt-10 max-w-3xl">
+          <p className="text-center text-sm font-semibold">Em todos os planos</p>
+          <ul className="mt-4 grid gap-x-8 gap-y-2.5 text-sm text-muted-foreground sm:grid-cols-2">
             {incluso.map((item) => (
-              <li key={item} className="flex items-center gap-1.5">
-                <Check aria-hidden="true" className="size-4 shrink-0 text-accent-foreground" />
-                {item}
+              <li key={item} className="flex gap-2">
+                <Check
+                  aria-hidden="true"
+                  className="mt-0.5 size-4 shrink-0 text-accent-foreground"
+                />
+                <span>{item}</span>
               </li>
             ))}
           </ul>
-          <PrimaryButton href={REGISTER_URL} className="mt-8">
-            Começar teste grátis
-          </PrimaryButton>
-          <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-            {fraseTeste(config.teste_gratis)} No teste dá para convidar até{" "}
-            {plural(config.teste_gratis.usuarios, "pessoa", "pessoas")} da equipe. Desistência em 7
-            dias com reembolso integral.
-          </p>
         </div>
       </>
     );
@@ -404,16 +432,15 @@ function Precos() {
       <div className="text-center">
         <p className="eyebrow">Preços</p>
         <h2 className="mt-3 text-3xl leading-tight sm:text-4xl">
-          Três planos, pelo tamanho da igreja
+          Três planos, de acordo com a realidade da sua igreja!
         </h2>
         {carregando ? (
           <Skeleton aria-hidden="true" className="mx-auto mt-5 h-6 w-80 max-w-full" />
         ) : null}
-        {pagamento ? <p className="mt-4 text-lg text-muted-foreground">{pagamento}</p> : null}
         {config?.fundador.disponivel ? (
           <p className="mx-auto mt-6 max-w-2xl rounded-2xl bg-muted px-5 py-3 text-sm">
-            <strong>Plano Fundador:</strong> preço especial para quem assinar até{" "}
-            {formatarData(config.fundador.ate)}, travado enquanto a assinatura continuar ativa.
+            <strong>Desconto especial de lançamento:</strong> preço especial para quem assinar até{" "}
+            {formatarData(config.fundador.ate)}.
           </p>
         ) : null}
       </div>
