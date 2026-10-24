@@ -298,7 +298,7 @@ function CartaoDoPlano({
         </span>
       </p>
       {/* A fonte acompanha a largura do cartão para "Cobrado todo mês no cartão. Cancele quando quiser." caber numa linha */}
-      <p className="mt-3 min-h-10 text-[clamp(0.75rem,3.85cqi,0.8125rem)] leading-relaxed">
+      <p className="mt-3 min-h-10 text-[clamp(0.75rem,3.85cqi,0.8125rem)] leading-relaxed text-balance">
         {anual
           ? `Cobrado uma vez por ano${cartao}. Equivale a ${formatarReais(plano.anual_equivale_por_mes)} por mês.`
           : `Cobrado todo mês${cartao}. Cancele quando quiser.`}
