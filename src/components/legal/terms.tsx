@@ -10,7 +10,7 @@ import { EmailLink, LegalHeader, Summary } from "./legal-layout";
 export function TermsContent() {
   return (
     <article className="legal-prose">
-      <LegalHeader title="Termos de Uso" updated="15 de outubro de 2026" version="2.2" />
+      <LegalHeader title="Termos de Uso" updated="24 de outubro de 2026" version="2.3" />
 
       <Summary>
         <li>Teste grátis de 30 dias com até 5 roteiros, sem cartão.</li>
@@ -76,8 +76,14 @@ export function TermsContent() {
           devem ser verdadeiras e atualizadas.
         </li>
         <li>
-          A conta é pessoal. Você é responsável por manter sua senha em sigilo e pelas atividades
-          feitas com o seu acesso.
+          Cada pessoa tem o próprio acesso e é responsável por manter a senha em sigilo e pelas
+          atividades feitas com ele.
+        </li>
+        <li>
+          A assinatura é da igreja. Quem assina (o Assinante) pode convidar outras pessoas para a
+          equipe, cada uma com um papel, até o limite de pessoas do plano. Um e-mail participa de
+          uma igreja só. Os roteiros, os modelos e o limite de roteiros são da igreja, para a equipe
+          toda.
         </li>
         <li>
           Se suspeitar de uso indevido, avise-nos em <EmailLink email={CONTACT_EMAIL} />.
@@ -88,7 +94,7 @@ export function TermsContent() {
       <ul>
         <li>
           Novas contas têm 30 dias de teste grátis, com até 5 roteiros no total. O limite do teste
-          não se renova.
+          não se renova. No teste, a igreja pode convidar até 5 pessoas, que dividem os 5 roteiros.
         </li>
         <li>Não é preciso cadastrar cartão para começar.</li>
         <li>
@@ -104,17 +110,20 @@ export function TermsContent() {
       <h3>4. Plano e pagamento</h3>
       <h4>4.1 Plano</h4>
       <p>
-        O Casa de Lídia tem um plano com até 30 roteiros por mês. Pedir para refazer só uma parte de
-        um roteiro não conta nesse limite. As opções de pagamento e os valores em vigor são
-        mostrados no app antes da contratação.
+        O Casa de Lídia tem três planos (Essencial, Crescendo e Rede), que mudam no número de
+        roteiros por mês, de pessoas na equipe e de células cadastradas. O Rede tem roteiros
+        ilimitados, com um limite técnico mensal contra abuso, que aumentamos a pedido. Cada parte
+        de um roteiro pode ser refeita pela IA até 2 vezes, e depois disso a mudança é feita no
+        editor. Refazer uma parte não conta no limite de roteiros. As opções de pagamento e os
+        valores em vigor são mostrados no app antes da contratação.
       </p>
       <h4>4.2 Licença de uso</h4>
       <p>
-        A assinatura concede a você uma licença de uso do software Casa de Lídia, pessoal, não
-        exclusiva e intransferível, pelo período contratado (o mês ou o ano pago) e dentro dos
-        limites do plano. O teste grátis dá a mesma licença, pelo prazo e com os limites do teste. A
-        licença não transfere a você a propriedade da plataforma (seção 9). Os roteiros que você
-        gera continuam sendo seus (seção 8).
+        A assinatura concede uma licença de uso do software Casa de Lídia, não exclusiva e
+        intransferível, para a igreja e as pessoas que ela convidar para a equipe, pelo período
+        contratado (o mês ou o ano pago) e dentro dos limites do plano. O teste grátis dá a mesma
+        licença, pelo prazo e com os limites do teste. A licença não transfere a você a propriedade
+        da plataforma (seção 9). Os roteiros que você gera continuam sendo seus (seção 8).
       </p>
       <h4>4.3 Forma de pagamento</h4>
       <p>
@@ -137,10 +146,10 @@ export function TermsContent() {
       </p>
       <h4>4.6 Ofertas promocionais</h4>
       <p>
-        Ofertas promocionais podem ter regras próprias, como quantidade de vagas, informadas na
-        divulgação de cada oferta. Quando um preço promocional vale enquanto a assinatura continuar
-        ativa e em dia, cancelar a assinatura encerra a oferta: uma nova assinatura segue o preço em
-        vigor.
+        Ofertas promocionais, como o Plano Fundador, podem ter regras próprias, como prazo ou
+        quantidade de vagas, informadas na divulgação de cada oferta. Quando um preço promocional
+        vale enquanto a assinatura continuar ativa e em dia, cancelar a assinatura encerra a oferta:
+        uma nova assinatura segue o preço em vigor.
       </p>
       <h4>4.7 Alteração de preço</h4>
       <p>
@@ -199,7 +208,10 @@ export function TermsContent() {
       <h4>Você não pode</h4>
       <ul>
         <li>revender ou repassar o acesso ao serviço sem autorização</li>
-        <li>compartilhar sua conta com outras pessoas</li>
+        <li>
+          compartilhar o seu acesso (e-mail e senha) com outras pessoas: para isso, convide-as para
+          a equipe
+        </li>
         <li>usar o serviço para fins ilegais</li>
         <li>tentar burlar os limites do plano ou do teste grátis</li>
         <li>usar robôs ou scripts para acessar o serviço ou sobrecarregar nossos servidores</li>

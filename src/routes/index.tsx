@@ -24,7 +24,7 @@ import {
   SITE_URL,
   SLOGAN,
 } from "@/lib/site";
-import { formatarReais, type ConfigPublica, type PlanoId } from "@/lib/config-publica";
+import { formatarData, formatarReais, type ConfigPublica, type Plano } from "@/lib/config-publica";
 import { useConfigPublica } from "@/hooks/use-config-publica";
 import logo from "@/assets/casadelidia-retangular-header.png";
 import heroFoto from "@/assets/hero-celula.webp";
@@ -236,151 +236,149 @@ function fraseTeste(teste: ConfigPublica["teste_gratis"]) {
   return `Todo plano começa com ${dias} de teste grátis e ${roteiros}${teste.exige_cartao ? "" : ", sem cartão"}.`;
 }
 
-// O que vem no plano (SPEC, seção 6: "Tudo incluso")
+// O que vem em todos os planos (SPEC, seção 6.1): entre eles muda só o tamanho
 const incluso = [
+  "Transcrição automática, mesmo sem legenda",
   "O culto do canal aparece sozinho no app",
-  "Seus modelos e a logo da igreja nos roteiros",
+  "Seus modelos e a logo da igreja",
   "Envio aos líderes e relatórios das células",
   "Word e PDF sem marca d'água",
+  "Equipe com papéis",
 ];
 
-function Vagas({ oferta }: { oferta: ConfigPublica["primeiros50"] }) {
-  const restam = oferta.vagas_restantes === 1 ? "Resta" : "Restam";
-  const pct = oferta.vagas_total ? (oferta.vagas_restantes / oferta.vagas_total) * 100 : 0;
+function limitesDoPlano(p: Plano) {
+  return [
+    p.roteiros_ilimitados
+      ? "Roteiros ilimitados"
+      : `${plural(p.roteiros_por_mes, "roteiro", "roteiros")} por mês`,
+    p.usuarios_ilimitados
+      ? "Equipe sem limite de pessoas"
+      : `Até ${plural(p.usuarios, "pessoa", "pessoas")} na equipe`,
+    p.celulas_ilimitadas ? "Células ilimitadas" : `Até ${plural(p.celulas, "célula", "células")}`,
+  ];
+}
+
+function CartaoDoPlano({ plano, anual }: { plano: Plano; anual: boolean }) {
+  const preco = anual ? plano.anual : plano.mensal;
+  const regular = anual ? plano.anual_regular : plano.mensal_regular;
   return (
-    <div className="mx-auto mt-5 w-full max-w-60">
-      <div className="h-2 overflow-hidden rounded-full bg-muted" aria-hidden="true">
-        <div className="h-full rounded-full bg-gold" style={{ width: `${pct}%` }} />
-      </div>
-      <p className="mt-2 text-xs font-semibold text-muted-foreground">
-        {restam} {oferta.vagas_restantes} de {oferta.vagas_total} vagas
+    <div className="surface-card flex flex-col p-6 sm:p-7">
+      <h3 className="font-display text-2xl">{plano.nome}</h3>
+      <p className="mt-1 text-sm text-muted-foreground">{plano.perfil}</p>
+      <p className="mt-6 min-h-6 text-sm text-muted-foreground">
+        {plano.fundador && regular > preco ? (
+          <>
+            <span className="sr-only">De </span>
+            <s>{formatarReais(regular)}</s>
+            <span className="sr-only"> por</span>
+          </>
+        ) : null}
       </p>
+      <p className="font-display text-4xl font-semibold leading-none sm:text-5xl">
+        {formatarReais(preco)}
+        <span className="font-sans text-base font-medium text-muted-foreground">
+          {anual ? "/ano" : "/mês"}
+        </span>
+      </p>
+      <p className="mt-3 min-h-10 text-sm leading-relaxed">
+        {anual
+          ? `Cobrado uma vez por ano. Equivale a ${formatarReais(plano.anual_equivale_por_mes)} por mês.`
+          : "Cobrado todo mês. Cancele quando quiser."}
+      </p>
+      <ul className="mt-5 space-y-2.5 border-t border-border pt-5 text-sm">
+        {limitesDoPlano(plano).map((item) => (
+          <li key={item} className="flex gap-2.5">
+            <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-accent-foreground" />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
-function PricingCard({
-  config,
-  erro,
-  tentarDeNovo,
-}: {
-  config: ConfigPublica | undefined;
-  erro: boolean;
-  tentarDeNovo: () => void;
-}) {
-  const [annual, setAnnual] = useState(false);
+function Precos() {
+  const { data: config, isError, refetch } = useConfigPublica();
+  const [anual, setAnual] = useState(false);
+  // Se uma nova busca falhar depois de já ter dados, continua mostrando os dados.
+  const carregando = !config && !isError;
+  const pagamento = config ? frasePagamento(config.pagamento) : null;
+  const mesesGratis = config?.planos_v3[0]?.meses_gratis ?? 0;
+  const opcao = (ativo: boolean) =>
+    `rounded-full px-4 py-2 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+      ativo
+        ? "bg-background text-foreground shadow-sm"
+        : "text-muted-foreground hover:text-foreground"
+    }`;
 
   let corpo: React.ReactNode;
   if (config) {
-    const { mensal, anual } = config.planos;
-    const oferta = config.primeiros50;
-    const comOferta = !annual && oferta.disponivel && oferta.plano === "mensal";
-    const opcao = (ativo: boolean) =>
-      `rounded-full px-4 py-2 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
-        ativo
-          ? "bg-background text-foreground shadow-sm"
-          : "text-muted-foreground hover:text-foreground"
-      }`;
-
     corpo = (
       <>
         <div
           role="radiogroup"
           aria-label="Forma de cobrança"
-          className="mx-auto grid w-full max-w-xs grid-cols-2 gap-1 rounded-full bg-muted p-1 text-sm font-semibold"
+          className="mx-auto mt-8 grid w-full max-w-sm grid-cols-2 gap-1 rounded-full bg-muted p-1 text-sm font-semibold"
         >
           <button
             type="button"
             role="radio"
-            aria-checked={!annual}
-            onClick={() => setAnnual(false)}
-            className={opcao(!annual)}
+            aria-checked={!anual}
+            onClick={() => setAnual(false)}
+            className={opcao(!anual)}
           >
             Mensal
           </button>
           <button
             type="button"
             role="radio"
-            aria-checked={annual}
-            onClick={() => setAnnual(true)}
-            className={opcao(annual)}
+            aria-checked={anual}
+            onClick={() => setAnual(true)}
+            className={opcao(anual)}
           >
             Anual
+            {mesesGratis > 0 ? (
+              <span className="ml-1.5 whitespace-nowrap rounded-full bg-gold px-2 py-0.5 text-[0.65rem] font-bold uppercase text-gold-foreground">
+                {plural(mesesGratis, "mês grátis", "meses grátis")}
+              </span>
+            ) : null}
           </button>
         </div>
 
-        {comOferta ? (
-          <>
-            <span className="mx-auto mt-7 inline-flex rounded-full bg-gold px-3 py-1 text-xs font-bold uppercase tracking-wider text-gold-foreground">
-              Oferta de lançamento
-            </span>
-            <p className="mt-4 text-lg text-muted-foreground">
-              <span className="sr-only">De </span>
-              <s>{formatarReais(mensal.preco)}</s>
-              <span className="sr-only"> por</span>
-            </p>
-            <p className="font-display text-5xl font-semibold leading-none sm:text-6xl">
-              {formatarReais(oferta.preco)}
-              <span className="font-sans text-base font-medium text-muted-foreground">/mês</span>
-            </p>
-            <p className="mx-auto mt-4 max-w-xs text-sm leading-relaxed">
-              Para os {oferta.vagas_total} primeiros assinantes, com o preço travado enquanto a
-              assinatura continuar ativa.
-            </p>
-            <Vagas oferta={oferta} />
-          </>
-        ) : annual ? (
-          <>
-            {anual.meses_gratis > 0 ? (
-              <span className="mx-auto mt-7 inline-flex rounded-full bg-gold px-3 py-1 text-xs font-bold uppercase tracking-wider text-gold-foreground">
-                {plural(anual.meses_gratis, "mês grátis", "meses grátis")}
-              </span>
-            ) : null}
-            <p className="mt-4 text-lg text-muted-foreground">
-              <span className="sr-only">De </span>
-              <s>{formatarReais(mensal.preco * 12)}</s>
-              <span className="sr-only"> por</span>
-            </p>
-            <p className="font-display text-5xl font-semibold leading-none sm:text-6xl">
-              {formatarReais(anual.preco)}
-              <span className="font-sans text-base font-medium text-muted-foreground">/ano</span>
-            </p>
-            <p className="mt-4 text-sm leading-relaxed">
-              Cobrado uma vez por ano. Equivale a {formatarReais(anual.equivale_por_mes)} por mês.
-            </p>
-          </>
-        ) : (
-          <>
-            <p className="mt-8 font-display text-5xl font-semibold leading-none sm:text-6xl">
-              {formatarReais(mensal.preco)}
-              <span className="font-sans text-base font-medium text-muted-foreground">/mês</span>
-            </p>
-            <p className="mt-4 text-sm leading-relaxed">Cobrado todo mês. Cancele quando quiser.</p>
-          </>
-        )}
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
+          {config.planos_v3.map((plano) => (
+            <CartaoDoPlano key={plano.id} plano={plano} anual={anual} />
+          ))}
+        </div>
 
-        <ul className="mt-7 space-y-2.5 border-t border-border pt-6 text-left text-sm">
-          {[`${plural(mensal.roteiros_por_mes, "roteiro", "roteiros")} por mês`, ...incluso].map(
-            (item) => (
-              <li key={item} className="flex gap-2.5">
-                <Check
-                  aria-hidden="true"
-                  className="mt-0.5 size-4 shrink-0 text-accent-foreground"
-                />
-                <span>{item}</span>
+        <div className="mx-auto mt-9 max-w-3xl text-center">
+          <p className="text-sm font-semibold">Em todos os planos</p>
+          <ul className="mt-3 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
+            {incluso.map((item) => (
+              <li key={item} className="flex items-center gap-1.5">
+                <Check aria-hidden="true" className="size-4 shrink-0 text-accent-foreground" />
+                {item}
               </li>
-            ),
-          )}
-        </ul>
+            ))}
+          </ul>
+          <PrimaryButton href={REGISTER_URL} className="mt-8">
+            Começar teste grátis
+          </PrimaryButton>
+          <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+            {fraseTeste(config.teste_gratis)} No teste dá para convidar até{" "}
+            {plural(config.teste_gratis.usuarios, "pessoa", "pessoas")} da equipe. Desistência em 7
+            dias com reembolso integral.
+          </p>
+        </div>
       </>
     );
-  } else if (erro) {
+  } else if (isError) {
     corpo = (
-      <p className="text-sm text-muted-foreground">
+      <p className="mt-8 text-center text-sm text-muted-foreground">
         Não deu para carregar os preços agora.{" "}
         <button
           type="button"
-          onClick={tentarDeNovo}
+          onClick={() => void refetch()}
           className="font-semibold text-foreground underline underline-offset-4 hover:text-accent-foreground/80"
         >
           Tentar de novo
@@ -389,54 +387,37 @@ function PricingCard({
     );
   } else {
     corpo = (
-      <div role="status">
+      <div role="status" className="mt-8">
         <span className="sr-only">Carregando preços…</span>
         <Skeleton aria-hidden="true" className="mx-auto h-10 w-56 max-w-full rounded-full" />
-        <Skeleton aria-hidden="true" className="mx-auto mt-8 h-14 w-48 max-w-full" />
-        <Skeleton aria-hidden="true" className="mx-auto mt-4 h-10 w-full" />
-        <Skeleton aria-hidden="true" className="mx-auto mt-7 h-32 w-full" />
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
+          {[0, 1, 2].map((i) => (
+            <Skeleton key={i} aria-hidden="true" className="h-80 w-full rounded-2xl" />
+          ))}
+        </div>
       </div>
     );
   }
-
-  return (
-    <div className="surface-card mx-auto mt-10 flex w-full max-w-md flex-col p-7 text-center sm:p-9">
-      {corpo}
-
-      <PrimaryButton href={REGISTER_URL} className="mt-7 w-full">
-        Começar teste grátis
-      </PrimaryButton>
-      {config ? (
-        <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-          {fraseTeste(config.teste_gratis)} Desistência em 7 dias com reembolso integral.
-        </p>
-      ) : null}
-    </div>
-  );
-}
-
-function Precos() {
-  const { data: config, isError, refetch } = useConfigPublica();
-  // Se uma nova busca falhar depois de já ter dados, continua mostrando os dados.
-  const carregando = !config && !isError;
-  const pagamento = config ? frasePagamento(config.pagamento) : null;
 
   return (
     <div aria-busy={carregando}>
       <div className="text-center">
         <p className="eyebrow">Preços</p>
         <h2 className="mt-3 text-3xl leading-tight sm:text-4xl">
-          {config
-            ? `Um plano só, com ${plural(config.planos.mensal.roteiros_por_mes, "roteiro", "roteiros")} por mês`
-            : "Um plano só"}
+          Três planos, pelo tamanho da igreja
         </h2>
         {carregando ? (
           <Skeleton aria-hidden="true" className="mx-auto mt-5 h-6 w-80 max-w-full" />
         ) : null}
         {pagamento ? <p className="mt-4 text-lg text-muted-foreground">{pagamento}</p> : null}
+        {config?.fundador.disponivel ? (
+          <p className="mx-auto mt-6 max-w-2xl rounded-2xl bg-muted px-5 py-3 text-sm">
+            <strong>Plano Fundador:</strong> preço especial para quem assinar até{" "}
+            {formatarData(config.fundador.ate)}, travado enquanto a assinatura continuar ativa.
+          </p>
+        ) : null}
       </div>
-
-      <PricingCard config={config} erro={isError && !config} tentarDeNovo={() => void refetch()} />
+      {corpo}
     </div>
   );
 }
@@ -453,6 +434,14 @@ const faqs = [
   {
     q: "Serve para qualquer denominação?",
     a: "Sim. O roteiro segue a sua pregação e os modelos são definidos por você, então ele acompanha a linguagem e a prática da sua igreja.",
+  },
+  {
+    q: "Qual plano escolher?",
+    a: "O que muda entre os planos é quantos roteiros a igreja gera por mês, quantas pessoas entram na equipe e quantas células dá para cadastrar. Todos os recursos estão nos três.",
+  },
+  {
+    q: "Mais de uma pessoa pode usar?",
+    a: "Pode. Quem assina convida a equipe, cada pessoa com um papel: Pastor/Administrador, Coordenador de Células, Financeiro ou Visualizador. Os líderes de célula não precisam de conta: recebem o roteiro pelo WhatsApp.",
   },
   {
     q: "Minha igreja não transmite o culto. Posso usar?",

@@ -10,7 +10,7 @@ import { EmailLink, LegalHeader, Summary } from "./legal-layout";
 export function PrivacyContent() {
   return (
     <article className="legal-prose">
-      <LegalHeader title="Política de Privacidade" updated="15 de outubro de 2026" version="2.1" />
+      <LegalHeader title="Política de Privacidade" updated="24 de outubro de 2026" version="2.2" />
 
       <Summary>
         <li>
@@ -87,8 +87,11 @@ export function PrivacyContent() {
         suas instruções (LGPD, art. 5º, VI e VII, e art. 39). Cabe ao controlador ter a base legal
         para registrar esses dados, inclusive os sensíveis (art. 11). Pedidos de oração e
         testemunhos podem conter dados sensíveis de outras pessoas, como informações de saúde ou de
-        fé. No app, eles aparecem só para você, não são enviados aos provedores de IA e não são
-        usados para nenhuma outra finalidade. Oriente os líderes a escrever só o necessário.
+        fé. No app, eles aparecem só para as pessoas da equipe da igreja com papel que permite ver
+        os relatórios (Assinante, Pastor/Administrador e Coordenador de Células), não são enviados
+        aos provedores de IA e não são usados para nenhuma outra finalidade. Oriente os líderes a
+        escrever só o necessário. Quando a igreja convida alguém para a equipe, o nome e o e-mail
+        dessa pessoa ficam visíveis para quem cuida da equipe.
       </p>
       <h4>1.4 Uso e dispositivo</h4>
       <ul>
