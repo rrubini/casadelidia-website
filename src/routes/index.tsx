@@ -161,8 +161,8 @@ const steps = [
   },
   {
     n: "2",
-    title: "A IA escreve o roteiro",
-    text: "Sai da pregação, no modelo e com a logo da sua igreja.",
+    title: "A IA escreve, você revisa e aprova o roteiro",
+    text: "Da live do YouTube, a IA cria o roteiro a partir do trecho da pregação, seguindo o modelo do roteiro da sua igreja (PDF ou Word).",
     img: printPasso2,
     largura: 1200,
     altura: 900,
@@ -170,7 +170,7 @@ const steps = [
   },
   {
     n: "3",
-    title: "Revise e envie",
+    title: "Baixe ou envie aos líderes",
     text: "Baixe em PDF ou mande aos líderes pelo WhatsApp.",
     img: printPasso3,
     largura: 1200,
@@ -662,7 +662,17 @@ function Landing() {
           <ol className="mt-12 grid gap-12 md:grid-cols-3 md:gap-8">
             {steps.map((s) => (
               <li key={s.n} className="flex flex-col">
-                <div className="relative mx-auto w-full max-w-sm md:max-w-none">
+                {/* No celular o título vem antes da imagem; no desktop a imagem fica em cima, alinhada nas três colunas */}
+                <div className="mx-auto w-full max-w-sm md:order-last md:mt-6 md:max-w-none">
+                  <div className="flex items-center gap-3">
+                    <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-gold font-display text-lg font-semibold text-gold-foreground">
+                      {s.n}
+                    </span>
+                    <h3 className="text-xl">{s.title}</h3>
+                  </div>
+                  <p className="mt-2 leading-relaxed text-muted-foreground">{s.text}</p>
+                </div>
+                <div className="relative mx-auto mt-6 w-full max-w-sm md:mt-0 md:max-w-none">
                   <div
                     aria-hidden="true"
                     className="absolute inset-x-6 inset-y-2 -z-10 rounded-full bg-accent/15 blur-2xl"
@@ -677,13 +687,6 @@ function Landing() {
                     className="aspect-[4/3] w-full rounded-2xl object-cover shadow-[var(--shadow-lift)]"
                   />
                 </div>
-                <div className="mt-6 flex items-center gap-3">
-                  <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-gold font-display text-lg font-semibold text-gold-foreground">
-                    {s.n}
-                  </span>
-                  <h3 className="text-xl">{s.title}</h3>
-                </div>
-                <p className="mt-2 leading-relaxed text-muted-foreground">{s.text}</p>
               </li>
             ))}
           </ol>
