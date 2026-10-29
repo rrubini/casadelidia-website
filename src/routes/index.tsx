@@ -246,15 +246,16 @@ const incluso = [
   "Adicione seu time de apoio, cada um com sua função: roteiro, envio, líder de célula etc.",
 ];
 
+// As células primeiro: é o número que mais ajuda a igreja a escolher o plano
 function limitesDoPlano(p: Plano) {
   return [
+    p.celulas_ilimitadas ? "Células ilimitadas" : `Até ${plural(p.celulas, "célula", "células")}`,
     p.roteiros_ilimitados
       ? "Roteiros ilimitados"
       : `${plural(p.roteiros_por_mes, "roteiro", "roteiros")} por mês`,
     p.usuarios_ilimitados
       ? "Equipe sem limite de pessoas"
       : `Até ${plural(p.usuarios, "pessoa", "pessoas")} na equipe`,
-    p.celulas_ilimitadas ? "Células ilimitadas" : `Até ${plural(p.celulas, "célula", "células")}`,
   ];
 }
 
@@ -281,8 +282,7 @@ function CartaoDoPlano({
         </span>
       ) : null}
       <h3 className="font-display text-2xl">{plano.nome}</h3>
-      <p className="mt-1 text-sm text-muted-foreground">{plano.perfil}</p>
-      <p className="mt-6 min-h-6 text-sm text-muted-foreground">
+      <p className="mt-4 min-h-6 text-sm text-muted-foreground">
         {plano.fundador && regular > preco ? (
           <>
             <span className="sr-only">De </span>
@@ -304,10 +304,10 @@ function CartaoDoPlano({
           : `Cobrado todo mês${cartao}. Cancele quando quiser.`}
       </p>
       <ul className="mt-5 space-y-2.5 border-t border-border pt-5 text-sm">
-        {limitesDoPlano(plano).map((item) => (
+        {limitesDoPlano(plano).map((item, i) => (
           <li key={item} className="flex gap-2.5">
             <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-accent-foreground" />
-            <span>{item}</span>
+            <span className={i === 0 ? "font-semibold" : undefined}>{item}</span>
           </li>
         ))}
       </ul>
@@ -464,7 +464,7 @@ const faqs = [
   },
   {
     q: "Qual plano escolher?",
-    a: "O que muda entre os planos é quantos roteiros a igreja gera por mês, quantas pessoas entram na equipe e quantas células dá para cadastrar. Todos os recursos estão nos três.",
+    a: "Comece pelo número de células da sua igreja. Também muda entre os planos quantos roteiros a igreja gera por mês e quantas pessoas entram na equipe. Todos os recursos estão nos três.",
   },
   {
     q: "Mais de uma pessoa pode usar?",

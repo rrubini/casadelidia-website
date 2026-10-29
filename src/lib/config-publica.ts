@@ -8,7 +8,6 @@ export type PlanoId = "essencial" | "crescendo" | "rede";
 export type Plano = {
   id: PlanoId;
   nome: string;
-  perfil: string;
   mensal: number;
   anual: number;
   /** Já vem com corte nos centavos, igual à tela do app. Mostrar como veio, sem recalcular. */
