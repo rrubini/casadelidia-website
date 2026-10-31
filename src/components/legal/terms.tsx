@@ -10,13 +10,13 @@ import { EmailLink, LegalHeader, Summary } from "./legal-layout";
 export function TermsContent() {
   return (
     <article className="legal-prose">
-      <LegalHeader title="Termos de Uso" updated="24 de outubro de 2026" version="2.3" />
+      <LegalHeader title="Termos de Uso" updated="31 de outubro de 2026" version="2.4" />
 
       <Summary>
         <li>Teste grátis de 30 dias com até 5 roteiros, sem cartão.</li>
         <li>
-          Um plano com até 30 roteiros por mês. A assinatura dá uma licença de uso do software pelo
-          período contratado.
+          Três planos: Essencial e Crescendo, assinados no app, e Rede, sob consulta. A assinatura
+          dá uma licença de uso do software pelo período contratado.
         </li>
         <li>
           Pagamento por cartão de crédito, processado pela Asaas, com renovação automática e nota
@@ -111,11 +111,14 @@ export function TermsContent() {
       <h4>4.1 Plano</h4>
       <p>
         O Casa de Lídia tem três planos (Essencial, Crescendo e Rede), que mudam no número de
-        roteiros por mês, de pessoas na equipe e de células cadastradas. O Rede tem roteiros
+        roteiros por mês, de pessoas na equipe e de células cadastradas. O Essencial e o Crescendo
+        são assinados no app, e os limites, as opções de pagamento e os valores em vigor de cada um
+        são mostrados antes da contratação. O Rede, para redes de igrejas e igrejas com muitas
+        células, é contratado sob consulta, pelo e-mail <EmailLink email={CONTACT_EMAIL} />, com o
+        valor e as condições combinados por escrito antes da contratação. Ele tem roteiros
         ilimitados, com um limite técnico mensal contra abuso, que aumentamos a pedido. Cada parte
         de um roteiro pode ser refeita pela IA até 2 vezes, e depois disso a mudança é feita no
-        editor. Refazer uma parte não conta no limite de roteiros. As opções de pagamento e os
-        valores em vigor são mostrados no app antes da contratação.
+        editor. Refazer uma parte não conta no limite de roteiros.
       </p>
       <h4>4.2 Licença de uso</h4>
       <p>
