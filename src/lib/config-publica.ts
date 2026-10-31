@@ -4,10 +4,12 @@ export const CONFIG_PUBLICA_URL = "https://app.casadelidia.com.br/api/public/con
 
 export type PlanoId = "essencial" | "crescendo" | "rede";
 
-/** Um dos 3 planos (SPEC v3.2). Os preços já vêm no de Fundador quando ele está aberto. */
+/** Um dos 3 planos (SPEC v3.3). Os preços já vêm no de Fundador quando ele está aberto. */
 export type Plano = {
   id: PlanoId;
   nome: string;
+  /** O Rede: sem preço (os campos de preço vêm null) e o contato por e-mail no lugar. */
+  sob_consulta?: boolean;
   mensal: number;
   anual: number;
   /** Já vem com corte nos centavos, igual à tela do app. Mostrar como veio, sem recalcular. */
@@ -54,17 +56,17 @@ function conferir(dados: unknown): ConfigPublica {
       (p) =>
         typeof p?.id === "string" &&
         typeof p?.nome === "string" &&
-        [
-          p.mensal,
-          p.anual,
-          p.anual_equivale_por_mes,
-          p.meses_gratis,
-          p.mensal_regular,
-          p.anual_regular,
-          p.roteiros_por_mes,
-          p.usuarios,
-          p.celulas,
-        ].every(numero) &&
+        // Plano sob consulta não tem preço
+        (p.sob_consulta === true ||
+          [
+            p.mensal,
+            p.anual,
+            p.anual_equivale_por_mes,
+            p.meses_gratis,
+            p.mensal_regular,
+            p.anual_regular,
+          ].every(numero)) &&
+        [p.roteiros_por_mes, p.usuarios, p.celulas].every(numero) &&
         [p.fundador, p.roteiros_ilimitados, p.usuarios_ilimitados, p.celulas_ilimitadas].every(
           booleano,
         ),

@@ -283,7 +283,7 @@ function CartaoDoPlano({
       ) : null}
       <h3 className="font-display text-2xl">{plano.nome}</h3>
       <p className="mt-4 min-h-6 text-sm text-muted-foreground">
-        {plano.fundador && regular > preco ? (
+        {!plano.sob_consulta && plano.fundador && regular > preco ? (
           <>
             <span className="sr-only">De </span>
             <s>{formatarReais(regular)}</s>
@@ -292,16 +292,34 @@ function CartaoDoPlano({
         ) : null}
       </p>
       <p className="font-display text-4xl font-semibold leading-none sm:text-[min(3rem,calc((100cqi_-_2.5rem)/5))]">
-        {formatarReais(preco)}
-        <span className="font-sans text-base font-medium text-muted-foreground">
-          {anual ? "/ano" : "/mês"}
-        </span>
+        {plano.sob_consulta ? (
+          "Sob consulta"
+        ) : (
+          <>
+            {formatarReais(preco)}
+            <span className="font-sans text-base font-medium text-muted-foreground">
+              {anual ? "/ano" : "/mês"}
+            </span>
+          </>
+        )}
       </p>
       {/* A fonte acompanha a largura do cartão para "Cobrado todo mês no cartão. Cancele quando quiser." caber numa linha */}
       <p className="mt-3 min-h-10 text-[clamp(0.75rem,3.85cqi,0.8125rem)] leading-relaxed text-balance">
-        {anual
-          ? `Cobrado uma vez por ano${cartao}. Equivale a ${formatarReais(plano.anual_equivale_por_mes)} por mês.`
-          : `Cobrado todo mês${cartao}. Cancele quando quiser.`}
+        {plano.sob_consulta ? (
+          <>
+            Para redes com muitas filiais ou mais células do que cabem no Crescendo.{" "}
+            <a
+              href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Plano ${plano.nome}`)}`}
+              className="font-semibold text-foreground underline underline-offset-4 hover:text-accent-foreground/80"
+            >
+              Fale com a gente
+            </a>
+          </>
+        ) : anual ? (
+          `Cobrado uma vez por ano${cartao}. Equivale a ${formatarReais(plano.anual_equivale_por_mes)} por mês.`
+        ) : (
+          `Cobrado todo mês${cartao}. Cancele quando quiser.`
+        )}
       </p>
       <ul className="mt-5 space-y-2.5 border-t border-border pt-5 text-sm">
         {limitesDoPlano(plano).map((item, i) => (
@@ -464,7 +482,7 @@ const faqs = [
   },
   {
     q: "Qual plano escolher?",
-    a: "Comece pelo número de células da sua igreja. Também muda entre os planos quantos roteiros a igreja gera por mês e quantas pessoas entram na equipe. Todos os recursos estão nos três.",
+    a: `Comece pelo número de células da sua igreja. Também muda entre os planos quantos roteiros a igreja gera por mês e quantas pessoas entram na equipe. Todos os recursos estão nos três. O Rede, para redes com muitas filiais ou mais células do que cabem no Crescendo, é sob consulta: escreva para ${CONTACT_EMAIL}.`,
   },
   {
     q: "Mais de uma pessoa pode usar?",
